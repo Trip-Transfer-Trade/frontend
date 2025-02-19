@@ -12,9 +12,9 @@ export default function Layout() {
       <div>
         <Outlet />
       </div>
-      {/* <footer>
+      <footer>
         <Footer />
-      </footer> */}
+      </footer>
     </div>
   );
 }

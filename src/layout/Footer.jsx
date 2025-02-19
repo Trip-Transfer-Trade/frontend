@@ -1,9 +1,25 @@
 import React from "react";
+import "./Footer.css"
 
 export default function Footer() {
     return (
-        <div>
-            <h1>This is Footer</h1>
-        </div>
+        
+        <footer className="footer">
+            <div className="menu-icons">
+                <div className="menu-item">
+                    <img src="/src/assets/images/footer/home.svg" alt="Home" className="icon" />
+                </div>
+                <div className="menu-item">
+                    <img src="/src/assets/images/footer/mytrip.svg" alt="Mytrip" className="icon" />
+                </div>
+                <div className="menu-item">
+                    <img src="/src/assets/images/footer/wallet.svg" alt="Wallet" className="icon" />
+                </div>
+                <div className="menu-item">
+                    <img src="/src/assets/images/footer/mypage.svg" alt="MyPage" className="icon" />
+                </div>
+            </div>
+
+        </footer>
     )
 }
