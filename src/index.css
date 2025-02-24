@@ -67,6 +67,8 @@ button:focus-visible {
   }
 } */
 
+@import "tailwindcss";
+
 body {
   margin: 0;
 }
