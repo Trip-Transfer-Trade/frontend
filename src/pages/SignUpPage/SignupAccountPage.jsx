@@ -1,8 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import BackHeader from "../../layout/BackHeader";
+import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupAccountPage() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -19,10 +23,14 @@ export default function SignupAccountPage() {
     });
   }
 
+  function next() {
+    navigate("/auth/signup/complete");
+  }
+
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <BackHeader />
-      <div className="mx-auto p-6">
+      <div className="flex-grow w-full mx-auto p-6">
         <h2 className="text-xl font-bold">회원정보를 입력해주세요.</h2>
 
         <div className="mt-8 space-y-4">
@@ -34,8 +42,8 @@ export default function SignupAccountPage() {
               placeholder="아이디 입력"
               value={formData.id}
               onChange={handleChange}
-              className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
-            ></input>
+              className="input-style"
+            />
           </div>
 
           <div className="space-y-2">
@@ -46,8 +54,8 @@ export default function SignupAccountPage() {
               placeholder="비밀번호 입력"
               value={formData.password}
               onChange={handleChange}
-              className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
-            ></input>
+              className="input-style"
+            />
           </div>
 
           <div className="space-y-2">
@@ -58,14 +66,13 @@ export default function SignupAccountPage() {
               placeholder="비밀번호 입력"
               value={formData.passwordConfirm}
               onChange={handleChange}
-              className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
-            ></input>
+              className="input-style"
+            />
           </div>
         </div>
-
-        <button className="w-full p-3 rounded-lg text-white font-bold bg-blue-500">
-          다음
-        </button>
+      </div>
+      <div className="p-6">
+        <NextConfirmButton text="다음" onClick={next} />
       </div>
     </div>
   );
