@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Logo from "../../assets/images/logo.svg";
+import logo from "../../assets/images/logo.svg";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function LoginPage() {
     <div className="mx-auto p-6">
       <div className="flex flex-col items-center space-y-6">
         <div className="p-12">
-          <img src={Logo} alt="Logo" />
+          <img src={logo} alt="Logo" />
         </div>
 
         <div className="w-full space-y-4">
@@ -47,7 +47,7 @@ export default function LoginPage() {
 
           <div className="space-y-4">
             <button
-              className="h-12 w-full rounded-md bg-blue-500 text-white"
+              className="h-12 w-full rounded-md bg-brand-blue text-white"
               onClick={login}
             >
               로그인하기
