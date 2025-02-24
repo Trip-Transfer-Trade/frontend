@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import BackHeader from "../../layout/BackHeader";
+import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupVerificationPage() {
   const navigate = useNavigate();
@@ -32,9 +33,9 @@ export default function SignupVerificationPage() {
     formData.carrier && formData.phone && formData.verificationCode;
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <BackHeader />
-      <div className="mx-auto p-6">
+      <div className="flex-grow w-full mx-auto p-6">
         <h2 className="text-xl font-bold">본인 인증을 진행해주세요.</h2>
 
         <div className="mt-8 space-y-4">
@@ -44,7 +45,7 @@ export default function SignupVerificationPage() {
               name="carrier"
               value={formData.carrier}
               onChange={handleChange}
-              className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
+              className="input-style"
             >
               <option value="">통신사 선택</option>
               <option value="SKT">SKT</option>
@@ -62,20 +63,20 @@ export default function SignupVerificationPage() {
               placeholder="전화번호 입력"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
+              className="input-style"
             ></input>
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-medium">인증번호</label>
-            <div className="flex space-x-2">
+            <div className="flex items-center gap-2">
               <input
-                type="input"
+                type="text"
                 name="verificationCode"
                 placeholder="인증번호 입력"
-                value={formData.passwordConfirm}
+                value={formData.verificationCode} // ⚠️ 변수명 수정 (passwordConfirm → verificationCode)
                 onChange={handleChange}
-                className="w-full h-12 px-3 rounded-lg border border-gray-200 focus:outline-none focus:border-blue-500"
+                className="input-style flex-1" // ✅ flex-1 추가
               />
               <button
                 className={`p-2 rounded-lg text-white font-bold ${
@@ -90,14 +91,13 @@ export default function SignupVerificationPage() {
             </div>
           </div>
         </div>
-
-        <button
+      </div>
+      <div className="p-6">
+        <NextConfirmButton
+          text="다음"
           onClick={next}
           disabled={!isFormComplete}
-          className="w-full p-3 rounded-lg text-white font-bold bg-blue-500"
-        >
-          다음
-        </button>
+        />
       </div>
     </div>
   );
