@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BackHeader from "../../layout/BackHeader";
+import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupVerificationPage() {
@@ -34,7 +34,7 @@ export default function SignupVerificationPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <BackHeader />
+      <BackNavigation />
       <div className="flex-grow w-full mx-auto p-6">
         <h2 className="text-xl font-bold">본인 인증을 진행해주세요.</h2>
 
