@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import BackHeader from "../../layout/BackHeader";
+import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupAccountPage() {
@@ -29,7 +29,7 @@ export default function SignupAccountPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <BackHeader />
+      <BackNavigation />
       <div className="flex-grow w-full mx-auto p-6">
         <h2 className="text-xl font-bold">회원정보를 입력해주세요.</h2>
 
