@@ -7,7 +7,7 @@ import "./firebase.js";
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker
-    .register('/firebase-message-sw.js')  // 서비스 워커 등록 (public에 위치)
+    .register('/firebase-messaging-sw.js')  // 서비스 워커 등록 (public에 위치)
     .then((registration) => {
       console.log('Service Worker registered with scope:', registration.scope);
     })
