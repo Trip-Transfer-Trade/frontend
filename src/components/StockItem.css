@@ -1,0 +1,68 @@
+.stock-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 0.1px solid #f7f7f7;
+    width: 360px;
+  }
+  
+  .stock-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stock-rank {
+    font-size: 16px;
+    font-weight: bold;
+    color: #212529;
+  }
+  
+  .stock-logo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  
+  .stock-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .stock-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #212529;
+  }
+  
+  .stock-code {
+    font-size: 12px;
+    color: #868e96;
+  }
+  
+  .stock-price {
+    text-align: right;
+  }
+  
+  .price {
+    font-size: 12px;
+    font-weight: 600;
+    color: #212529;
+  }
+  
+  .price-change {
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  
+  .price-up {
+    color: #f03e3e;
+  }
+  
+  .price-down {
+    color: #1c7ed6;
+  }
+  
+  
