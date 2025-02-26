@@ -4,6 +4,7 @@
   height: 6vh;
   background-color: white;
   padding: 24px;
+  z-index: 999;
 }
 
 .logo {
