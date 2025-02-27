@@ -1,0 +1,192 @@
+.container {
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: white;
+  padding-left: 24px;
+  padding-right: 24px;
+  /* padding-top: 15px; */
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0;
+  padding-right: 32px;
+}
+
+.search-container {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px;
+  padding-right: 48px;
+  border: none;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+.quick-select {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.country-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.country-flag {
+  font-size: 16px;
+}
+
+.continents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.continent-section {
+  border-bottom: 1px solid #eee;
+}
+
+.continent-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.chevron-icon {
+  transition: transform 0.3s ease;
+}
+
+.chevron-icon.rotate {
+  transform: rotate(180deg);
+}
+
+.continent-content {
+  padding: 16px 0;
+}
+
+.popular-banner {
+  position: fixed;
+  bottom: 95px;
+  left: 16px;
+  right: 16px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+  padding: 14px;
+  cursor: pointer;
+}
+
+.banner-content {
+  display: flex;
+  gap: 27px;
+  margin-left: 75px;
+  justify-content: flex-start;
+}
+
+.globe-icon {
+  font-size: 24px;
+}
+
+.banner-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner-text strong {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.banner-text span {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Remove input autofill background */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #f5f5f5 inset;
+}
+
+/* Country item styles */
+.country-item {
+  display: flex;
+  align-items: center;
+  padding: 16px 8px;
+  gap: 12px;
+}
+
+.flag-container {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+}
+
+.country-flag {
+  font-size: 20px;
+}
+
+.country-name {
+  font-size: 14px;
+  color: #333;
+}
+
+.country-code {
+  display: none;
+}
+
