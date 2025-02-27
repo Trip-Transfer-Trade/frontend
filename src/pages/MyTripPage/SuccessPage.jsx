@@ -16,6 +16,7 @@ export default function FailedPage(){
     const handleDetailClick = () =>{
         // 목표 내역 자세히 보기
         console.log('목표 내역 자세히 보기')
+        navigate("/trip/success/detail")
     }
 
     const handleQuestionClick = ()=>{
@@ -65,7 +66,7 @@ export default function FailedPage(){
   
             <button
               onClick={handleExchangeClick}
-              className="w-2/3 mx-auto px-6 py-3 text-white text-bold bg-blue-600 rounded-2xl text-[16px] hover:bg-blue-700 focus:outline-none"
+              className="w-3/5 mx-auto px-6 py-3 text-white text-bold bg-blue-600 rounded-2xl text-[16px] hover:bg-blue-700 focus:outline-none"
             >
               환전하러 가기
             </button>
