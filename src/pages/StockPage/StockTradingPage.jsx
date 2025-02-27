@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
+import { toast, ToastContainer } from "react-toastify";
 
 import "./StockPage.css";
 
@@ -45,9 +46,18 @@ export default function StockTradingPage( {type} ) {
 
     const totalAmount = purchasePrice * quantity
 
+    const handlePurchase = () => {
+        if(tradeMode === "buy"){
+            toast.success("매수 완료!", { position:"bottom-center", autoClose: 1000, style: {bottom: "80px"} } )
+        } else {
+            toast.success("매도 완료!", { position:"bottom-center", autoClose: 1000, style: {bottom: "80px"} } )
+        }
+    }
+
     return (
         <div>
             <BackNavigation text="" />
+            <ToastContainer />
             <div className="p-1 border-b-3 border-gray-100">
                 <div className="flex items-center">
                     <h1 className="text-xl font-bold text-center flex-1">{stockData.name}</h1>
@@ -133,7 +143,7 @@ export default function StockTradingPage( {type} ) {
                             <p className="text-sm text-gray-600">{tradeMode === "buy" ? "주문 금액" : "판매 금액"}</p>
                             <p className="text-xl font-semibold">{totalAmount.toLocaleString()}원</p>
                         </div>
-                        <button className={`w-full p-2 text-xl font-bold h-[48px] text-white rounded-lg ${ tradeMode === "buy" ? "bg-red-500" : "bg-blue-500" }`}>
+                        <button onClick={handlePurchase} className={`w-full p-2 text-xl font-bold h-[48px] text-white rounded-lg ${ tradeMode === "buy" ? "bg-red-500" : "bg-blue-500" }`}>
                             {tradeMode === "buy" ? "구매하기" : "판매하기"}
                         </button>
                     </div>
