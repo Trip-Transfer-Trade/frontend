@@ -5,6 +5,6 @@ import AuthRouter from "./AuthRouter";
 import StockRouter from "./StockRouter";
 import TripRouter from "./TripRouter";
 
-const router = createBrowserRouter([RootRouter, AuthRouter,TripRouter, StockRouter]);
+const router = createBrowserRouter([RootRouter, AuthRouter,TripRouter, ...StockRouter]);
 
 export default router;
