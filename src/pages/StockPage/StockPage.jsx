@@ -8,6 +8,7 @@ import StockItem from "../../components/StockItem";
 import portfoliBanner from "../../assets/images/stock/portfolioBanner.svg"
 
 import "./StockPage.css"
+import { Link, Outlet } from "react-router-dom";
 
 export default function StockPage() {
 
@@ -74,15 +75,20 @@ export default function StockPage() {
                                 <Tab label="상승">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -92,15 +98,20 @@ export default function StockPage() {
                                 <Tab label="하락">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -110,15 +121,20 @@ export default function StockPage() {
                                 <Tab label="인기">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -128,15 +144,20 @@ export default function StockPage() {
                                 <Tab label="거래량">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -157,15 +178,20 @@ export default function StockPage() {
                                 <Tab label="상승">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -175,15 +201,20 @@ export default function StockPage() {
                                 <Tab label="하락">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -193,15 +224,20 @@ export default function StockPage() {
                                 <Tab label="인기">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -211,15 +247,20 @@ export default function StockPage() {
                                 <Tab label="거래량">
                                     <div className="ranking-tab">
                                         {stockItems.map((item) => (
-                                            <StockItem
-                                            key={item.id}
-                                            rank={item.id}
-                                            logo="https://via.placeholder.com/40"
-                                            name={item.name}
-                                            code={item.code}
-                                            price={item.price}
-                                            change={item.change}
-                                        />
+                                            <Link 
+                                            key={item.id} 
+                                            to="/stock/buy"
+                                            state={{ code: item.code }}
+                                            >
+                                                <StockItem
+                                                    rank={item.id}
+                                                    logo="https://via.placeholder.com/40"
+                                                    name={item.name}
+                                                    code={item.code}
+                                                    price={item.price}
+                                                    change={item.change}
+                                                />
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="portfoliBanner" >
@@ -233,6 +274,7 @@ export default function StockPage() {
                 </section>
             </div>
 
+            <Outlet />
             <Footer />
         </div>
     )
