@@ -43,28 +43,28 @@ export default function FailedPage(){
   
         {/* 중앙 콘텐츠 영역 */}
         <div className="flex-grow flex flex-col items-center justify-start px-4 pt-36">
-          <div className="w-full max-w-md text-center">
-            <h1 className="text-xl font-semibold text-gray-900">목표 기간이 만료됐어요</h1>
+          <div className="w-full max-w-md text-center font-['Pretendard-Medium']">
+            <h1 className="text-[22px] text-gray-900">목표 기간이 만료됐어요</h1>
   
             <div className="mb-2">
               <img
                 src="/src/assets/images/trip/wallet.svg"
                 alt="지갑"
-                className="w-42 h-48 mx-auto object-contain"
+                className="w-46 h-52 mx-auto object-contain"
               />
             </div>
   
-            <p className="text-sm text-gray-900 mb-2">자동 매도 후 환전할 수 있어요</p>
+            <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
   
             <button
               onClick={handleExchangeClick}
-              className="w-2/3 mx-auto px-6 py-3 text-white bg-blue-600 rounded-2xl text-[16px] hover:bg-blue-700 focus:outline-none"
+              className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-Bold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
             >
               환전하러 가기
             </button>
             <button
               onClick={handleNextClick}
-              className="w-full mt-1 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+              className="w-full mt-1 text-[13px] text-gray-500 hover:text-gray-700 transition-colors"
             >
               다음에 할게요
             </button>
