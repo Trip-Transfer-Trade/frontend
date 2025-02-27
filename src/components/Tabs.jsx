@@ -37,7 +37,7 @@ export default function Tabs({ children }) {
       </div>
 
       {/* 선택된 탭 내용 렌더링 */}
-      <div className="px-6 py-4">
+      <div className="pt-3">
         {children.map((child) => {
           return child.props.label === activeTab ? child.props.children : null;
         })}
