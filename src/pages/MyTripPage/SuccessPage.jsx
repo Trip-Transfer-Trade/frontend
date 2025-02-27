@@ -16,6 +16,7 @@ export default function FailedPage(){
     const handleDetailClick = () =>{
         // 목표 내역 자세히 보기
         console.log('목표 내역 자세히 보기')
+        navigate("/trip/success/detail")
     }
 
     const handleQuestionClick = ()=>{
@@ -48,11 +49,11 @@ export default function FailedPage(){
         </div>
   
         <div className="flex-grow flex flex-col items-center justify-start px-4 pt-36">
-          <div className="w-full max-w-md text-center">
-            <h1 className="text-xl font-semibold text-gray-900">목표에 도달했어요!</h1>
+          <div className="w-full max-w-md text-center font-['Pretendard-Medium']">
+            <h1 className="text-[22px] text-gray-900">목표에 도달했어요!</h1>
             <button
                 onClick={handleDetailClick} 
-                className="text-xs text-gray-500">목표 내역 자세히 보러가기</button>
+                className="text-[13px] text-gray-500">목표 내역 자세히 보러가기</button>
             <div className="mb-2">
               <img
                 src="/src/assets/images/trip/hand.svg"
@@ -61,17 +62,17 @@ export default function FailedPage(){
               />
             </div>
   
-            <p className="text-sm text-gray-900 mb-2">자동 매도 후 환전할 수 있어요</p>
+            <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
   
             <button
               onClick={handleExchangeClick}
-              className="w-2/3 mx-auto px-6 py-3 text-white text-bold bg-blue-600 rounded-2xl text-[16px] hover:bg-blue-700 focus:outline-none"
+              className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-Bold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
             >
               환전하러 가기
             </button>
             <button
               onClick={handleNextClick}
-              className="w-full mt-1 text-xs text-gray-500 hover:text-gray-700 transition-colors"
+              className="w-full mt-1 text-[13px] text-gray-500 hover:text-gray-700 transition-colors"
             >
               다음에 할게요
             </button>
