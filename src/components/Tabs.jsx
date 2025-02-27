@@ -16,20 +16,19 @@ export default function Tabs({ children }) {
 
   return (
     <div>
-      <div className="flex border-b border-custom-gray-2 relative">
+      {/* 탭 헤더 */}
+      <div className="flex space-x-1 px-8">
         {children.map((child) => {
           const { label } = child.props;
           return (
             <button
               key={label}
-              className={`flex-1 p-2 text-lg relative ${
+              className={`relative w-[55px] h-[34px] flex items-center justify-center text-lg ${
                 activeTab === label
-                  ? "font-bold after:content-[''] after:absolute after:bottom-[-2px] after:left-0 after:w-full after:h-[2px] after:bg-black"
-                  : "text-custom-gray-3"
+                  ? "font-bold text-black after:content-[''] after:absolute after:bottom-0 after:left-[50%] after:translate-x-[-50%] after:w-[55px] after:h-[2px] after:bg-black"
+                  : "text-gray-400"
               }`}
-              onClick={() => {
-                setActiveTab(label);
-              }}
+              onClick={() => setActiveTab(label)}
             >
               {label}
             </button>
