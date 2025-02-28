@@ -16,6 +16,7 @@ export default function FailedPage() {
 
   const handleNextClick = () => {
     console.log("다음에 할게요");
+    navigate("/trip")
   };
 
   const handleDetailClick = () => {

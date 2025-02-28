@@ -3,6 +3,8 @@ import SuccessPage from "../pages/MyTripPage/TripGoal/SuccessPage";
 import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
 import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
 import ExchangeMethodPage from "../pages/ExchangePage/ExchangeMethodPage";
+import MyTripPage from "../pages/MyTripPage/MyTripPage";
+
 const TripRouter = {
   path: "/trip",
   children: [
@@ -10,7 +12,8 @@ const TripRouter = {
     { path:"success", element : <SuccessPage />},
     { path:"info", element : <InfoPage />},
     { path:"success/detail", element : <SuccessDetailPage />},
-    { path:"exchange", element : <ExchangeMethodPage />}
+    { path:"exchange", element : <ExchangeMethodPage />},
+    { index:true, element:<MyTripPage />}
   ],
 };
 
