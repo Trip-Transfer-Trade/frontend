@@ -1,16 +1,22 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import SharedModal from "../../../components/Modal";
+import ExchangeMethod from "../../ExchangePage/ExchangeMethodPage";
+import { useState } from "react";
 
 export default function FailedPage(){
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
-    const handleExchangeClick = () => {
-        // 환전 하러 가기 동작
-        console.log('환전하러 가기');
-      };
-    
+
+  const handleExchangeClick = () => {
+    console.log("환전하러 가기");
+    setIsModalOpen(true);
+  };
     const handleNextClick = () => {
         // 다음에 할게요 동작
       console.log('다음에 할게요');
+      navigate("/trip")
     };
     
     const handleQuestionClick = ()=>{
@@ -70,6 +76,11 @@ export default function FailedPage(){
             </button>
           </div>
         </div>
+        {isModalOpen && (
+                <SharedModal onClose={() => setIsModalOpen(false)}>
+                  <ExchangeMethod />
+                </SharedModal>
+              )}
       </div>
     );
 }
