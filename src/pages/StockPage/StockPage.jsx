@@ -77,7 +77,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -100,7 +100,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -123,7 +123,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -146,7 +146,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -180,7 +180,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -203,7 +203,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -226,7 +226,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
@@ -249,7 +249,7 @@ export default function StockPage() {
                                         {stockItems.map((item) => (
                                             <Link 
                                             key={item.id} 
-                                            to="/stock/buy"
+                                            to="/stocks/buy"
                                             state={{ code: item.code }}
                                             >
                                                 <StockItem
