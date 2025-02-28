@@ -38,8 +38,12 @@ export default function ExchangeMethodPage({ onClose }) {
 
         <div className="p-5 pt-12">
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-              <span className="text-orange-500 text-lg">₩</span>
+            <div className="w-7 h-7 rounded-full flex items-center justify-center">
+            <img
+                src="/src/assets/images/trip/coin.svg"
+                alt="동전"
+                className="w-10 mx-auto object-contain"
+              />
             </div>
             <span className="font-['Pretendard-Bold'] text-[20px]">환전하러 가기</span>
           </div>
