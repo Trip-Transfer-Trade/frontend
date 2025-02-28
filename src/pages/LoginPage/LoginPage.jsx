@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import logo from "../../assets/images/logo.svg";
 
 export default function LoginPage() {
+  const logo = "/assets/images/logo.svg";
   const navigate = useNavigate();
 
   const [id, setId] = useState("");
