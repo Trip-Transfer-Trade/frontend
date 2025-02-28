@@ -10,7 +10,7 @@ export default function InfoPage(){
     };
     
     return (
-        <div className="min-h-screen bg-white flex flex-col">
+        <div className="min-h-screen bg-white flex flex-col font-['Pretendard-Medium']">
             <div className="flex justify-end p-4">
                 <button className="text-gray-500"
                     onClick={handleBack}>
@@ -20,17 +20,14 @@ export default function InfoPage(){
                 </button>
             </div>
 
-          {/* 실제 내용이 들어갈 카드(패널) 영역 */}
-          <div className="bg-white w-full max-w-md p-6 pt-25">
-            {/* 상단 헤더 */}
-            <h1 className="text-[20px] font-semibold mb-8">
+          <div className="bg-white w-full p-6 pt-25">
+            <h1 className="text-[20px] mb-8">
               TTT에서 매도와 환전을 도와드려요
             </h1>
     
-            {/* 자동매도란? 섹션 */}
             <div className="mb-6">
-              <h2 className="font-semibold text-[18px] text-gray-900 mb-3">자동매도란?</h2>
-              <p className="text-sm text-gray-700 leading-relaxed">
+              <h2 className="text-[18px] text-gray-900 mb-3">자동매도란?</h2>
+              <p className="text-[15px] text-gray-700 leading-relaxed">
                 지금까지 구매한 주식을 자동으로 판매해 드려요.
                 <br />
                 오늘 판매한 해외 종목은 2영업일 뒤에 원화로 바꾸거나 출금할 수 있어요.(미국 영업일 기준) 
@@ -39,10 +36,9 @@ export default function InfoPage(){
               </p>
             </div>
     
-            {/* 즉시환전이란? 섹션 */}
             <div className="mb-6 mt-10">
-              <h2 className="font-semibold text-[18px] text-gray-900 mb-3">즉시환전이란?</h2>
-              <p className="text-sm text-gray-700 leading-relaxed">
+              <h2 className="text-[18px] text-gray-900 mb-3">즉시환전이란?</h2>
+              <p className="text-[15px] text-gray-700 leading-relaxed">
                 수익금은 자동으로 환전해 드려요.
                 <br />
                 즉시 환전으로 환전된 금액은 환전 지갑에서 확인할 수 있어요.
