@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
 import { toast, ToastContainer } from "react-toastify";
@@ -8,6 +8,10 @@ import "./StockPage.css";
 
 export default function StockTradingPage( {type} ) {
 
+    const navigate = useNavigate();
+    const {trademode} = useParams();
+    const location = useLocation();
+    const code = location.state?.code;
 
     const stockData = {
         name: "삼성전자",
@@ -18,14 +22,11 @@ export default function StockTradingPage( {type} ) {
         askVolumes: ["100", "200", "150", "300", "250", "100", "200", "150", "300", "250", "100"],
         bidVolumes: ["120", "180", "130", "280", "220", "120", "180", "130", "280", "220", "120"],
     }
-
-    const location = useLocation();
-    const code = location.state?.code;
-    const [tradeMode, setTradeMode] = useState("buy");
+    
+    const [tradeMode, setTradeMode] = useState(trademode || "buy");
     const [purchasePrice, setPurchasePrice] = useState(354516)
     const [quantity, setQuantity] = useState(0)
     const [availableFunds] = useState(11232341)
-    
     const scrollRef = useRef(null);
     
     useEffect(() => {
@@ -34,10 +35,15 @@ export default function StockTradingPage( {type} ) {
         }
     }, [])
 
-
     useEffect(() => {
         console.log("현재 선택된 종목 코드:", code);
     }, [code]);
+
+    useEffect(() => {
+        if (tradeMode !== trademode) {
+            navigate(`/stocks/${tradeMode}`, { replace: true });
+        }
+    }, [tradeMode, navigate, trademode]);
 
     const increaseQuantity = () => setQuantity(quantity + 1)
     const decreaseQuantity = () => setQuantity(Math.max(0, quantity - 1))
@@ -94,9 +100,9 @@ export default function StockTradingPage( {type} ) {
                 <div className="w-3/5 p-4 flex flex-col flex-grow">
                     <div className="flex text-center ">
                         <button className={`w-1/2 font-bold h-[34px] rounded-sm ${ tradeMode === "buy" ? "bg-red-500 text-white" : "bg-white text-gray-500" }`}
-                            onClick={() => {setTradeMode("buy"); setQuantity(0)}}>매수</button>
+                            onClick={() => setTradeMode("buy")}>매수</button>
                         <button className={`w-1/2 font-bold h-[34px] rounded-sm ${ tradeMode === "sell" ? "bg-blue-500 text-white" : "bg-white text-gray-500" }`}
-                            onClick={() => {setTradeMode("sell"); setQuantity(0)}}>매도</button>
+                            onClick={() => setTradeMode("sell")}>매도</button>
                     </div>
 
                     <div className="py-2">

@@ -5,9 +5,8 @@ import StockTradingPage from "../pages/StockPage/StockTradingPage";
 const StockRouter = [{
     path: "/",
     children: [
-        { path: "stock", element: <StockPage /> },
-        { path: "stock/buy", element: <StockTradingPage /> },
-        { path: "stock/sell", element: <StockTradingPage /> },
+        { path: "stocks", element: <StockPage /> },
+        { path: "stocks/:trademode", element: <StockTradingPage /> },
     ]
 }];
 
