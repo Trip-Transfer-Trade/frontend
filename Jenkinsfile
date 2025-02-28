@@ -2,19 +2,19 @@ pipeline {
     agent any
 
     environment {
-        AWS_S3_BUCKET = "triptransfertrade.shop "  // S3 버킷 이름
+        AWS_S3_BUCKET = "triptransfertrade.shop"  // S3 버킷 이름
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'dev, credentialsId: 'github-signin', url: 'https://github.com/Trip-Transfer-Trade/frontend.git'
+                git branch: 'dev', credentialsId: 'github-signin', url: 'https://github.com/Trip-Transfer-Trade/frontend.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm ci'  // CI/CD 환경에서는 npm install 대신 npm ci 사용
             }
         }
 
@@ -26,8 +26,8 @@ pipeline {
 
         stage('Upload to S3') {
             steps {
-                withAWS(credentials: 'aws-credentials') {
-                    sh "aws s3 sync build/ s3://${AWS_S3_BUCKET} --delete"
+                withCredentials([aws(credentialsId: 'aws-credentials', region: 'ap-northeast-2')]) {
+                    sh "aws s3 sync build/ s3='${AWS_S3_BUCKET}' --delete"
                 }
             }
         }
