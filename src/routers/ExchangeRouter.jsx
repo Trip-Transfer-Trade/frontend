@@ -4,7 +4,6 @@ import ExchangeRatesPage from "../pages/ExchangePage/ExchangeRatesPage";
 import ExchangeRateDetailsPage from "../pages/ExchangePage/ExchangeRateDetailsPage";
 import CurrencyExchangePage from "../pages/ExchangePage/CurrencyExchangePage";
 import ExchangeCompletePage from "../pages/ExchangePage/ExchangeCompletePage";
-import Test from "../pages/ExchangePage/Test";
 
 const ExchangeRouter = {
   path: "/exchange",
@@ -14,8 +13,7 @@ const ExchangeRouter = {
     { path: "rates", element: <ExchangeRatesPage /> },
     { path: "rates/:id", element: <ExchangeRateDetailsPage /> },
     { path: "currency", element: <CurrencyExchangePage /> },
-    { path: "complete", element: <ExchangeCompletePage /> },
-    { path: "test", element: <Test /> },
+    { path: "complete", element: <ExchangeCompletePage /> }
   ],
 };
 
