@@ -1,7 +1,7 @@
-import FailedPage from "../pages/MyTripPage/FailedPage";
-import SuccessPage from "../pages/MyTripPage/SuccessPage";
-import InfoPage from "../pages/MyTripPage/InfoPage";
-import SuccessDetailPage from "../pages/MyTripPage/SuccessDetailPage";
+import FailedPage from "../pages/MyTripPage/TripGoal/FailedPage";
+import SuccessPage from "../pages/MyTripPage/TripGoal/SuccessPage";
+import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
+import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
 
 const TripRouter = {
   path: "/trip",
