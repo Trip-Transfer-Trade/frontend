@@ -28,10 +28,11 @@ pipeline {
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                sh 'npm run build || echo "Build failed" && exit 1'  // 빌드 실패 시 종료
+                sh 'ls -l'  // 어떤 파일이 생성되었는지 확인
             }
         }
-
+        
         stage('Upload to S3') {
             steps {
                 withCredentials([aws(credentialsId: 'aws-credentials', region: 'ap-northeast-2')]) {
