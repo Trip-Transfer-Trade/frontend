@@ -1,0 +1,91 @@
+.container {
+    padding: 24px;
+  }
+
+  .banner {
+    background: linear-gradient(135deg, #829CF4, var(--color-brand-blue));
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    padding: 20px 20px;
+    margin-bottom: 40px;
+  }
+  
+  .banner-content {
+    position: relative;
+    min-height: 70px;
+  }
+  
+  .banner-text {
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 1.4;
+    margin-top: 17px;
+    max-width: 65%;
+    white-space: pre-line;
+    text-align: center;
+  }
+  
+  .banner-image {
+    position: absolute;
+    right: 0;
+    top: 45%;
+    transform: translateY(-50%);
+    height: auto;
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  .banner-page {
+    position: absolute;
+    bottom: -8px;
+    right: 0;
+    color: white;
+    font-size: 14px;
+  }
+  
+  
+  .title {
+    font-weight: bold;
+    font-size: large;
+    margin-bottom: 1.5rem;
+    margin-left: 1.4rem;
+
+  }
+  
+  .service-grid {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .service-card {
+    flex: 0 0 30%;
+    text-align: center;
+    padding: 1.3rem;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+  }
+  
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .service-icon {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    background-color: #f8f8f8;
+  }
+  
+  .service-title {
+    font-size: 0.75rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  
