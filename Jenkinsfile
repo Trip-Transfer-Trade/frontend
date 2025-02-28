@@ -8,7 +8,15 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'dev', credentialsId: 'github-signin', url: 'https://github.com/Trip-Transfer-Trade/frontend.git'
+                script {
+                    if (fileExists('.git')) {
+                        sh 'git reset --hard origin/dev'
+                        sh 'git clean -fd'
+                        sh 'git pull origin dev'
+                    } else {
+                        sh 'git clone -b dev https://github.com/Trip-Transfer-Trade/frontend.git .'
+                    }
+                }
             }
         }
 
