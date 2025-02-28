@@ -56,7 +56,7 @@ export default function FailedPage() {
           </button>
           <div className="mb-2">
             <img
-              src="/src/assets/images/trip/hand.svg"
+              src="/assets/images/trip/hand.svg"
               alt="지갑"
               className="w-42 h-48 mx-auto object-contain"
             />

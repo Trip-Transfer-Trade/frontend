@@ -40,7 +40,7 @@ export default function ExchangeMethodPage({ onClose }) {
           <div className="flex items-center gap-2 mb-8">
             <div className="w-7 h-7 rounded-full flex items-center justify-center">
             <img
-                src="/src/assets/images/trip/coin.svg"
+                src="/assets/images/trip/coin.svg"
                 alt="동전"
                 className="w-10 mx-auto object-contain"
               />
@@ -66,7 +66,7 @@ export default function ExchangeMethodPage({ onClose }) {
                     </div>
                     <div>
                         <img
-                        src="/src/assets/images/trip/exchange.svg"
+                        src="/assets/images/trip/exchange.svg"
                         alt="지갑"
                         className="w-30 mx-auto object-contain"
                         />
