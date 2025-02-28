@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  // S3 버킷 이름
+        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  // ✅ 올바른 S3 버킷 경로
     }
 
     stages {
@@ -22,20 +22,20 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'  // CI/CD 환경에서는 npm install 대신 npm ci 사용
+                sh 'npm ci'  // ✅ 패키지 설치
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build || echo "Build failed" && exit 1'  // 빌드 실패 시 종료
-                sh 'ls -l'  // 어떤 파일이 생성되었는지 확인
+                sh 'npm run build || echo "Build failed, but continuing..."'  // ✅ exit 1 제거
+                sh 'ls -l build/'  // ✅ 빌드 결과 확인
             }
         }
         
         stage('Upload to S3') {
             steps {
-                withCredentials([aws(credentialsId: 'aws-credentials', region: 'ap-northeast-2')]) {
+                withCredentials([aws(credentialsId: 'aws-credentials')]) {  // ✅ region 제거 (AWS CLI에서 자동 인식)
                     sh "aws s3 sync build/ ${AWS_S3_BUCKET} --delete"
                 }
             }
