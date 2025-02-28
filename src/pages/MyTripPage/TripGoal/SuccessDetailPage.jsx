@@ -27,7 +27,7 @@ export default function SuccessDetailPage(){
   
             <div className="mb-16">
               <img
-                src="/src/assets/images/trip/good.svg"
+                src="/assets/images/trip/good.svg"
                 alt="칭찬"
                 className="w-36 h-36 mx-auto object-contain"
               />

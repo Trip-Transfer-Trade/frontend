@@ -3,15 +3,13 @@ import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
 import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
-import searchBtn from "../../assets/images/stock/searchBtn.svg";
 import StockItem from "../../components/StockItem";
-import portfoliBanner from "../../assets/images/stock/portfolioBanner.svg"
 
 import "./StockPage.css"
 import { Link, Outlet } from "react-router-dom";
 
 export default function StockPage() {
-
+    const portfoliBanner = "/assets/images/stock/portfolioBanner.svg";
     const stockItems = [
         {
             id: 1,
@@ -67,7 +65,7 @@ export default function StockPage() {
                     <Tab label="국내">
                         <div className="search-container">
                             <input type="text" className="searchInput" placeholder="검색어를 입력해 주세요."/>
-                            <img src={searchBtn} alt="검색 돋보기 아이콘" className="searchBtn" />
+                            <img src="/assets/images/stock/searchBtn.svg" alt="검색 돋보기 아이콘" className="searchBtn" />
                         </div>
                         <div className="ranking-title">실시간 랭킹</div>
                         <section className="ranking-container">
@@ -170,7 +168,7 @@ export default function StockPage() {
                     <Tab label="미국">
                     <div className="search-container">
                             <input type="text" className="searchInput" placeholder="검색어를 입력해 주세요."/>
-                            <img src={searchBtn} alt="검색 돋보기 아이콘" className="searchBtn" />
+                            <img src={"/assets/images/stock/searchBtn.svg"} alt="검색 돋보기 아이콘" className="searchBtn" />
                         </div>
                         <div className="ranking-title">실시간 랭킹</div>
                         <section className="ranking-container">
