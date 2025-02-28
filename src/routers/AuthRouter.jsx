@@ -1,8 +1,8 @@
 import LoginPage from "../pages/LoginPage/LoginPage";
-import SignupProfilePage from "../pages/SignupPage/SignupProfilePage";
-import SignupVerificationPage from "../pages/SignupPage/SignupVerificationPage";
-import SignupAccountPage from "../pages/SignupPage/SignupAccountPage";
-import SignupCompletePage from "../pages/SignupPage/SignupCompletePage";
+import SignupProfilePage from "../pages/SignUpPage/SignupProfilePage";
+import SignupVerificationPage from "../pages/SignUpPage/SignupVerificationPage";
+import SignupAccountPage from "../pages/SignUpPage/SignupAccountPage";
+import SignupCompletePage from "../pages/SignUpPage/SignupCompletePage";
 
 const AuthRouter = {
   path: "/auth",
