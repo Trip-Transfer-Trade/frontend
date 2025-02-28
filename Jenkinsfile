@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_S3_BUCKET = "triptransfertrade.shop"  // S3 버킷 이름
+        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  // S3 버킷 이름
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
         stage('Upload to S3') {
             steps {
                 withCredentials([aws(credentialsId: 'aws-credentials', region: 'ap-northeast-2')]) {
-                    sh "aws s3 sync build/ s3='${AWS_S3_BUCKET}' --delete"
+                    sh "aws s3 sync build/ ${AWS_S3_BUCKET} --delete"
                 }
             }
         }
