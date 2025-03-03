@@ -1,31 +1,40 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setProfileData } from "../../redux/store";
 
 import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupProfilePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  // 필드명 변경: birth → birth_date
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
-    birth: "",
+    birth_date: "",
   });
 
-  const isFormComplete = formData.name && formData.gender && formData.birth;
+  const isFormComplete =
+    formData.name && formData.gender && formData.birth_date;
 
   function handleChange(e) {
     const key = e.target.name;
     const value = e.target.value;
-
-    setFormData({
-      ...formData,
-      [key]: value,
-    });
+    setFormData((prev) => ({ ...prev, [key]: value }));
   }
 
   function next() {
+    // Redux에 DB 컬럼명과 동일하게 전달
+    dispatch(
+      setProfileData({
+        name: formData.name,
+        gender: formData.gender,
+        birth_date: formData.birth_date,
+      })
+    );
     navigate("/auth/signup/verification");
   }
 
@@ -65,27 +74,13 @@ export default function SignupProfilePage() {
 
           <div className="space-y-2">
             <label className="text-sm font-medium">생일</label>
-            <div className="relative">
-              <input
-                type="date"
-                name="birth"
-                value={formData.birth}
-                onChange={handleChange}
-                className="input-style"
-              />
-              <svg
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              ></svg>
-            </div>
+            <input
+              type="date"
+              name="birth_date" // 여기로 변경
+              value={formData.birth_date}
+              onChange={handleChange}
+              className="input-style"
+            />
           </div>
         </div>
       </div>

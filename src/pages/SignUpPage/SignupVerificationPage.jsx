@@ -1,36 +1,35 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setVerificationData } from "../../redux/store";
 
 import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
 
 export default function SignupVerificationPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     carrier: "",
-    phone: "",
+    phone_number: "",        // <== 이름 변경 (phone → phone_number)
     verificationCode: "",
   });
-
-  const [isCodeSent, setIsCodeSent] = useState(false); // 인증번호 요청 여부
 
   function handleChange(e) {
     const key = e.target.name;
     const value = e.target.value;
-
-    setFormData({
-      ...formData, // 기존 데이터 유지
-      [key]: value, // 해당 입력 필드 값 업데이트
-    });
+    setFormData((prev) => ({ ...prev, [key]: value }));
   }
 
   function next() {
+    // 인증로직 등을 수행 후 Redux에 저장
+    dispatch(setVerificationData({ phone_number: formData.phone_number }));
     navigate("/auth/signup/account");
   }
 
   const isFormComplete =
-    formData.carrier && formData.phone && formData.verificationCode;
+    formData.carrier && formData.phone_number && formData.verificationCode;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -59,12 +58,12 @@ export default function SignupVerificationPage() {
             <label className="text-sm font-medium">전화번호</label>
             <input
               type="input"
-              name="phone"
+              name="phone_number"
               placeholder="전화번호 입력"
-              value={formData.phone}
+              value={formData.phone_number}  // <== 변경
               onChange={handleChange}
               className="input-style"
-            ></input>
+            />
           </div>
 
           <div className="space-y-2">
@@ -74,17 +73,17 @@ export default function SignupVerificationPage() {
                 type="text"
                 name="verificationCode"
                 placeholder="인증번호 입력"
-                value={formData.verificationCode} // ⚠️ 변수명 수정 (passwordConfirm → verificationCode)
+                value={formData.verificationCode}
                 onChange={handleChange}
-                className="input-style flex-1" // ✅ flex-1 추가
+                className="input-style flex-1"
               />
               <button
                 className={`p-2 rounded-lg text-white font-bold ${
-                  formData.phone
+                  formData.phone_number
                     ? "bg-gray-500"
                     : "bg-gray-300 cursor-not-allowed"
                 }`}
-                disabled={!formData.phone}
+                disabled={!formData.phone_number}
               >
                 인증 요청
               </button>
