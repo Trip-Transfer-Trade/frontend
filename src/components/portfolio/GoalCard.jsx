@@ -1,10 +1,11 @@
+// components/GoalCard.jsx
 import { useEffect, useRef } from "react";
 
 const getFoodImage = (amount) => {
-  if (amount >= 1000000) return "/src/assets/images/portfolio/steak.svg";
-  if (amount >= 500000) return "/src/assets/images/portfolio/pizza.svg";
-  if (amount >= 100000) return "/src/assets/images/portfolio/burger.svg";
-  return "/src/assets/images/portfolio/rice.svg";
+  if (amount >= 1000000) return "src/assets/images/portfolio/steak.svg";
+  if (amount >= 500000) return "src/assets/images/portfolio/pizza.svg";
+  if (amount >= 100000) return "src/assets/images/portfolio/burger.svg";
+  return "src/assets/images/portfolio/rice.svg";
 };
 
 const getLevel = (amount) => {
@@ -24,7 +25,6 @@ const GoalCard = ({ currentAmount, targetAmount, daysLeft }) => {
     const canvas = progressRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
-
     let currentWidth = 0;
     const totalWidth = canvas.width;
 
@@ -39,8 +39,6 @@ const GoalCard = ({ currentAmount, targetAmount, daysLeft }) => {
         requestAnimationFrame(animateProgress);
       }
     };
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     animateProgress();
 
     return () => {
@@ -50,8 +48,18 @@ const GoalCard = ({ currentAmount, targetAmount, daysLeft }) => {
 
   return (
     <div className="bg-white rounded-lg p-4 mb-4 border border-gray-100">
+      <div className="flex justify-between items-start mb-2">
+        <div>
+          <p className="text-sm text-gray-600 mb-1">목표 금액 {targetAmount.toLocaleString()}원 중에서</p>
+          <div className="flex items-center gap-2">
+            <span className="text-blue-600 text-xl font-bold">{currentAmount.toLocaleString()}원</span>
+            <span className="text-gray-600">을 모았어요!</span>
+          </div>
+        </div>
+        <div className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">D-{daysLeft}</div>
+      </div>
       <canvas ref={progressRef} width={300} height={30} className="w-full mt-2" />
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mt-2">
         <div className="text-sm text-gray-600">
           Lv. {level} <span className="ml-2">밥을 먹을 수 있는 단계</span>
         </div>
