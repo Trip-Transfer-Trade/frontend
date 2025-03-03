@@ -1,11 +1,27 @@
+import { useLocation } from "react-router-dom";
+
 import "./Header.css";
 
 export default function Header() {
+  const location = useLocation();
+
+  function getTitle() {
+    if (location.pathname === "/trip") return "마이 트립 ✈️";
+    else if (location.pathname === "/exchange") return "환전 지갑";
+    else return "";
+  }
+
+  const title = getTitle();
+
   return (
     <header className="header flex w-full items-center justify-between">
-      {/* 로고 */}
-      <div>
-        <img src="/assets/images/logo.svg" alt="Logo" className="logo" />
+      {/* 로고 또는 타이틀 표시 */}
+      <div className="flex items-center">
+        {location.pathname === "/" ? (
+          <img src="/assets/images/logo.svg" alt="Logo" className="logo" />
+        ) : (
+          <h1 className="text-xl font-bold">{title}</h1>
+        )}
       </div>
 
       {/* 아이콘 */}
@@ -20,11 +36,7 @@ export default function Header() {
           alt="Notification"
           className="icon"
         />
-        <img
-          src="/assets/images/header/menu.svg"
-          alt="Menu"
-          className="icon"
-        />
+        <img src="/assets/images/header/menu.svg" alt="Menu" className="icon" />
       </div>
     </header>
   );
