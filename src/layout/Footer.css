@@ -6,3 +6,11 @@
   background-color: white;
   padding: 12px;
 }
+
+.footer-icon {
+  color: var(--color-custom-gray-3);
+}
+
+.footer-icon-selected {
+  color: var(--color-brand-blue);
+}
