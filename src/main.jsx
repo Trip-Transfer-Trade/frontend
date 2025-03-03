@@ -1,8 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux';
 import './index.css'
 import App from './App.jsx'
 import "./firebase.js";
+import store from './redux/store.js';
 
 
 if ('serviceWorker' in navigator) {
@@ -17,7 +19,11 @@ if ('serviceWorker' in navigator) {
 }
 
 createRoot(document.getElementById('root')).render(
+  
   <StrictMode>
+    <Provider store={store}>
     <App />
-  </StrictMode>,
+    </Provider>
+  </StrictMode>
+
 );
