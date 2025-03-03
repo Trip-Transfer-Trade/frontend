@@ -114,7 +114,7 @@ export default function CountrySelect() {
 
       <div className={styles["popular-banner"]}>
         <div className={styles["banner-content"]}>
-          <img src="/src/assets/images/main/trip.svg" alt="여행지" className={styles["globe-icon"]}/>
+          <img src="/assets/images/main/trip.svg" alt="여행지" className={styles["globe-icon"]}/>
           <div className={styles["banner-text"]}>
             <strong>인기 급상승</strong>
             <strong>여행지 Best 10</strong>

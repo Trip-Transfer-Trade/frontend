@@ -2,6 +2,9 @@ import FailedPage from "../pages/MyTripPage/TripGoal/FailedPage";
 import SuccessPage from "../pages/MyTripPage/TripGoal/SuccessPage";
 import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
 import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
+import ExchangeMethodPage from "../pages/ExchangePage/ExchangeMethodPage";
+import MyTripPage from "../pages/MyTripPage/MyTripPage";
+
 import PortfolioPage from "../pages/PortfolioPage/PortfolioPage";
 // import TripListPage from "../pages/MyTripPage/TripListPage";
 // import Home from "../pages/PortfolioPage/page";
@@ -13,6 +16,9 @@ const TripRouter = {
     { path:"failed", element : <FailedPage/>},
     { path:"success", element : <SuccessPage />},
     { path:"info", element : <InfoPage />},
+    { path:"success/detail", element : <SuccessDetailPage />},
+    { path:"exchange", element : <ExchangeMethodPage />},
+    { index:true, element:<MyTripPage />},
     { path:"success/detail", element : <SuccessDetailPage />},
     { path:"portfolio", element : <PortfolioPage/>},
     // { path:"list", element : <TripListPage/>},
