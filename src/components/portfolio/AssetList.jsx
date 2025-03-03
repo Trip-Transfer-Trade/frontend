@@ -1,10 +1,10 @@
-const assets = [
-  { id: 1, name: "SOL 미국 S&P500", code: "433330", price: "15,212", currentPrice: "21,324", profit: "40.8%", quantity: 50 },
-];
+import { useSelector } from "react-redux";
 
 export default function AssetsList() {
+  const assets = useSelector((state) => state.assets.assets);
+
   return (
-    <div className="px-4">
+    <div className="px-4 overflow-y-auto max-h-[400px]">
       <h3 className="text-lg font-medium mb-4">자산</h3>
       <div className="space-y-3">
         {assets.map((asset) => (
@@ -13,8 +13,17 @@ export default function AssetsList() {
               <span className="text-white text-xl">$</span>
             </div>
             <div className="flex-1">
-              <p className="font-medium">{asset.name}</p>
-              <p className="text-xs text-gray-500">{asset.code}</p>
+              <div className="flex justify-between">
+                <div>
+                  <p className="font-medium">{asset.name}</p>
+                  <p className="text-xs text-gray-500">{asset.code}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xs text-gray-500">수량: {asset.quantity}</p>
+                  <p className="text-xs text-gray-500 mr-2">구매가 {asset.price.toLocaleString()}</p>
+                  <p className="text-xs">현재가 {asset.currentPrice.toLocaleString()}</p>
+                </div>
+              </div>
             </div>
           </div>
         ))}

@@ -11,10 +11,10 @@ export default defineConfig({
         target: 'http://localhost:9093',
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '') //'/api' 부분을 제거하여 백엔드로 전달
+        rewrite: (path) => path.replace(/^\/api/, '')
       }
     }
-  }
+  },
   build: {
     outDir: "build", // ✅ `dist/` 대신 `build/` 폴더로 생성
   },
