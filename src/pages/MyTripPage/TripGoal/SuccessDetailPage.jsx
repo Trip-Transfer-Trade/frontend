@@ -20,7 +20,6 @@ export default function SuccessDetailPage(){
                 </button>
             </div>
   
-        {/* 중앙 콘텐츠 영역 */}
         <div className="flex-grow flex flex-col items-center justify-start px-4 pt-32">
           <div className="w-full max-w-md text-center">
             <p className="font-['Pretendard-Bold'] text-[23px]">미국 여행 가기</p>
@@ -28,7 +27,7 @@ export default function SuccessDetailPage(){
   
             <div className="mb-16">
               <img
-                src="/src/assets/images/trip/good.svg"
+                src="/assets/images/trip/good.svg"
                 alt="칭찬"
                 className="w-36 h-36 mx-auto object-contain"
               />
