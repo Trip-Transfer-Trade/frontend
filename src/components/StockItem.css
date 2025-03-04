@@ -35,6 +35,10 @@
     font-size: 15px;
     font-weight: 600;
     color: #212529;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;    
   }
   
   .stock-code {
