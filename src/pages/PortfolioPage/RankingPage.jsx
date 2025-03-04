@@ -13,7 +13,7 @@ const RankingHeader = () => (
     
     <div className="flex justify-center my-8">
       <img 
-        src="src/assets/images/portfolio/trp.svg" 
+        src="/assets/images/portfolio/trp.svg"
         alt="Trophy" 
         className="w-24 h-24 object-contain"
       />
@@ -33,7 +33,7 @@ const RankingItem = ({ rank, name, profit, percentage }) => {
       <span className="text-2xl font-bold w-8 text-gray-700">{rank}</span>
       <div className={`w-12 h-12 rounded-xl ${colors[rank]} flex items-center justify-center mr-4`}>
         <img 
-          src="/placeholder.svg?height=32&width=32" 
+          src="/assets/images/main/portfolio.svg?height=32&width=32" 
           alt="Profile" 
           className="w-8 h-8"
         />
