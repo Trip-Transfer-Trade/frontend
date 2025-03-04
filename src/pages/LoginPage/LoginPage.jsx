@@ -4,7 +4,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import InputField from "../../components/InputField";
 
 export default function LoginPage() {
-  const logo = "/assets/images/logo.svg";
+  const logo = "src/assets/images/logo.svg";
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
