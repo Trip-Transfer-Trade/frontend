@@ -21,7 +21,7 @@ export default function AssetsList() {
                 <div className="text-right">
                   <p className="text-xs text-gray-500">수량: {asset.quantity}</p>
                   <p className="text-xs text-gray-500 mr-2">구매가 {asset.price.toLocaleString()}</p>
-                  <p className="text-xs">현재가 {asset.currentPrice.toLocaleString()}</p>
+                  <p className="text-xs text-gray-500 mr-2">현재가 {asset.currentPrice.toLocaleString()}</p>
                 </div>
               </div>
             </div>
