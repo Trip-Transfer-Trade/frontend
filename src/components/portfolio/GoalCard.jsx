@@ -2,10 +2,10 @@
 import { useEffect, useRef } from "react";
 
 const getFoodImage = (amount) => {
-  if (amount >= 1000000) return "src/assets/images/portfolio/steak.svg";
-  if (amount >= 500000) return "src/assets/images/portfolio/pizza.svg";
-  if (amount >= 100000) return "src/assets/images/portfolio/burger.svg";
-  return "src/assets/images/portfolio/rice.svg";
+  if (amount >= 1000000) return "/assets/images/portfolio/steak.svg";
+  if (amount >= 500000) return "/assets/images/portfolio/pizza.svg";
+  if (amount >= 100000) return "/assets/images/portfolio/burger.svg";
+  return "/assets/images/portfolio/rice.svg";
 };
 
 const getLevel = (amount) => {
