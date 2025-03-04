@@ -3,14 +3,9 @@
   top: 0;
   height: 6vh;
   background-color: white;
-  padding: 24px;
   z-index: 999;
 }
 
 .logo {
-  height: 30px;
-}
-
-.icon {
-  height: 18px;
+  height: 36px;
 }
