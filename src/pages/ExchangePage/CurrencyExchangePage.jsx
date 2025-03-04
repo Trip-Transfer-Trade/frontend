@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import BackNavigation from "../../components/BackNavigation";
+import ExchangeCardSlider from "../../components/ExchangeComponent/ExchangeCardSlider";
 
 export default function CurrencyExchangePage() {
   const location = useLocation();
@@ -11,6 +12,19 @@ export default function CurrencyExchangePage() {
   const [amount, setAmount] = useState("");
 
   console.log(country);
+
+  const cards = [
+    {
+      image: "/assets/images/travel/travel-us.jpeg",
+      title: "미국 여행",
+      price: "$ 5.67",
+    },
+    {
+      image: "/assets/images/travel/travel-jp.jpg",
+      title: "일본 여행",
+      price: "$ 40",
+    },
+  ];
 
   return (
     <div className="flex flex-col">
@@ -80,7 +94,9 @@ export default function CurrencyExchangePage() {
         </div>
 
         {/* 환전 카드 */}
-        <div></div>
+        <div>
+          <ExchangeCardSlider cards={cards} />
+        </div>
       </div>
     </div>
   );
