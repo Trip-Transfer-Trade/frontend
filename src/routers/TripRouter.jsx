@@ -22,7 +22,8 @@ const TripRouter = {
     { path:"portfolio", element : <PortfolioPage/>},
     { path:"list", element : <TripListPage/>},
     { path:"edit", element : <TripEditPage/>},
-    { path:"portfolio/rank", element : <RankingPage/>}
+    { path:"portfolio/rank", element : <RankingPage/>},
+    { index:true, element:<MyTripPage />}
   ],
 };
 
