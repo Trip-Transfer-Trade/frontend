@@ -47,7 +47,7 @@ const GoalCard = ({ currentAmount, targetAmount, daysLeft }) => {
   }, [percent]);
 
   return (
-    <div className="bg-white rounded-lg p-4 mb-4 border border-gray-100">
+    <div className="bg-white rounded-lg p-4 mb-4 border border-gray-200">
       <div className="flex justify-between items-start mb-2">
         <div>
           <p className="text-sm text-gray-600 mb-1">목표 금액 {targetAmount.toLocaleString()}원 중에서</p>

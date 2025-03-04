@@ -56,7 +56,7 @@ const rankingData = [
 
 const RankingPage = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <RankingHeader />
       
       <div className="px-6 pb-4">

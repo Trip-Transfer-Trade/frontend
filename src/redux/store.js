@@ -62,8 +62,10 @@ const signupSlice = createSlice({
       });
   },
 });
-
 export const { setSignupData, resetSignupState } = signupSlice.actions;
+
+
+
 export const fetchAssets = createAsyncThunk("assets/fetchAssets", async (_, thunkAPI) => {
   try {
     const response = await axiosInstance.get("/assets");
@@ -106,13 +108,38 @@ const assetsSlice = createSlice({
       });
   },
 });
-
-
 export const { setAssets } = assetsSlice.actions;
+
+
+
+const tripSlice = createSlice({
+  name: "trip",
+  initialState: {
+    destination: "미국",
+    targetAmount: 1000000,
+    targetDate: "2025년 6월 1일",
+  },
+  reducers: {
+    updateDestination: (state, action) => {
+      state.destination = action.payload;
+    },
+    updateTargetAmount: (state, action) => {
+      state.targetAmount = action.payload;
+    },
+    updateTargetDate: (state, action) => {
+      state.targetDate = action.payload;
+    },
+  },
+});
+
+export const { updateDestination, updateTargetAmount, updateTargetDate } = tripSlice.actions;
+
+
 
 export default configureStore({
   reducer: {
     signup: signupSlice.reducer,
     assets: assetsSlice.reducer,
+    trip: tripSlice.reducer,
   },
 });

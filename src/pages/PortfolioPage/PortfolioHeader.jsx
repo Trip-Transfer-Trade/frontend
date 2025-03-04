@@ -57,7 +57,7 @@ export default function PortfolioHeader() {
             <span>{totalAssets.toLocaleString()}원</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">합계 기능 금액</span>
+            <span className="text-gray-500">환전가능금액</span>
             <span>{totalProfit.toLocaleString()}원</span>
           </div>
         </div>
