@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../utils/axiosInstance";
 import InputField from "../../components/InputField";
-import logo from "../../assets/images/logo.svg";
 
 export default function LoginPage() {
+  const logo = "/assets/images/logo.svg";
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
