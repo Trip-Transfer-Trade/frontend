@@ -1,4 +1,5 @@
-import BackNavigation from "../../components/BackNavigation";
+import { useNavigate } from "react-router-dom";
+
 import TripGoalSwiper from "../../components/TripGoalSwiper";
 import ExchangeTabs from "../../components/ExchangeComponent/ExchangeTabs";
 import ExchangeTab from "../../components/ExchangeComponent/ExchangeTab";
@@ -8,9 +9,9 @@ import ShowMoreButton from "../../components/ShowMoreButton";
 
 import { getCountryCodeFromCountryName } from "../../constants/countryMappings";
 
-import walletImg from "../../assets/images/exchange-wallet.svg";
-
 export default function ExchangeMainPage() {
+  const navigate = useNavigate();
+
   const tripGoals = [
     {
       country: "미국",
@@ -72,9 +73,7 @@ export default function ExchangeMainPage() {
 
   return (
     <div className="flex flex-col">
-      <BackNavigation text="환전 지갑" />
-
-      <div className="w-full">
+      <div className="w-full mt-6">
         {/* 여행 목표 카드 */}
         <TripGoalSwiper>
           {tripGoals.map((tripGoal, index) => (
@@ -94,15 +93,25 @@ export default function ExchangeMainPage() {
               <div className="flex justify-between items-end mb-2">
                 <div>
                   <p className="text-sm font-bold">환전 가능 금액</p>
-                  <p className="text-sm">원화 {tripGoal.amountKRW}</p>
-                  <p className="text-sm">달러 {tripGoal.amountUSD}</p>
+                  <p className="text-sm">{tripGoal.amountKRW} 원</p>
                 </div>
                 <div>
-                  <img src={walletImg} alt="walletImg" className="w-100px" />
+                  <img
+                    src="/assets/images/exchange/wallet.svg"
+                    alt="walletImg"
+                    className="w-100px"
+                  />
                 </div>
               </div>
               <div className="flex justify-center">
-                <button className="text-custom-gray-3 border-b">
+                <button
+                  className="text-custom-gray-3 border-b"
+                  onClick={() => {
+                    navigate("/exchange/currency", {
+                      state: { country: tripGoal.country }, // 선택한 여행 목표의 나라 정보를 넘김
+                    });
+                  }}
+                >
                   환전하러 가기
                 </button>
               </div>
@@ -118,7 +127,11 @@ export default function ExchangeMainPage() {
               showLimited={true}
             />
             <div className="py-2">
-              <ShowMoreButton />
+              <ShowMoreButton
+                onClick={() => {
+                  navigate("/exchange/wallet");
+                }}
+              />
             </div>
           </ExchangeTab>
           <ExchangeTab label="실시간 환율">
@@ -127,7 +140,11 @@ export default function ExchangeMainPage() {
               showLimited={true}
             />
             <div className="py-2">
-              <ShowMoreButton />
+              <ShowMoreButton
+                onClick={() => {
+                  navigate("/exchange/rates");
+                }}
+              />
             </div>
           </ExchangeTab>
         </ExchangeTabs>
