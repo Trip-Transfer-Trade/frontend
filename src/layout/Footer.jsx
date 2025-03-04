@@ -59,7 +59,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="footer flex w-full items-center justify-around">
+    <footer className="footer flex w-full items-center justify-between px-6">
       {menus.map((menu) => (
         <div
           key={menu.id}
@@ -72,7 +72,7 @@ export default function Footer() {
           )} flex flex-col justify-center items-center w-16 h-16`}
         >
           {menu.icon}
-          <span className="text-sm">{menu.label}</span>
+          <span className="text-xs">{menu.label}</span>
         </div>
       ))}
     </footer>
