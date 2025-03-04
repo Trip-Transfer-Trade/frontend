@@ -6,7 +6,6 @@ import InputField from "../../components/InputField";
 import NextConfirmButton from "../../components/NextConfirmButton";
 import BackNavigation from "../../components/BackNavigation";
 
-import complete from "../../assets/images/complete.svg"; // ✅ 기존 완료 이미지 추가
 
 const steps = ["Profile", "Verification", "Account", "Complete"];
 
@@ -91,12 +90,11 @@ export default function SignupFlow() {
           </>
         )}
 
-        {/* ✅ 회원가입 완료 화면 스타일 기존처럼 변경 */}
         {step === 3 && (
           <div className="flex flex-col items-center justify-center min-h-screen">
             <div className="flex flex-col items-center justify-center flex-grow">
               <div className="p-6">
-                <img src={complete} alt="complete" />
+                <img src="/src/assets/images/complete.svg" alt="complete" />
               </div>
               <h2 className="text-xl font-bold">회원가입 완료</h2>
             </div>
