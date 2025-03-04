@@ -1,10 +1,16 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import BackNavigation from "../../components/BackNavigation";
 
 export default function CurrencyExchangePage() {
+  const location = useLocation();
+  const { country } = location.state || {};
+
   const [showChart, setShowChart] = useState(false);
   const [amount, setAmount] = useState("");
+
+  console.log(country);
 
   return (
     <div className="flex flex-col">
