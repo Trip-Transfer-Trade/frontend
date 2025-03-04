@@ -1,16 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import Confetti from "./Confetti";
-
+import SharedModal from "../../../components/Modal";
+import ExchangeMethod from "../../ExchangePage/ExchangeMethodPage";
+import { useState } from "react";
 
 export default function FailedPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleExchangeClick = () => {
     console.log("환전하러 가기");
+    setIsModalOpen(true);
   };
 
   const handleNextClick = () => {
     console.log("다음에 할게요");
+    navigate("/trip")
   };
 
   const handleDetailClick = () => {
@@ -56,7 +62,7 @@ export default function FailedPage() {
           </button>
           <div className="mb-2">
             <img
-              src="/src/assets/images/trip/hand.svg"
+              src="/assets/images/trip/hand.svg"
               alt="지갑"
               className="w-42 h-48 mx-auto object-contain"
             />
@@ -76,6 +82,11 @@ export default function FailedPage() {
           </button>
         </div>
       </div>
+      {isModalOpen && (
+        <SharedModal onClose={() => setIsModalOpen(false)}>
+          <ExchangeMethod />
+        </SharedModal>
+      )}
     </div>
   );
 }
