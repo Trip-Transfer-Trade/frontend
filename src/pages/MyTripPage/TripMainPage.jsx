@@ -1,13 +1,13 @@
-import { useState } from "react"
-import { ChevronLeft, Plus, Home, Globe, DollarSign, User } from "lucide-react"
-import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/css"
-import "swiper/css/effect-coverflow"
-import { EffectCoverflow } from "swiper/modules"
-import BackNavigation from "../../components/BackNavigation"
-import Footer from "../../layout/Footer"
+import { useState } from "react";
+import { ChevronLeft, Plus, Home, Globe, DollarSign, User } from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/effect-coverflow";
+import { EffectCoverflow } from "swiper/modules";
+import BackNavigation from "../../components/BackNavigation";
+import Footer from "../../layout/Footer";
 
-const TripListPage = () => {
+const TripMainPage = () => {
   const [goals] = useState([
     {
       id: 1,
@@ -39,14 +39,16 @@ const TripListPage = () => {
       bgColor: "bg-white",
       textColor: "text-black",
     },
-  ])
+  ]);
 
   return (
     <div className="flex flex-col h-screen">
-    <BackNavigation/>
+      <BackNavigation />
       {/* Main Content */}
       <div className="flex-1 px-4 pb-20">
-        <h1 className="text-xl font-medium mb-6 mt-2">내가 가고싶은 여행지는?</h1>
+        <h1 className="text-xl font-medium mb-6 mt-2">
+          내가 가고싶은 여행지는?
+        </h1>
 
         {/* Swiper Carousel */}
         <div className="mt-4">
@@ -67,14 +69,20 @@ const TripListPage = () => {
           >
             {goals.map((goal) => (
               <SwiperSlide key={goal.id} className="w-[280px] h-[280px]">
-                <div className={`${goal.bgColor} ${goal.textColor} rounded-3xl shadow-lg p-5 h-full flex flex-col`}>
+                <div
+                  className={`${goal.bgColor} ${goal.textColor} rounded-3xl shadow-lg p-5 h-full flex flex-col`}
+                >
                   <div className="flex items-center mb-4">
                     <span className="text-2xl mr-2">{goal.flag}</span>
                     <span className="text-lg font-medium">{goal.title}</span>
                   </div>
 
                   <div className="flex-1 flex items-center justify-center">
-                    <img src="/placeholder.svg?height=100&width=150" alt="Airplane" className="w-32 h-auto" />
+                    <img
+                      src="/placeholder.svg?height=100&width=150"
+                      alt="Airplane"
+                      className="w-32 h-auto"
+                    />
                   </div>
 
                   <div className="flex justify-between items-end mt-4">
@@ -86,7 +94,9 @@ const TripListPage = () => {
                   </div>
 
                   <button
-                    className={`mt-4 text-sm py-2 w-full text-center rounded-full ${goal.bgColor === "bg-white" ? "text-black" : "text-white"}`}
+                    className={`mt-4 text-sm py-2 w-full text-center rounded-full ${
+                      goal.bgColor === "bg-white" ? "text-black" : "text-white"
+                    }`}
                   >
                     수익 확인하러 가기
                   </button>
@@ -104,10 +114,9 @@ const TripListPage = () => {
           </button>
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default TripListPage
-
+export default TripMainPage;
