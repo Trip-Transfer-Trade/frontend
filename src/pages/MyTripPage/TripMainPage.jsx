@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronLeft, Plus, Home, Globe, DollarSign, User } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,6 +9,8 @@ import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
 
 const TripMainPage = () => {
+  const navigate = useNavigate();
+
   const [goals] = useState([
     {
       id: 1,
@@ -71,6 +74,7 @@ const TripMainPage = () => {
               <SwiperSlide key={goal.id} className="w-[280px] h-[280px]">
                 <div
                   className={`${goal.bgColor} ${goal.textColor} rounded-3xl shadow-lg p-5 h-full flex flex-col`}
+                  onClick={() => navigate(`/trip/${goal.id}/portfolio`)}
                 >
                   <div className="flex items-center mb-4">
                     <span className="text-2xl mr-2">{goal.flag}</span>
@@ -108,7 +112,12 @@ const TripMainPage = () => {
 
         {/* Add Goal Button */}
         <div className="mt-8 px-4">
-          <button className="w-full py-4 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center">
+          <button
+            className="w-full py-4 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center"
+            onClick={() => {
+              navigate("/trip/country");
+            }}
+          >
             <Plus size={20} className="mr-2" />
             <span>목표 등록</span>
           </button>

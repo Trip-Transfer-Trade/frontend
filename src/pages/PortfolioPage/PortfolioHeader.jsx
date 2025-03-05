@@ -9,17 +9,29 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export default function PortfolioHeader() {
   const assets = useSelector((state) => state.assets.assets);
 
-  const totalAssets = assets.reduce((total, asset) => total + asset.currentPrice * asset.quantity, 0);
-  const totalPurchase = assets.reduce((total, asset) => total + asset.price * asset.quantity, 0);
+  const totalAssets = assets.reduce(
+    (total, asset) => total + asset.currentPrice * asset.quantity,
+    0
+  );
+  const totalPurchase = assets.reduce(
+    (total, asset) => total + asset.price * asset.quantity,
+    0
+  );
   const totalProfit = totalAssets - totalPurchase;
   const totalCash = 230000; // 예수금 -> 가짜 나중에 여기도 REDUX로 관리 > 백에서 값 가져오기기
 
   const chartData = {
-    labels: assets.map(asset => asset.name),
+    labels: assets.map((asset) => asset.name),
     datasets: [
       {
-        data: assets.map(asset => asset.currentPrice * asset.quantity),
-        backgroundColor: ["#4FD1C5", "#F56565", "#2D3748", "#F6E05E", "#667EEA"],
+        data: assets.map((asset) => asset.currentPrice * asset.quantity),
+        backgroundColor: [
+          "#4FD1C5",
+          "#F56565",
+          "#2D3748",
+          "#F6E05E",
+          "#667EEA",
+        ],
         borderWidth: 1,
       },
     ],
@@ -33,9 +45,16 @@ export default function PortfolioHeader() {
       <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
         <div className="mb-2">
           <p className="text-sm text-gray-500">총 자산</p>
-          <h2 className="text-2xl font-bold">₩{totalAssets.toLocaleString()}</h2>
-          <p className={`text-sm ${totalProfit >= 0 ? "text-red-500" : "text-blue-500"}`}>
-            {totalProfit >= 0 ? "수익" : "손실"} {totalProfit.toLocaleString()}원 ({((totalProfit / totalPurchase) * 100).toFixed(2)}%)
+          <h2 className="text-2xl font-bold">
+            ₩{totalAssets.toLocaleString()}
+          </h2>
+          <p
+            className={`text-sm ${
+              totalProfit >= 0 ? "text-red-500" : "text-blue-500"
+            }`}
+          >
+            {totalProfit >= 0 ? "수익" : "손실"} {totalProfit.toLocaleString()}
+            원 ({((totalProfit / totalPurchase) * 100).toFixed(2)}%)
           </p>
         </div>
 
@@ -63,9 +82,24 @@ export default function PortfolioHeader() {
         </div>
 
         <div className="flex justify-between mt-4 pt-4 border-t border-gray-200">
-          <a href="" className="text-gray-600 text-sm font-medium">투자하기</a>
-          <a href="" className="text-gray-600 text-sm font-medium">환전하기</a>
-          <a href="/trip/edit" className="text-gray-600 text-sm font-medium">수정하기</a>
+          <a
+            href="/trip/1/stocks"
+            className="text-gray-600 text-sm font-medium"
+          >
+            투자하기
+          </a>
+          <a
+            href="/exchange/currency"
+            className="text-gray-600 text-sm font-medium"
+          >
+            환전하기
+          </a>
+          <a
+            href="/trip/1/portfolio/edit"
+            className="text-gray-600 text-sm font-medium"
+          >
+            수정하기
+          </a>
         </div>
       </div>
     </div>
