@@ -7,13 +7,12 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:9093',
+      "/api": {
+        target: "http://localhost:8080",
         changeOrigin: true,
         secure: false,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
+      },
+    },
   },
   build: {
     outDir: "build", // ✅ `dist/` 대신 `build/` 폴더로 생성
