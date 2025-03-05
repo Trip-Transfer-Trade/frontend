@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import styles from "./MainPage.module.css";
 import { Fragment } from "react";
 
@@ -7,6 +9,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 export default function MainPage() {
+  const navigate = useNavigate();
+
   const banners = [
     {
       text: "주식으로 떠나는 여행\n투자부터 환전까지 한 번에!",
@@ -54,7 +58,12 @@ export default function MainPage() {
       <h2 className={styles.title}>이하늘님을 위한 추천 서비스</h2>
 
       <div className={styles["service-grid"]}>
-        <div className={styles["service-card"]}>
+        <div
+          className={styles["service-card"]}
+          onClick={() => {
+            navigate("/exchange");
+          }}
+        >
           <div className={styles["icon-wrapper"]}>
             <img
               src="/assets/images/main/wallet.svg"
@@ -65,7 +74,12 @@ export default function MainPage() {
           <h5 className={styles["service-title"]}>환전 지갑</h5>
         </div>
 
-        <div className={styles["service-card"]}>
+        <div
+          className={styles["service-card"]}
+          onClick={() => {
+            navigate("/top");
+          }}
+        >
           <div className={styles["icon-wrapper"]}>
             <img
               src="/assets/images/main/portfolio.svg"
@@ -76,7 +90,12 @@ export default function MainPage() {
           <h5 className={styles["service-title"]}>포트폴리오</h5>
         </div>
 
-        <div className={styles["service-card"]}>
+        <div
+          className={styles["service-card"]}
+          onClick={() => {
+            navigate("/destination");
+          }}
+        >
           <div className={styles["icon-wrapper"]}>
             <img
               src="/assets/images/main/trip.svg"
