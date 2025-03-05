@@ -1,12 +1,11 @@
 import { useState } from "react";
-
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-import "./TripGoalSwiper.css";
+import styles from "./TripGoalSwiper.module.css";
 
 export default function TripGoalSwiper({ children }) {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -27,13 +26,13 @@ export default function TripGoalSwiper({ children }) {
         pagination={{ clickable: true }}
         modules={[EffectCoverflow, Pagination]}
         onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
-        className="w-full"
+        className={`w-full ${styles.tripGoalSwiper}`}
       >
         {children.map((child, index) => (
           <SwiperSlide key={index}>
             <div
-              className={`card ${
-                index === activeIndex ? "active" : "inactive"
+              className={`${styles.card} ${
+                index === activeIndex ? styles.active : styles.inactive
               }`}
             >
               {child}
