@@ -5,6 +5,8 @@ import TripMainPage from "../pages/MyTripPage/TripMainPage";
 import ExchangeMainPage from "../pages/ExchangePage/ExchangeMainPage";
 import UserPage from "../pages/UserPage/UserPage";
 
+import HomeRouter from "./HomeRouter";
+
 const RootRouter = {
   path: "/",
   element: <Layout />,
@@ -13,6 +15,7 @@ const RootRouter = {
     { path: "trip", element: <TripMainPage /> },
     { path: "exchange", element: <ExchangeMainPage /> },
     { path: "mypage", element: <UserPage /> },
+    HomeRouter,
   ],
 };
 
