@@ -13,3 +13,8 @@ export const fetchExchangeRates = async () => {
   const response = await apiClient.get("/exchanges/rate");
   return response.data.rates;
 };
+
+
+
+
+
