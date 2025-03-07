@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../apis/apiClient";
+import apiClient from "../../apis/apiClient"
 import InputField from "../../components/InputField";
 
 export default function LoginPage() {
