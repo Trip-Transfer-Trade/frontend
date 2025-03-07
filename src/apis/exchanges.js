@@ -30,3 +30,4 @@ export const fetchTransaction = async (transactionData)=>{
     console.error("송금 실패", error);
     throw error;
   }}
+
