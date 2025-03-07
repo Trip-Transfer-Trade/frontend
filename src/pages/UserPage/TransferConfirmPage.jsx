@@ -48,6 +48,7 @@ export default function TransferConfirmPage() {
     
     try{
       await fetchTransaction(transactionData);
+      alert("송금을 완료하였습니다");
       navigate("/");
     } catch(error) {
       alert("송금 처리에 실패했습니다. 다시 시도해주세요.");
