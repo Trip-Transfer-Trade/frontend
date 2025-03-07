@@ -7,7 +7,7 @@ export default function Layout() {
   return (
     <div>
       <Header />
-      <div className="flex flex-col flex-grow pt-[6vh] pb-[10vh] w-full">
+      <div className="flex flex-col flex-grow pt-[10vh] pb-[10vh] w-full">
         <Outlet />
       </div>
       <Footer />
