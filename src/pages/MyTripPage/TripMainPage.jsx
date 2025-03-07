@@ -115,7 +115,7 @@ const TripMainPage = () => {
           <button
             className="w-full py-4 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center"
             onClick={() => {
-              navigate("/trip/country");
+              navigate("/trip/tripgoal");
             }}
           >
             <Plus size={20} className="mr-2" />

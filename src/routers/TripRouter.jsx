@@ -1,6 +1,3 @@
-import CountrySelect from "../pages/MyTripPage/CountrySelect";
-import TargetForm from "../pages/MyTripPage/TargetForm";
-
 import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
 
 import PortfolioPage from "../pages/PortfolioPage/PortfolioPage";
@@ -13,14 +10,14 @@ import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
 
 import StockPage from "../pages/StockPage/StockPage";
 import StockTradingPage from "../pages/StockPage/StockTradingPage";
+import TripGoalSetup from "../pages/MyTripPage/TripGoal/TripGoalFlow";
+
 
 const TripRouter = {
   path: "/trip",
   children: [
     // 여행 목표 생성
-    { path: "country", element: <CountrySelect /> },
-    { path: "form", element: <TargetForm /> },
-
+    { path: "tripgoal", element: <TripGoalSetup /> },
     { path: "service/info", element: <InfoPage /> },
 
     // 포트폴리오
