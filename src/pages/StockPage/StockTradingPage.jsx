@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useFetcher, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
 import { toast, ToastContainer } from "react-toastify";
 
 import "./StockPage.css";
-import axios from "axios";
+import apiClient from "../../apis/apiClient";
 
 export default function StockTradingPage() {
 
     const navigate = useNavigate();
-    const {trademode} = useParams();
+    const { trademode, tripGoal } = useParams();
     const location = useLocation();
     const { name, code } = location.state || {};
+    console.log("📌 tripGoal 값:", tripGoal); 
 
     const [stockItems, setStockItems] = useState({});
     const [tradeMode, setTradeMode] = useState(trademode || "buy");
@@ -31,16 +32,16 @@ export default function StockTradingPage() {
 
     useEffect (() => {
         const apiUrl = isCheckCode
-        ? `http://localhost:8084/api/stocks/${code}` 
-        : `http://localhost:8084/api/stocks/us/${code}`;
+        ? `/exchanges/${code}` 
+        : `/exchanges/us/${code}`;
 
-        axios.get(apiUrl)
+        apiClient.get(apiUrl)
         .then((response) => {
             console.log("📌 API 응답 데이터:", response.data);
             console.log("넘어온 ticker", code);
             setStockItems(response.data);
 
-            const price = isCheckCode ? parseFloat(response.data.output2.stck_prpr, 10) : parseFloat(response.data.stockPrice ?? response.data.output1.last, 10);
+            const price = isCheckCode ? parseFloat(response.data.output2.stck_prpr, 10) : parseFloat(response.data.stockPrice ?? response.data.data.output1.last, 10);
 
             setCurrencyPrice(price);
             setPurchasePrice(price);
@@ -81,13 +82,12 @@ export default function StockTradingPage() {
             }
         }
 
-        const apiUrl = tradeMode === "buy" ? "http://localhost:8084/api/exchanges/stocks/buy" : "http://localhost:8084/api/exchanges/stocks/sell";
+        const apiUrl = tradeMode === "buy" ? "/exchanges/stocks/buy" : "/exchanges/stocks/sell";
 
         const currencyCode = isCheckCode ? "KRW" : "USD";
 
         const requestData = {
-            userId: 1,
-            accountNumber: "937465216389",
+            tripId: tripGoal,
             amount: quantity * purchasePrice,
             currencyCode: currencyCode,
             stockCode: code,
@@ -96,11 +96,13 @@ export default function StockTradingPage() {
             totalPrice: quantity * purchasePrice,
         };
 
-        axios.post(apiUrl, requestData)
+        apiClient.post(apiUrl, requestData)
         .then((response) => {
+            console.log("📌 API 응답:", response.data);
             toast.success(`${tradeMode === "buy" ? "매수" : "매도"} 완료!`, { position:"bottom-center", autoClose: 1000, style: {bottom: "80px"} } )
         })
         .catch((err) => {
+            console.error("🚨 거래 실패! 서버 응답:", err.response?.data || err.message);
             toast.error("거래 실패! 다시 시도해주세요.", { position:"bottom-center", autoClose: 1000, style: {bottom: "80px"} });
         })
     }
