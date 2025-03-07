@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
+import { fetchTransaction } from "../../apis/exchanges";
 
 export default function TransferConfirmPage() {
   const { accountNumber, memo, amount } = useSelector(
@@ -34,6 +35,24 @@ export default function TransferConfirmPage() {
 
     return num + "원";
   };
+
+  const handleConfirm = async () =>{
+
+    const transactionData = {
+      accountId : 1,          
+      amount: parseFloat(amount),  
+      description: memo, 
+      targetAccountNumber:accountNumber, 
+      currencyCode :"KRW",
+    };
+    
+    try{
+      await fetchTransaction(transactionData);
+      navigate("/");
+    } catch(error) {
+      alert("송금 처리에 실패했습니다. 다시 시도해주세요.");
+    } 
+  }
 
   return (
     <div className="flex flex-col h-screen bg-white">
@@ -72,7 +91,7 @@ export default function TransferConfirmPage() {
       </div>
 
       <div className="px-6 mb-10">
-        <NextConfirmButton text="완료" onClick={() => navigate("/")} />
+        <NextConfirmButton text="완료" onClick={() => handleConfirm()} />
       </div>
     </div>
   );
