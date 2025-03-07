@@ -1,0 +1,80 @@
+.container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .closeButton {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #333;
+  }
+  
+  .content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px 20px 40px 20px;
+  }
+  
+  .checkmark {
+    margin-bottom: 24px;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 48px 0;
+    text-align: center;
+  }
+  
+  .illustration {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .illustrationImage {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  .accountInfo {
+    width: 100%;
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .accountRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accountLabel {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  .accountNumber {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  

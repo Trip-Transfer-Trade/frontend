@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../apis/apiClient";
+import axiosInstance from "../utils/axiosInstance";
+import apiClient from "../apis/apiClient";
 
 export const submitSignup = createAsyncThunk("signup/submitSignup", async (signupData, thunkAPI) => {
   try {
-    const response = await axiosInstance.post("/members/signup", signupData);
+    const response = await apiClient.post("/members/signup", signupData);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || "회원가입 실패");
