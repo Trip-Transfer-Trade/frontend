@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAssets } from "../../redux/store";
+import { fetchAssets } from "../../redux/assetsSlice";
 import PortfolioHeader from "./PortfolioHeader";
 import AssetsList from "../../components/portfolio/AssetList";
 import Footer from "../../layout/Footer";
