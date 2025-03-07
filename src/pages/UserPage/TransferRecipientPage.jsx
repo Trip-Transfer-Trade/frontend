@@ -52,7 +52,13 @@ export default function TransferRecipientPage() {
       {/* 키패드 */}
       <button
         className="bg-brand-blue text-white py-4 text-center w-full"
-        onClick={() => navigate("/mypage/transfer/amount")}
+        onClick={() => {
+          if (!accountNumber) {
+            alert("계좌번호를 입력해주세요.");
+            return;
+          }
+          navigate("/mypage/transfer/amount");
+        }}
       >
         확인
       </button>
