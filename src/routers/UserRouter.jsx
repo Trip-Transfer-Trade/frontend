@@ -1,6 +1,10 @@
+import HistoryPage from "../pages/UserPage/HistoryPage";
+
 const UserRouter = {
   path: "/mypage",
-  children: [],
+  children: [
+    { path: "history", element: <HistoryPage /> },
+  ],
 };
 
 export default UserRouter;
