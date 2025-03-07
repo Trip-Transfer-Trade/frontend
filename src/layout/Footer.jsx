@@ -17,10 +17,10 @@ export default function Footer() {
   // 현재 경로에 맞춰 초기 선택 상태 설정
   useEffect(() => {
     if (location.pathname.startsWith("/trip")) {
-      setSelected("mytrip");
+      setSelected("trip");
     } else if (location.pathname.startsWith("/exchange")) {
-      setSelected("wallet");
-    } else if (location.pathname.startsWith("/auth")) {
+      setSelected("exchange");
+    } else if (location.pathname.startsWith("/mypage")) {
       setSelected("mypage");
     } else {
       setSelected("home");
@@ -39,13 +39,13 @@ export default function Footer() {
       path: "/",
     },
     {
-      id: "mytrip",
+      id: "trip",
       icon: <TbWorld className="text-2xl" />,
       label: "마이트립",
       path: "/trip",
     },
     {
-      id: "wallet",
+      id: "exchange",
       icon: <IoWalletOutline className="text-2xl" />,
       label: "환전지갑",
       path: "/exchange",
@@ -54,7 +54,7 @@ export default function Footer() {
       id: "mypage",
       icon: <FaUser className="text-2xl" />,
       label: "마이페이지",
-      path: "/auth/login",
+      path: "/mypage",
     },
   ];
 
