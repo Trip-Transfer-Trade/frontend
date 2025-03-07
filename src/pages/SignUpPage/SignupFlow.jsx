@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSignupData, submitSignup } from "../../redux/store";
+import { setSignupData, submitSignup } from "../../redux/signupSlice";
 import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import NextConfirmButton from "../../components/NextConfirmButton";
