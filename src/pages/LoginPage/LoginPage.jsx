@@ -15,8 +15,8 @@ export default function LoginPage() {
     try {
       await apiClient.post("/members/login", { userName, password });
       navigate("/");
-    } catch (err) {
-      setError("아이디 또는 비밀번호가 잘못되었습니다.");
+    } catch (error) {
+      setError(error, "아이디 또는 비밀번호가 잘못되었습니다.");
     }
   }
 
