@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import apiClient from "../../apis/apiClient";
+import apiClient from "../../apis/apiClient"
 import InputField from "../../components/InputField";
 
 export default function LoginPage() {
@@ -13,7 +13,7 @@ export default function LoginPage() {
   async function login() {
     setError(null);
     try {
-      await axiosInstance.post("/members/login", { userName, password });
+      await apiClient.post("/members/login", { userName, password });
       navigate("/");
     } catch (err) {
       setError("아이디 또는 비밀번호가 잘못되었습니다.");
