@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../apis/apiClient";
 
 export const submitSignup = createAsyncThunk("signup/submitSignup", async (signupData, thunkAPI) => {
   try {
