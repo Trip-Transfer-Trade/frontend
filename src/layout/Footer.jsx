@@ -5,7 +5,7 @@ import { GoHomeFill } from "react-icons/go";
 import { TbWorld } from "react-icons/tb";
 import { IoWalletOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa6";
-import { useAuth } from "../\bcontext/AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 
 import "./Footer.css";
 
