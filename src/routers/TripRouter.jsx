@@ -16,7 +16,7 @@ import TripGoalSetup from "../pages/MyTripPage/TripGoal/TripGoalFlow";
 const TripRouter = {
   path: "/trip",
   children: [
-    // 여행 목표 생성
+    // 여행 목표 생성 
     { path: "tripgoal", element: <TripGoalSetup /> },
     { path: "service/info", element: <InfoPage /> },
 

@@ -4,7 +4,7 @@ import apiClient from "../../apis/apiClient";
 import InputField from "../../components/InputField";
 
 export default function LoginPage() {
-  const logo = "src/assets/images/logo.svg";
+  const logo = "/assets/images/logo.svg";
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +13,7 @@ export default function LoginPage() {
   async function login() {
     setError(null);
     try {
-      await axiosInstance.post("/members/login", { userName, password });
+      await apiClient.post("/members/login", { userName, password });
       navigate("/");
     } catch (err) {
       setError("아이디 또는 비밀번호가 잘못되었습니다.");
@@ -41,10 +41,19 @@ export default function LoginPage() {
           />
           {error && <p className="text-red-500">{error}</p>}
           <button
-            className="h-12 w-full rounded-md bg-brand-blue text-white"
+            className="h-12 w-full rounded-md bg-brand-blue text-white font-bold"
             onClick={login}
           >
-            로그인하기
+            로그인
+          </button>
+
+          <button
+            className="h-12 w-full rounded-md bg-blue-100 text-brand-blue font-bold"
+            onClick={() => {
+              navigate("/auth/signup");
+            }}
+          >
+            회원가입
           </button>
         </div>
       </div>
