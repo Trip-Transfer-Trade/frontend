@@ -1,15 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Plus} from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
-import { EffectCoverflow } from "swiper/modules";
-import BackNavigation from "../../components/BackNavigation";
-import Footer from "../../layout/Footer";
-import { useAuth } from "../../\bcontext/AuthProvider";
 import { useEffect} from "react"; 
 import TripCard from "./TripCard";
-import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTripGoals } from "../../redux/tripSlice";
 

@@ -1,7 +1,6 @@
 import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
 
 import PortfolioPage from "../pages/PortfolioPage/PortfolioPage";
-import TripEditPage from "../pages/MyTripPage/TripEditPage";
 import RankingPage from "../pages/PortfolioPage/RankingPage";
 
 import FailedPage from "../pages/MyTripPage/TripGoal/FailedPage";
@@ -22,7 +21,6 @@ const TripRouter = {
 
     // 포트폴리오
     { path: ":tripGoal/portfolio", element: <PortfolioPage /> },
-    { path: ":tripGoal/portfolio/edit", element: <TripEditPage /> },
     { path: ":tripGoal/portfolio/rank", element: <RankingPage /> },
 
     // 여행 목표 성공&실패
