@@ -4,13 +4,14 @@ import Footer from "../../layout/Footer";
 import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
 import StockItem from "../../components/StockItem";
-import axios from "axios";
+import apiClient from "../../apis/apiClient";
 
 import "./StockPage.css"
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import Toggle from "../../components/Toggle";
 
 export default function StockPage() {
+    const { tripGoal } = useParams(); 
     const portfoliBanner = "/assets/images/stock/portfolioBanner.svg";
 
     const [nationTab, setNationTab] = useState("국내");
@@ -20,7 +21,7 @@ export default function StockPage() {
     const [exchangeRate, setExchangeRate] = useState(0);
 
     useEffect(() => {
-        axios.get("http://localhost:8084/api/exchanges/rate/us")
+        apiClient.get("/exchanges/rate/us")
         .then((response) => {
             console.error("달러 환율:", response.data.rate)
             const rate = parseFloat(response.data.rate.replace(/,/g, ""));
@@ -40,12 +41,14 @@ export default function StockPage() {
     }[type] || "top");
 
     useEffect(() => {
-        axios.get(nationTab === "국내" ? "http://localhost:8084/api/stocks" : "http://localhost:8084/api/stocks/us", {
+        console.log("🟢 API 호출! nationTab:", nationTab, "type:", type);
+        apiClient.get(nationTab === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking", {
             params: { type: convertType(type) }
         })
         .then((response) => {
             console.log(response.data.output)
-            const stockData = nationTab === "국내" ? response.data.output : response.data.output2;
+            console.log(response.data.output2)
+            const stockData = nationTab === "국내" ? response.data.data.output : response.data.output2;
             setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
         })
         .catch((err) => {
@@ -76,12 +79,12 @@ export default function StockPage() {
                                     <Tab key={value} label={label} onClick={() => setType(label)} >
                                         <div className="ranking-tab">
                                             {stockItems.list.map((item) => (
-                                                <Link key={item.data_rank} to="/stocks/buy" state={{ name: item.hts_kor_isnm, code: item.ticker }}>
+                                                <Link key={item.data_rank} to={`/trip/${tripGoal}/stocks/buy`} state={{ name: item.hts_kor_isnm, code: item.ticker, tripGoal }}>
                                                     <StockItem 
                                                         rank={item.data_rank}
                                                         logo="https://via.placeholder.com/40"
                                                         name={item.hts_kor_isnm}
-                                                        code={item.ticker }
+                                                        code={item.ticker}
                                                         price={item.stck_prpr}
                                                         change={item.prdy_ctrt}
                                                     />
@@ -114,16 +117,16 @@ export default function StockPage() {
                                     { label: "인기", value: "popular"},
                                     { label: "거래량", value: "volume"},
                                 ].map(({ label, value }) => (
-                                    <Tab key={value} label={label} onClick={() => {console.log(label); setType(value)}} >
+                                    <Tab key={value} label={label} onClick={() => {console.log(label); setType(label)}} >
                                         <div className="ranking-tab">
                                             {stockItems.list.slice(0, 30).map((item, index) => (
-                                                <Link key={item.rank} to="/stocks/buy" state={{ name: item.knam, code: item.symb }}>
+                                                <Link key={item.rank} to={`/trip/${tripGoal}/stocks/buy`} state={{ name: item.knam, code: item.symb, tripGoal }}>
                                                 <StockItem 
                                                     rank={item.rank > 0 ? item.rank : index + 1}
                                                     logo="https://via.placeholder.com/40"
                                                     name={item.knam ? item.knam.toLocaleString() : "undefined"}
                                                     code={item.symb}
-                                                    price={isToggled ? (item.last * exchangeRate).toFixed(2) : item.last}
+                                                    price={isToggled ? (item.last * exchangeRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : item.last}
                                                     change={item.rate}
                                                     isDollar={!isToggled}
                                                 />

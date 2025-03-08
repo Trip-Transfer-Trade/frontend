@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axiosInstance";
+import apiClient from "../apis/apiClient";
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async (_, thunkAPI) => {
   try {
-    const response = await axiosInstance.get("/auth/detail"); //변경 가능 - 아직 api 없음ㅜ
+    const response = await apiClient.get("/auth/detail"); //변경 가능 - 아직 api 없음ㅜ
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response?.data || "사용자 정보 가져오기 실패");
