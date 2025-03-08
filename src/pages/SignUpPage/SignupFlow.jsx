@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "../../components/InputField";
 import NextConfirmButton from "../../components/NextConfirmButton";
 import BackNavigation from "../../components/BackNavigation";
-
+import { sendSms, checkCode } from "../../apis/users"; 
 
 const steps = ["Profile", "Verification", "Account", "Complete"];
 
@@ -15,6 +15,9 @@ export default function SignupFlow() {
   const signupData = useSelector((state) => state.signup);
 
   const [step, setStep] = useState(0);
+  const [isVerificationRequested, setIsVerificationRequested] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
+
   const [formData, setFormData] = useState({
     userName: "",
     password: "",
@@ -26,14 +29,44 @@ export default function SignupFlow() {
     riskTolerance: "LOW",
   });
 
+  async function handleRequestVerificationCode(){
+    try{
+      await sendSms(formData.phoneNumber);
+      setIsVerificationRequested(true);
+    } catch{
+      alert("인증 번호 요청에 실패했습니다.");
+    }
+  }
+
+  async function handleCheckVerificationCode(){
+    try{
+      console.log(formData.verificationCode)
+      await checkCode({
+        phoneNumber:formData.phoneNumber,
+        code:formData.verificationCode
+      });
+      setIsVerified(true);
+    } catch {
+      alert("인증 번호가 올바르지 않습니다.")
+    }
+  }
+
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
+
   function nextStep() {
     if (step === 2) {
-      if (!formData.userName || !formData.password || formData.password !== formData.passwordConfirm) {
+      if (!formData.userName && !formData.password){
+        alert("아이디와 비밀번호를 입력해주세요.")
+        // 아이디 중복 검사 추가해야될 듯
+        return
+      } else if (!formData.userName){
+        alert("아이디를 입력해주세요.")
+        return
+      } else if (!formData.password || formData.password !== formData.passwordConfirm) {
         alert("아이디와 비밀번호를 정확히 입력해주세요.");
         return;
       }
@@ -54,7 +87,14 @@ export default function SignupFlow() {
           setStep(step + 1);
         }
       });
-    } else {
+    }
+    // } else if(step===1){
+    //   handleCheckVerificationCode(formData.verificationCode)
+    //   if(isVerified){
+    //     setStep(step+1);
+    //   }
+    // }
+     else {
       setStep(step + 1);
     }
   }
@@ -79,7 +119,18 @@ export default function SignupFlow() {
         {step === 1 && (
           <>
             <InputField label="전화번호" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-            <InputField label="인증번호" name="verificationCode" value={formData.verificationCode} onChange={handleChange} />
+            <button type="button" onClick={handleRequestVerificationCode} disabled={isVerificationRequested}>
+              {isVerificationRequested ? "인증번호 재요청" : "인증번호 요청"}
+            </button>
+
+            {isVerificationRequested && (
+              <>
+                <InputField label="인증번호" name="verificationCode" value={formData.verificationCode} onChange={handleChange} />
+                <button type="button" onClick={handleCheckVerificationCode} disabled={isVerified}>
+                  {isVerified && <p style={{ color: "green" }}>✅ 인증 완료</p>}                
+                </button>
+              </>
+            )}
           </>
         )}
         {step === 2 && (
@@ -107,7 +158,7 @@ export default function SignupFlow() {
 
       <div className="p-6">
         {step < 3 ? (
-          <NextConfirmButton text={step === 2 ? "완료" : "다음"} onClick={nextStep} disabled={step === 2 && formData.password !== formData.passwordConfirm} />
+          <NextConfirmButton text={step === 2 ? "완료" : "다음"} onClick={nextStep} />
         ) : null}
       </div>
     </div>
