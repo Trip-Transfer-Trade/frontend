@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axiosInstance";
+import apiClient from "../apis/apiClient";
 
 export const submitTripGoal = createAsyncThunk("trip/submitTripGoal", async (tripData, thunkAPI) => {
   
   try {
-    const response = await axiosInstance.post("/trips/goal", tripData, {
+    const response = await apiClient.post("/trips/goal", tripData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -14,16 +14,34 @@ export const submitTripGoal = createAsyncThunk("trip/submitTripGoal", async (tri
     return thunkAPI.rejectWithValue(error.response?.data || "여행 목표 저장 실패");
   }
 });
+
+export const fetchTripGoals = createAsyncThunk(
+  "trip/fetchTripGoals",
+  async (_, thunkAPI) => {
+    try {
+      const response = await apiClient.get("/trips/all");
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || "여행 목표 조회 실패");
+    }
+  }
+);
+
 const tripSlice = createSlice({
   name: "trip",
   initialState: {
+    name:"",
     country: "",
     goalAmount: null,
     endDate: null,
+    tripGoals: [],
     status: "idle",
     error: null,
   },
   reducers: {
+    setName:(state, action)=>{
+      state.name = action.payload;
+    },
     setCountry: (state, action) => {
       state.country = action.payload;
     },
@@ -36,10 +54,26 @@ const tripSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(submitTripGoal.fulfilled, (state) => { state.status = "succeeded"; })
-      .addCase(submitTripGoal.rejected, (state, action) => { state.error = action.payload; });
+      .addCase(fetchTripGoals.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchTripGoals.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.tripGoals = action.payload;
+      })
+      .addCase(fetchTripGoals.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(submitTripGoal.fulfilled, (state, action) => { 
+        state.status = "succeeded";
+        state.tripGoals = [...state.tripGoals, action.payload];
+      })
+      .addCase(submitTripGoal.rejected, (state, action) => { 
+        state.error = action.payload; 
+      });
   },
 });
 
-export const { setCountry, setGoalAmount, setEndDate } = tripSlice.actions;
+export const { setName, setCountry, setGoalAmount, setEndDate } = tripSlice.actions;
 export default tripSlice.reducer;
