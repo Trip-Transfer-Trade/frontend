@@ -1,0 +1,88 @@
+.agreementContainer {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: white;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  
+  .agreementContent {
+    padding: 20px;
+  }
+  
+  .agreementTitle {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 32px;
+  }
+  
+  .agreementItem {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+  
+  .agreementItemHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .agreementItemTitle {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: transparent;
+    transition: all 0.2s;
+  }
+  
+  .checkbox.checked {
+    background: #4f46e5;
+    border-color: #4f46e5;
+    color: white;
+  }
+  
+  .agreementItemContent {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+  }
+  
+  .agreeButton {
+    width: 100%;
+    padding: 16px;
+    border-radius: 8px;
+    border: none;
+    background: #e0e0e0;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 32px;
+    cursor: not-allowed;
+    transition: all 0.2s;
+  }
+  
+  .agreeButton.active {
+    background: #4f46e5;
+    cursor: pointer;
+  }
+  
+  .agreeButton.active:hover {
+    background: #4338ca;
+  }
+  
+  

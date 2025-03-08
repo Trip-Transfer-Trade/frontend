@@ -13,3 +13,21 @@ export const fetchExchangeRates = async () => {
   const response = await apiClient.get("/exchanges/rate");
   return response.data.rates;
 };
+
+// 송금 내역 조회
+export const fetchHistories = async (accountId) => {
+  console.log("송금내역 조회 호출")
+  const response = await apiClient.get(`/exchanges/transactions/${accountId}`);
+  return response.data.data;
+}
+
+// 송금하기
+export const fetchTransaction = async (transactionData)=>{
+  console.log("송금 실행")
+  try {
+    await apiClient.post(`/exchanges/transactions`, transactionData);
+  } catch (error) {
+    console.error("송금 실패", error);
+    throw error;
+  }}
+
