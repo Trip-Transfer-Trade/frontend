@@ -3,6 +3,7 @@ import TransferRecipientPage from "../pages/UserPage/TransferRecipientPage";
 import TransferAmountPage from "../pages/UserPage/TransferAmountPage";
 import TransferConfirmPage from "../pages/UserPage/TransferConfirmPage";
 import HistoryPage from "../pages/UserPage/HistoryPage";
+import MyAccountPage from "../pages/UserPage/MyAccountPage";
 
 
 const UserRouter = {
@@ -29,6 +30,16 @@ const UserRouter = {
         },
       ],
     },
+    {
+      path: "account",
+      children: [
+        {
+          index: true,
+          element: <MyAccountPage />
+        },
+      ]
+    }
+
 
   ],
 };
