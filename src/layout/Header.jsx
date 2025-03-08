@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <div>
-      <header className="header flex w-full items-center justify-between px-6">
+      <header className="header flex w-full justify-between px-6">
         {/* 로고 또는 타이틀 표시 */}
         <div className="flex items-center">
           {location.pathname === "/" ? (
