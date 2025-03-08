@@ -11,7 +11,7 @@ export const fetchUserCurrencies = async () => {
 export const fetchExchangeRates = async () => {
   console.log("fetchExchangeRates 호출");
   const response = await apiClient.get("/exchanges/rate");
-  return response.data.rates;
+  return response.data.data.rates;
 };
 
 // 송금 내역 조회
