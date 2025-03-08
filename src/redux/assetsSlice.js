@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../utils/axiosInstance";
+import apiClient from "../apis/apiClient";
 
 export const fetchAssets = createAsyncThunk("assets/fetchAssets", async (_, thunkAPI) => {
     try {
-      const response = await axiosInstance.get("/assets");
+      const response = await apiClient.get("/assets");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data || "자산 데이터를 불러오는 데 실패했습니다.");
