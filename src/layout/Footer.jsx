@@ -5,6 +5,7 @@ import { GoHomeFill } from "react-icons/go";
 import { TbWorld } from "react-icons/tb";
 import { IoWalletOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa6";
+import { useAuth } from "../\bcontext/AuthProvider";
 
 import "./Footer.css";
 
@@ -13,6 +14,9 @@ export default function Footer() {
   const location = useLocation();
 
   const [selected, setSelected] = useState("home");
+
+  //로그인 상태 가져오기 
+  const { isLoggedIn, updateLoginStatus } = useAuth();
 
   // 현재 경로에 맞춰 초기 선택 상태 설정
   useEffect(() => {
@@ -26,6 +30,17 @@ export default function Footer() {
       setSelected("home");
     }
   }, [location.pathname]);
+
+  //로그인 체크 후 리디렉션 (home 제외)
+  useEffect(() => {
+    console.log("🔍 Footer - 현재 로그인 상태:", isLoggedIn);
+    updateLoginStatus(); // 로그인 상태 즉시 반영
+
+    if (isLoggedIn === false && selected !== "home") {
+      console.warn("🚪 로그아웃 감지 - 로그인 페이지로 이동");
+      navigate("/auth/login");
+    }
+  }, [isLoggedIn, selected, navigate]); // selected가 변경될 때마다 실행
 
   function getIconClass(menu) {
     return selected === menu ? "footer-icon-selected" : "footer-icon";

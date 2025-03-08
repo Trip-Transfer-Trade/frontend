@@ -1,15 +1,28 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Plus, Home, Globe, DollarSign, User } from "lucide-react";
+import { Plus} from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import { EffectCoverflow } from "swiper/modules";
 import BackNavigation from "../../components/BackNavigation";
 import Footer from "../../layout/Footer";
+import { useAuth } from "../../\bcontext/AuthProvider";
+import { useEffect} from "react";
 
 const TripMainPage = () => {
+
+  const {isLoggedIn} = useAuth();
   const navigate = useNavigate();
+  
+  useEffect(() => {
+    console.log("로그인 상태:", isLoggedIn); // 디버깅용
+    if (isLoggedIn === false) {
+      navigate("/auth/login");
+    }
+  }, [isLoggedIn, navigate]);
+
+  
 
   const [goals] = useState([
     {
