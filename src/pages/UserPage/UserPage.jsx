@@ -1,8 +1,8 @@
 import { IoChevronForwardOutline } from "react-icons/io5";
-
 import MenuItem from "../../components/UserComponent/MenuItem";
 
 export default function UserPage() {
+
   const menuItems = [
     { icon: "📊", label: "내 주식", path: "/" },
     { icon: "💳", label: "전체 계좌", path: "/mypage/transfer/recipient" },
