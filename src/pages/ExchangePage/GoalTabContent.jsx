@@ -1,4 +1,6 @@
-import { getCountryCodeFromCountryName } from "../../../constants/countryMappings";
+import { Link } from "react-router-dom";
+
+import { getCountryCodeFromCountryName } from "../../constants/countryMappings";
 
 const tripGoals = [
   {
@@ -21,9 +23,10 @@ export default function GoalTabContent() {
       <p className="text-lg font-bold mb-6">환전 가능 금액</p>
       <div className="space-y-2">
         {tripGoals.map((tripGoal) => (
-          <div
+          <Link
+            to={`/exchange/goals/${tripGoal.goal_id}`} // 클릭 시 목표 상세 페이지로 이동
             key={tripGoal.goal_id}
-            className="flex justify-between items-center p-6 bg-white rounded-lg border border-gray-300"
+            className="flex justify-between items-center p-6 bg-white rounded-lg border border-gray-300 cursor-pointer"
           >
             <div className="flex flex-col">
               <p className="text-xs text-custom-gray-3">{tripGoal.name}</p>
@@ -39,7 +42,7 @@ export default function GoalTabContent() {
               alt={`${tripGoal.country} flag`}
               className="w-16 h-16 rounded-lg"
             />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
