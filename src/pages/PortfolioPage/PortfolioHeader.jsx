@@ -3,10 +3,12 @@ import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import BackNavigation from "../../components/BackNavigation";
 import GoalCard from "../../components/portfolio/GoalCard";
+import { useParams } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PortfolioHeader() {
+  const { tripId } = useParams();
   const assets = useSelector((state) => state.assets.assets);
   const selectedTrip = useSelector((state)=>state.trip.selectedTrip);
   if(!selectedTrip) return <p>여행 포트폴리오 상세 정보 불러오는 중...✈️</p>
@@ -21,7 +23,6 @@ export default function PortfolioHeader() {
     (total, asset) => total + asset.price * asset.quantity,
     0
   );
-  const totalProfit = totalAssets - totalPurchase;
   const totalCash = 230000;
 
   const processChartData = (assets) => {
@@ -113,7 +114,7 @@ export default function PortfolioHeader() {
         </div>
 
         <div className="flex justify-center mt-4 pt-4">
-          <a href="/trip/portfolio/edit" className="text-gray-400 text-sm font-medium underline">
+          <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
             목표 수정하기
           </a>
         </div>
