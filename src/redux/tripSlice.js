@@ -39,6 +39,22 @@ export const fetchTripById = createAsyncThunk(
   }
 );
 
+export const updateTrip = createAsyncThunk(
+  "trip/updateTrip",
+  async ({ tripId, updatedData }, thunkAPI) => {
+    try {
+      const response = await apiClient.put(`/trips/${tripId}`, updatedData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || "목표 수정 실패");
+    }
+  }
+);
+
 const tripSlice = createSlice({
   name: "trip",
   initialState: {
@@ -94,6 +110,17 @@ const tripSlice = createSlice({
         state.selectedTrip = action.payload;
       })
       .addCase(fetchTripById.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(updateTrip.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateTrip.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.selectedTrip = action.payload;
+      })
+      .addCase(updateTrip.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

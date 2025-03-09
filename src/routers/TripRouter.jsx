@@ -10,6 +10,8 @@ import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
 import StockPage from "../pages/StockPage/StockPage";
 import StockTradingPage from "../pages/StockPage/StockTradingPage";
 import TripGoalSetup from "../pages/MyTripPage/TripGoal/TripGoalFlow";
+import GoalProgressPage from "../pages/PortfolioPage/GoalProgressPage";
+import TripEditPage from "../pages/PortfolioPage/TripEditPage";
 
 const TripRouter = {
   path: "/trip",
@@ -20,6 +22,8 @@ const TripRouter = {
 
     // 포트폴리오
     { path: ":tripId/portfolio", element: <PortfolioPage /> },
+    { path: ":tripId/portfolio/progress", element: <GoalProgressPage /> },
+    { path: ":tripId/portfolio/progress/edit", element: <TripEditPage /> },
     { path: ":tripId/portfolio/rank", element: <RankingPage /> },
 
     // 여행 목표 성공&실패
