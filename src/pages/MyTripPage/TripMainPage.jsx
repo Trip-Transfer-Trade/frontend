@@ -28,7 +28,7 @@ export default function TripMainPage() {
     <div className="flex flex-col min-h-screen">
       <main className="flex-1 p-4 space-y-4">
         {status === "loading" && <p>로딩 중...</p>}
-        {status === "failed" && <p>여행 목표 조회 실패: {error}</p>}
+        {status === "failed" && <p>여행 목표 조회 실패</p>}
         {Array.isArray(tripGoals) && tripGoals.length > 0 ? (
           tripGoals.map((trip) => <TripCard key={trip.id} trip={trip} />)
         ) : (
