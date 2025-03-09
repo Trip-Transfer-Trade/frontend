@@ -1,9 +1,20 @@
 import apiClient from "./apiClient";
 
-// 사용자 보유 통화 조회
-export const fetchUserCurrencies = async () => {
-  console.log("fetchUserCurrencies 호출");
-  const response = await apiClient.get("/exchanges/wallet");
+// 내 지갑 조회
+export const fetchWallet = async () => {
+  console.log("fetchWallet 호출");
+  const response = await apiClient.get("/exchanges/myWallet");
+  return response.data.data;
+};
+
+// 내 지갑 상세 조회
+export const fetchWalletDetail = async (currencyCode) => {
+  console.log(`fetchWalletDetail 호출: currencyCode=${currencyCode}`);
+
+  const response = await apiClient.get("/exchanges/myWallet/detail", {
+    params: { currencyCode },
+  });
+
   return response.data.data;
 };
 
@@ -16,18 +27,18 @@ export const fetchExchangeRates = async () => {
 
 // 송금 내역 조회
 export const fetchHistories = async (accountId) => {
-  console.log("송금내역 조회 호출")
+  console.log("송금내역 조회 호출");
   const response = await apiClient.get(`/exchanges/transactions/${accountId}`);
   return response.data.data;
-}
+};
 
 // 송금하기
-export const fetchTransaction = async (transactionData)=>{
-  console.log("송금 실행")
+export const fetchTransaction = async (transactionData) => {
+  console.log("송금 실행");
   try {
     await apiClient.post(`/exchanges/transactions`, transactionData);
   } catch (error) {
     console.error("송금 실패", error);
     throw error;
-  }}
-
+  }
+};
