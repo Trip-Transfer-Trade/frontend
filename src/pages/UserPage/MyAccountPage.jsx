@@ -40,9 +40,10 @@ export default function MyAccountPagePage() {
                                 accounts.map((account, index) => (
                                     <AccountItem 
                                         key={index} 
+                                        id = {account.accountId}
                                         title={account.name} 
                                         amount={`${account.amount.toLocaleString()}원`} 
-                                        onTransfer={() => alert(`${account.name} 이체 기능 실행`)}
+                                        onTransfer={() => alert(`${account.name} 이체 기능 실행`)}       
                                     />
                                 ))
                             ) : (
