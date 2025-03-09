@@ -16,6 +16,10 @@ const countryCodeMap = {
   "멕시코": "MX",
   "인도": "IN",
   "브라질": "BR",
+  "아르헨티나": "AR",
+  "칠레": "CL",
+  "이집트": "EG",
+  "남아프리카공화국": "ZA",
   "이름없음": "UN"
 };
 
@@ -26,7 +30,10 @@ function getCountryFlagURL(countryName) {
 
 export default function TripCard({ trip }) {
 
+  const navigate = useNavigate();
+
   const {
+    id,
     name,
     country,
     goalAmount,
@@ -42,7 +49,9 @@ export default function TripCard({ trip }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm relative" onClick={() => navigate(":tripGoal/portfolio")}>
+    <div className="bg-white rounded-xl p-4 shadow-sm relative cursor-pointer hover:shadow-md transition"
+      onClick={()=>navigate(`/trip/${trip.id}/portfolio`)}
+    >
       <img src={flagURL} alt={country} className="absolute top-3 right-3 w-10 h-10" />
 
       <div className="flex justify-between items-start mb-2">
