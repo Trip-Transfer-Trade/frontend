@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { getCountryCodeFromCountryName } from "../../constants/countryMappings";
 
 export default function ExchangeRateItem({
@@ -6,6 +8,8 @@ export default function ExchangeRateItem({
   cur_nm,
   tts,
 }) {
+  const navigate = useNavigate();
+
   function parseCountryName(cur_nm) {
     if (typeof cur_nm !== "string" || cur_nm.trim() === "") {
       return "UNKNOWN"; // 예외 처리: 빈 값 또는 문자열이 아닌 경우
@@ -17,8 +21,19 @@ export default function ExchangeRateItem({
     return !isNaN(changePrice) && changePrice > 0; // 숫자인지 확인 후 양수 여부 판별
   }
 
+  function handleClick() {
+    const countryName = parseCountryName(cur_nm);
+    const currencyCode = getCountryCodeFromCountryName(countryName);
+    navigate(`/exchange/rates/${currencyCode}`, {
+      state: { cur_nm, changePrice, changeRate, tts },
+    });
+  }
+
   return (
-    <div className="flex items-center justify-between p-2">
+    <div
+      className="flex items-center justify-between px-2 py-4"
+      onClick={handleClick}
+    >
       <span className="flex items-center space-x-2">
         <img
           src={`https://flagsapi.com/${getCountryCodeFromCountryName(

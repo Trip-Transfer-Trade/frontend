@@ -97,6 +97,39 @@ export const currencyToSymbolMap = {
   NZD: "NZ$", // 뉴질랜드 달러
 };
 
+export const currencyToKoreanUnitMap = {
+  // 유럽
+  CHF: "스위스 프랑",
+  DKK: "덴마크 크로네",
+  EUR: "유로",
+  GBP: "영국 파운드",
+  NOK: "노르웨이 크로네",
+  SEK: "스웨덴 크로나",
+
+  // 아시아
+  AED: "아랍에미리트 디르함",
+  BHD: "바레인 디나르",
+  BND: "브루나이 달러",
+  CNY: "중국 위안",
+  HKD: "홍콩 달러",
+  IDR: "인도네시아 루피아",
+  JPY: "일본 엔",
+  KRW: "대한민국 원",
+  KWD: "쿠웨이트 디나르",
+  MYR: "말레이시아 링깃",
+  SAR: "사우디아라비아 리얄",
+  SGD: "싱가포르 달러",
+  THB: "태국 바트",
+
+  // 북미
+  CAD: "캐나다 달러",
+  USD: "미국 달러",
+
+  // 오세아니아
+  AUD: "호주 달러",
+  NZD: "뉴질랜드 달러",
+};
+
 // 통화 코드에서 국가 코드 반환
 export const getCountryCodeFromCurrency = (currencyCode) => {
   return currencyToCountryCodeMap[currencyCode] || "UNKNOWN";
@@ -110,4 +143,9 @@ export const getCountryNameFromCurrency = (currencyCode) => {
 // 통화 코드에서 화폐 기호 반환
 export const getCurrencySymbolFromCurrency = (currencyCode) => {
   return currencyToSymbolMap[currencyCode] || "UNKNOWN";
+};
+
+// 통화 코드에서 한글 단위 반환
+export const getKoreanUnitFromCurrency = (currencyCode) => {
+  return currencyToKoreanUnitMap[currencyCode] || "알 수 없음";
 };
