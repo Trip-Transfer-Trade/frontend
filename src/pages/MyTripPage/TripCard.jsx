@@ -46,6 +46,8 @@ export default function TripCard({ trip }) {
   const progressStyle = { width: `${progress}%` };
   const flagURL = getCountryFlagURL(country)
 
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm relative cursor-pointer hover:shadow-md transition"
       onClick={()=>navigate(`/trip/${trip.id}/portfolio`)}
