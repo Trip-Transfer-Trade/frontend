@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 // 국가 이름을 ISO 2코드로 변환하는 매핑 객체
 const countryCodeMap = {
   "미국": "US",
@@ -37,8 +39,10 @@ export default function TripCard({ trip }) {
   const progressStyle = { width: `${progress}%` };
   const flagURL = getCountryFlagURL(country)
 
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm relative">
+    <div className="bg-white rounded-xl p-4 shadow-sm relative" onClick={() => navigate(":tripGoal/portfolio")}>
       <img src={flagURL} alt={country} className="absolute top-3 right-3 w-10 h-10" />
 
       <div className="flex justify-between items-start mb-2">
