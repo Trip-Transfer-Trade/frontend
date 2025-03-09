@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { fetchExchangeRates } from "../../../apis/exchanges";
+import { fetchExchangeRates } from "../../apis/exchanges";
 
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 
-import ExchangeRateList from "../../../components/ExchangeComponent/ExchangeRateList";
+import ExchangeRateList from "../../components/ExchangeComponent/ExchangeRateList";
 
 export default function RateTabContent() {
   const [exchangeRates, setExchangeRates] = useState([
