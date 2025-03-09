@@ -62,7 +62,7 @@ const TripEditPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-white px-6"> {/* ✅ 전체 패딩 조정 */}
+    <div className="flex flex-col h-screen bg-white px-6">
       <div className="pt-6">
         <BackNavigation />
       </div>
@@ -79,7 +79,6 @@ const TripEditPage = () => {
           </p>
         </div>
 
-        {/* 여행 이름 수정 */}
         <div
           className="border-b border-gray-200 py-4 px-2 flex justify-between items-center"
           onClick={() => setEditingField("name")}
@@ -98,7 +97,6 @@ const TripEditPage = () => {
           )}
         </div>
 
-        {/* 여행지 수정 */}
         <div className="border-b border-gray-200 py-4 px-2 flex justify-between items-center">
           <span className="text-gray-500">여행지</span>
           <button
@@ -127,7 +125,6 @@ const TripEditPage = () => {
           )}
         </div>
 
-        {/* 기간 수정 */}
         <div
           className="border-b border-gray-200 py-4 px-2 flex justify-between items-center"
           onClick={() => setEditingField("date")}
@@ -146,7 +143,6 @@ const TripEditPage = () => {
           )}
         </div>
 
-        {/* 금액 수정 */}
         <div
           className="border-b border-gray-200 py-4 px-2 flex justify-between items-center"
           onClick={() => setEditingField("amount")}
@@ -165,8 +161,7 @@ const TripEditPage = () => {
           )}
         </div>
 
-        {/* 버튼 */}
-        <div className="mt-10 space-y-3"> {/* ✅ 버튼 간격 조정 */}
+        <div className="mt-10 space-y-3">
           <button
             className="w-full py-3 bg-blue-500 hover:bg-gray-600 text-white rounded-lg font-medium"
             onClick={handleUpdate}
