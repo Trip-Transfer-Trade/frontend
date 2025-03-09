@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 
-import { fetchUserCurrencies } from "../../../apis/exchanges";
+import { fetchWallet } from "../../apis/exchanges";
 
-import OwnedCurrencyList from "../../../components/ExchangeComponent/OwnedCurrencyList";
+import OwnedCurrencyList from "../../components/ExchangeComponent/OwnedCurrencyList";
 
 export default function WalletTabContent() {
-  const [userCurrencies, setUserCurrencies] = useState([]);
+  const [ownedCurrencies, setOwnedCurrencies] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       try {
-        const data = await fetchUserCurrencies();
-        setUserCurrencies(data);
+        const data = await fetchWallet();
+        setOwnedCurrencies(data);
       } catch (error) {
         console.error("내 지갑 정보 불러오기 실패", error);
       } finally {
@@ -30,7 +30,7 @@ export default function WalletTabContent() {
       ) : (
         <div className="flex flex-col">
           <p className="text-lg font-bold mb-6">내 지갑</p>
-          <OwnedCurrencyList ownedCurrencyData={userCurrencies} />
+          <OwnedCurrencyList ownedCurrencyData={ownedCurrencies} />
         </div>
       )}
     </div>
