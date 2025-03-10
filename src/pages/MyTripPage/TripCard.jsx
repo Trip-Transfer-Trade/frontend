@@ -47,7 +47,7 @@ export default function TripCard({ trip }) {
   const progressStyle = { width: `${progress}%` };
   const flagURL = getCountryFlagURL(country)
 
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   return (
 
