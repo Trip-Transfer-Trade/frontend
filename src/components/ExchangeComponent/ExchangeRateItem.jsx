@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
-import { getCountryCodeFromCountryName } from "../../constants/countryMappings";
+import {
+  getCountryCodeFromCountryName,
+  getCurrencyCodeFromCountryName,
+} from "../../constants/countryMappings";
 
 export default function ExchangeRateItem({
   changePrice,
@@ -11,21 +13,15 @@ export default function ExchangeRateItem({
   const navigate = useNavigate();
 
   function parseCountryName(cur_nm) {
-    if (typeof cur_nm !== "string" || cur_nm.trim() === "") {
-      return "UNKNOWN"; // 예외 처리: 빈 값 또는 문자열이 아닌 경우
-    }
-    return cur_nm.split(" ")[0]; // countryName
-  }
-
-  function isPositive(changePrice) {
-    return !isNaN(changePrice) && changePrice > 0; // 숫자인지 확인 후 양수 여부 판별
+    if (!cur_nm || typeof cur_nm !== "string") return "UNKNOWN";
+    return cur_nm.split(" ")[0];
   }
 
   function handleClick() {
     const countryName = parseCountryName(cur_nm);
-    const currencyCode = getCountryCodeFromCountryName(countryName);
+    const currencyCode = getCurrencyCodeFromCountryName(countryName);
     navigate(`/exchange/rates/${currencyCode}`, {
-      state: { cur_nm, changePrice, changeRate, tts },
+      state: { changePrice, changeRate, cur_nm, tts },
     });
   }
 
@@ -50,10 +46,10 @@ export default function ExchangeRateItem({
         <span className="block text-lg">{tts}원</span>
         <span
           className={`text-sm ${
-            isPositive(changePrice) ? "text-red-500" : "text-blue-500"
+            changePrice > 0 ? "text-red-500" : "text-blue-500"
           }`}
         >
-          {changePrice}원({changeRate}%)
+          {changePrice}원 ({changeRate}%)
         </span>
       </span>
     </div>
