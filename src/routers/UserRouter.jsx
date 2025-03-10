@@ -24,7 +24,7 @@ const UserRouter = {
           element: <TransferConfirmPage />, // 최종 확인 페이지
         },
         {
-          path: "history",
+          path: "history/:id",
           element: <HistoryPage />,
         },
       ],

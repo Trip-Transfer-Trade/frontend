@@ -17,6 +17,10 @@ const countryCodeMap = {
   "멕시코": "MX",
   "인도": "IN",
   "브라질": "BR",
+  "아르헨티나": "AR",
+  "칠레": "CL",
+  "이집트": "EG",
+  "남아프리카공화국": "ZA",
   "이름없음": "UN"
 };
 
@@ -27,7 +31,10 @@ function getCountryFlagURL(countryName) {
 
 export default function TripCard({ trip }) {
 
+  const navigate = useNavigate();
+
   const {
+    id,
     name,
     country,
     goalAmount,
@@ -43,7 +50,9 @@ export default function TripCard({ trip }) {
   const navigate = useNavigate();
 
   return (
+
     <div className="bg-white rounded-xl py-4 px-6 shadow-md relative" onClick={() => navigate(":tripGoal/portfolio")}>
+      
       <p className="flex items-center justify-between text-gray-700 text-[15px] font-semibold">
         {name ?? "이름 없음"}
         <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600" />
@@ -53,8 +62,6 @@ export default function TripCard({ trip }) {
         <p className="text-2xl font-semibold">{displayAmount}원</p>
         <img src={flagURL} alt={country} className="w-15 h-15" style={{ borderRadius: "22px" }} />
       </div>
-
-
 
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
