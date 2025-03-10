@@ -5,7 +5,7 @@ import WalletDetailPage from "../pages/ExchangePage/WalletDetailPage";
 import GoalDetailPage from "../pages/ExchangePage/GoalDetailPage";
 import RateDetailPage from "../pages/ExchangePage/RateDetailPage";
 
-import Test from "../pages/ExchangePage/Test";
+// import Test from "../pages/ExchangePage/Test";
 
 const ExchangeRouter = {
   path: "/exchange",
@@ -17,7 +17,7 @@ const ExchangeRouter = {
     { path: "goals/:goalId", element: <GoalDetailPage /> },
     { path: "rates/:currencyCode", element: <RateDetailPage /> },
 
-    { path: "test", element: <Test /> },
+    // { path: "test", element: <Test /> },
   ],
 };
 
