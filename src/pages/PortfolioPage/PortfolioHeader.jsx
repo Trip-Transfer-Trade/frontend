@@ -1,14 +1,16 @@
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import { useSelector } from "react-redux";
+import { useState } from "react"
 import BackNavigation from "../../components/BackNavigation";
-import GoalCard from "../../components/portfolio/GoalCard";
+import GoalCard from "../../components/Portfolio/GoalCard";
 import { useParams } from "react-router-dom";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PortfolioHeader() {
   const { tripId } = useParams();
+    const [activeTab, setActiveTab] = useState("domestic")
   const assets = useSelector((state) => state.assets.assets);
   const selectedTrip = useSelector((state)=>state.trip.selectedTrip);
   if(!selectedTrip) return <p>여행 포트폴리오 상세 정보 불러오는 중...✈️</p>
@@ -73,9 +75,30 @@ export default function PortfolioHeader() {
   return (
     <div className="p-4 bg-white">
       <BackNavigation text= {name} />
-
+      <div className="flex items-center p-4 bg-white">
+        <div className="ml-auto">
+        <div className="w-[160px] h-8 bg-gray-100 rounded-full p-1 flex">
+            <button 
+              className={`flex-1 text-xs rounded-full flex items-center justify-center transition-colors ${
+                activeTab === "domestic" ? "bg-white shadow-sm" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("domestic")}
+            >
+              국내
+            </button>
+            <button 
+              className={`flex-1 text-xs rounded-full flex items-center justify-center transition-colors ${
+                activeTab === "international" ? "bg-white shadow-sm" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("international")}
+            >
+              해외
+            </button>
+          </div>
+        </div>
+      </div>
       <GoalCard profit={profit} goalAmount={goalAmount} endDate={endDate} />
-      
+
       <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
         <div className="mb-2">
           <h2 className="text-xl text-gray-500">총 자산</h2>

@@ -12,6 +12,10 @@ import StockTradingPage from "../pages/StockPage/StockTradingPage";
 import TripGoalSetup from "../pages/MyTripPage/TripGoal/TripGoalFlow";
 import GoalProgressPage from "../pages/PortfolioPage/GoalProgressPage";
 import TripEditPage from "../pages/PortfolioPage/TripEditPage";
+import TransferPage from "../pages/MyTripPage/TransferPage";
+import EnterAmountPage from "../pages/MyTripPage/EnterAmountPage";
+
+
 
 const TripRouter = {
   path: "/trip",
@@ -19,6 +23,9 @@ const TripRouter = {
     // 여행 목표 생성 
     { path: "tripgoal", element: <TripGoalSetup /> },
     { path: "service/info", element: <InfoPage /> },
+    { path: "transfer", element: < TransferPage/> },
+    { path: "transfer/amount", element: < EnterAmountPage/> },
+    
 
     // 포트폴리오
     { path: ":tripId/portfolio", element: <PortfolioPage /> },
