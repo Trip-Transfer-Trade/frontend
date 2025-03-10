@@ -26,6 +26,17 @@ export const fetchTripGoals = createAsyncThunk(
     }
   }
 );
+export const TripAll = createAsyncThunk(
+  "trip/tripAll",
+  async (_, thunkAPI) => {
+    try{
+      const response = await apiClient.get("/exchanges/tripAccount/info?currencyCodes=KRW,USD");
+      return response.data.data;
+    }catch(error){
+      return thunkAPI.rejectWithValue(error.response?.data || "여행 목표 조회 실패");
+    }
+  }
+);
 
 export const fetchTripById = createAsyncThunk(
   "trip/fetchTripById",
