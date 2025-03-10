@@ -31,7 +31,45 @@ export const countryNameToCountryCodeMap = {
   뉴질랜드: "NZ",
 };
 
+export const countryNameToCurrencyMap = {
+  // 유럽
+  스위스: "CHF",
+  덴마크: "DKK",
+  유럽연합: "EUR",
+  영국: "GBP",
+  노르웨이: "NOK",
+  스웨덴: "SEK",
+
+  // 아시아
+  아랍에미리트: "AED",
+  바레인: "BHD",
+  브루나이: "BND",
+  중국: "CNY",
+  홍콩: "HKD",
+  인도네시아: "IDR",
+  일본: "JPY",
+  대한민국: "KRW",
+  쿠웨이트: "KWD",
+  말레이시아: "MYR",
+  사우디아라비아: "SAR",
+  싱가포르: "SGD",
+  태국: "THB",
+
+  // 북미
+  캐나다: "CAD",
+  미국: "USD",
+
+  // 오세아니아
+  호주: "AUD",
+  뉴질랜드: "NZD",
+};
+
 // 국가 이름을 국가 코드로 변환하는 함수
 export const getCountryCodeFromCountryName = (countryName) => {
   return countryNameToCountryCodeMap[countryName] || "UNKNOWN";
+};
+
+// 국가 이름을 통화 코드로 변환하는 함수
+export const getCurrencyCodeFromCountryName = (countryName) => {
+  return countryNameToCurrencyMap[countryName] || "UNKNOWN";
 };

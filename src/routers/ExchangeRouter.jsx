@@ -3,7 +3,7 @@ import ExchangeCompletePage from "../pages/ExchangePage/ExchangeCompletePage";
 
 import WalletDetailPage from "../pages/ExchangePage/WalletDetailPage";
 import GoalDetailPage from "../pages/ExchangePage/GoalDetailPage";
-// import RateDetailPage from "../pages/ExchangePage/RateDetailPage";
+import RateDetailPage from "../pages/ExchangePage/RateDetailPage";
 
 import Test from "../pages/ExchangePage/Test";
 
@@ -15,7 +15,7 @@ const ExchangeRouter = {
 
     { path: "wallets/:currencyCode", element: <WalletDetailPage /> },
     { path: "goals/:goalId", element: <GoalDetailPage /> },
-    // { path: "rates/:currencyCode", element: <RateDetailPage /> },
+    { path: "rates/:currencyCode", element: <RateDetailPage /> },
 
     { path: "test", element: <Test /> },
   ],
