@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import apiClient from "../../apis/apiClient"
 import InputField from "../../components/InputField";
+import LoginModal from "./LoginModal";
 
 export default function LoginPage() {
   const logo = "/assets/images/logo.svg";
@@ -9,6 +10,7 @@ export default function LoginPage() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
 
   async function login() {
     setError(null);
@@ -55,6 +57,9 @@ export default function LoginPage() {
           >
             회원가입
           </button>
+
+          <button onClick={() => setModalOpen(true)}>모달창</button>
+          <LoginModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
         </div>
       </div>
     </div>
