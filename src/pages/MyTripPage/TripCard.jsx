@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { TbHandClick } from "react-icons/tb";
 
 // 국가 이름을 ISO 2코드로 변환하는 매핑 객체
 const countryCodeMap = {
@@ -49,28 +50,29 @@ export default function TripCard({ trip }) {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm relative cursor-pointer hover:shadow-md transition"
-      onClick={()=>navigate(`/trip/${trip.id}/portfolio`)}
-    >
-      <img src={flagURL} alt={country} className="absolute top-3 right-3 w-10 h-10" />
 
-      <div className="flex justify-between items-start mb-2">
-        <div>
-          <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
-          <p className="text-2xl font-bold">{displayAmount}원</p>
-        </div>
+    <div className="bg-white rounded-xl py-4 px-6 shadow-md relative" onClick={() => navigate(":tripGoal/portfolio")}>
+      
+      <p className="flex items-center justify-between text-gray-700 text-[15px] font-semibold">
+        {name ?? "이름 없음"}
+        <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600" />
+      </p>
+
+      <div className="flex items-center justify-between mb-2">
+        <p className="text-2xl font-semibold">{displayAmount}원</p>
+        <img src={flagURL} alt={country} className="w-15 h-15" style={{ borderRadius: "22px" }} />
       </div>
 
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
-          <div className="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded">
-            {progress.toFixed(0)}% 완료
+          <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
+            {progress.toFixed(0)}% 달성
           </div>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div className="bg-blue-500 h-2 rounded-full transition-all duration-500" style={progressStyle}></div>
         </div>
-        <p className="text-xs text-gray-500 mt-1 text-right">
+        <p className="text-[10px] text-gray-500 mt-1 text-right">
           {endDate} 까지 모으는 중
         </p>
       </div>
