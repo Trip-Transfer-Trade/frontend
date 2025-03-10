@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { useDrop } from "react-dnd";
 
-// 국가 이름을 ISO 2코드로 변환하는 매핑 객체
 const countryCodeMap = {
   "미국": "US",
   "캐나다": "CA",
@@ -29,26 +29,30 @@ function getCountryFlagURL(countryName) {
 }
 
 export default function TripCard({ trip }) {
-
   const navigate = useNavigate();
-
-  const {
-    id,
-    name,
-    country,
-    goalAmount,
-    profit,
-    endDate
-  } = trip;
-
+  const { id, name, country, goalAmount, profit, endDate } = trip;
   const displayAmount = (goalAmount ?? 0).toLocaleString();
   const progress = goalAmount > 0 ? Math.min((profit / goalAmount) * 100, 100) : 0;
   const progressStyle = { width: `${progress}%` };
   const flagURL = getCountryFlagURL(country)
 
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: "ACCOUNT_CARD",
+    drop: (item) => {
+      navigate(`/trip/transfer?account=${item.accountNumber}&trip=${id}`);
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
+
 
   return (
-    <div className="bg-white rounded-xl p-4 shadow-sm relative cursor-pointer hover:shadow-md transition"
+    <div 
+    ref={drop}
+      className={`bg-white rounded-xl p-4 shadow-sm relative cursor-pointer hover:shadow-md transition ${
+        isOver ? "border-2 border-blue-500" : ""
+      }`}
       onClick={()=>navigate(`/trip/${trip.id}/portfolio`)}
     >
       <img src={flagURL} alt={country} className="absolute top-3 right-3 w-10 h-10" />
