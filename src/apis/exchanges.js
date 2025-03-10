@@ -18,10 +18,40 @@ export const fetchWalletDetail = async (currencyCode) => {
   return response.data.data;
 };
 
+// 환전 가능 금액 조회
+export const fetchAvailableAmount = async () => {
+  console.log("fetchAvailableAmount 호출");
+  const response = await apiClient.get("/exchanges/myWallet/trip");
+  return response.data.data;
+};
+
+// 목표 별 보유 통화 조회
+export const fetchCurrenciesByGoal = async (accountId) => {
+  console.log(`fetchCurrenciesByGoal 호출: accountId=${accountId}`);
+  const response = await apiClient.get("/exchanges/myWallet/trip/all", {
+    params: { accountId },
+  });
+
+  return response.data.data;
+};
+
 // 환율 정보 조회
 export const fetchExchangeRates = async () => {
   console.log("fetchExchangeRates 호출");
   const response = await apiClient.get("/exchanges/rate");
+  return response.data.data.rates;
+};
+
+// 환율 차트 데이터 조회
+export const fetchExchangeRateChart = async (currencyCode, days) => {
+  console.log(
+    `fetchExchangeRateChart 호출: code=${currencyCode}, days=${days}`
+  );
+  const response = await apiClient.get("/exchanges/chart", {
+    params: { code: currencyCode, days },
+  });
+
+  console.log(response.data.data.rates);
   return response.data.data.rates;
 };
 
