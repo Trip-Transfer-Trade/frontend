@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { TbHandClick } from "react-icons/tb";
 import { useDrop } from "react-dnd";
 
 const countryCodeMap = {
@@ -66,14 +67,14 @@ export default function TripCard({ trip }) {
 
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
-          <div className="bg-blue-100 text-blue-600 text-xs px-2 py-0.5 rounded">
-            {progress.toFixed(0)}% 완료
+          <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
+            {progress.toFixed(0)}% 달성
           </div>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div className="bg-blue-500 h-2 rounded-full transition-all duration-500" style={progressStyle}></div>
         </div>
-        <p className="text-xs text-gray-500 mt-1 text-right">
+        <p className="text-[10px] text-gray-500 mt-1 text-right">
           {endDate} 까지 모으는 중
         </p>
       </div>
