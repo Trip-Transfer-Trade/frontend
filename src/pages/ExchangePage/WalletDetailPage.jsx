@@ -3,6 +3,7 @@ import { useParams, useLocation } from "react-router-dom";
 
 import { fetchWalletDetail } from "../../apis/exchanges";
 
+import { getCountryCodeFromCountryName } from "../../constants/countryMappings";
 import { getCurrencySymbolFromCurrency } from "../../constants/currencyMappings";
 
 import BackNavigation from "../../components/BackNavigation";
@@ -51,17 +52,26 @@ export default function WalletDetailPage() {
 
         <hr className="my-6 h-[2px] bg-custom-gray-2 border-none" />
 
-        <h3 className="text-custom-gray-3 font-bold mb-4">보유 내역</h3>
+        <p className="text-custom-gray-3 font-bold mb-4">보유 내역</p>
         <div className="space-y-4">
           {walletDetail.map((goal) => (
             <div
               key={goal.accountId}
               className="flex justify-between items-center p-4 bg-white rounded-lg border border-gray-300"
             >
-              <span></span>
-              <span className="text-right font-bold">
+              <div className="flex items-center space-x-2">
+                <img
+                  src={`https://flagsapi.com/${getCountryCodeFromCountryName(
+                    goal.country
+                  )}/flat/64.png`}
+                  alt={`${getCountryCodeFromCountryName(goal.country)} flag`}
+                  className="h-10"
+                />
+                <span className="font-bold">{goal.tripName}</span>
+              </div>
+              <div className="text-right font-bold">
                 {goal.amount} {currencyCode}
-              </span>
+              </div>
             </div>
           ))}
         </div>

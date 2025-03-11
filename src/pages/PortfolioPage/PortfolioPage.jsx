@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { fetchAssets } from "../../redux/assetsSlice";
 import { fetchTripById } from "../../redux/tripSlice";
 import PortfolioHeader from "./PortfolioHeader";
-import AssetsList from "../../components/portfolio/AssetList";
+import AssetsList from "../../components/Portfolio/AssetList";
 import Footer from "../../layout/Footer";
 
 export default function Portfolio() {
