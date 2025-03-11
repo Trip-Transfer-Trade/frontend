@@ -1,131 +1,73 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ChevronLeft, Plus, Home, Globe, DollarSign, User } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Plus } from "lucide-react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
-import { EffectCoverflow } from "swiper/modules";
-import BackNavigation from "../../components/BackNavigation";
-import Footer from "../../layout/Footer";
+import { useEffect } from "react"; 
+import TripCard from "./TripCard";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchTripGoals } from "../../redux/tripSlice";
+import { TbHandClick } from "react-icons/tb";
 
-const TripMainPage = () => {
+export default function TripMainPage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { tripGoals, status, error } = useSelector((state) => state.trip);
 
-  const [goals] = useState([
-    {
-      id: 1,
-      country: "미국",
-      flag: "🇺🇸",
-      title: "미국 여행 가기",
-      amount: "1,000,000원",
-      daysLeft: 51,
-      bgColor: "bg-white",
-      textColor: "text-black",
-    },
-    {
-      id: 2,
-      country: "일본",
-      flag: "🇯🇵",
-      title: "일본 여행 가기",
-      amount: "1,000,000원",
-      daysLeft: 51,
-      bgColor: "bg-blue-500",
-      textColor: "text-white",
-    },
-    {
-      id: 3,
-      country: "프랑스",
-      flag: "🇫🇷",
-      title: "프랑스 여행 가기",
-      amount: "2,000,000원",
-      daysLeft: 120,
-      bgColor: "bg-white",
-      textColor: "text-black",
-    },
-  ]);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchTripGoals());
+    }
+  }, [dispatch, status]);
+
+  useEffect(() => {
+    if (Array.isArray(tripGoals) && tripGoals.length === 0) {
+      dispatch(fetchTripGoals());
+    }
+  }, [tripGoals, dispatch]);
 
   return (
-    <div className="flex flex-col h-screen">
-      <BackNavigation />
-      {/* Main Content */}
-      <div className="flex-1 px-4 pb-20">
-        <h1 className="text-xl font-medium mb-6 mt-2">
-          내가 가고싶은 여행지는?
-        </h1>
+    <div className="flex flex-col min-h-screen">
+      <main className="flex-1 p-4 space-y-4">
+        {status === "loading" && <p>로딩 중...</p>}
+        {status === "failed" && <p>여행 목표 조회 실패: {error}</p>}
+        
+        {/* 내 계좌 정보 추가 */}
+        <div className="bg-white rounded-xl py-5 px-6 shadow-md flex flex-col relative">
+          {/* 상단: 계좌명 + 아이콘 */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <img src="/assets/images/trip/ShinhanIcon.svg" alt="로그인" className="w-8 h-8" />
+              <div>
+                <p className="text-sm font-medium text-black">내 메인 계좌</p>
+                <p className="text-xs text-gray-500">123-456-789</p>
+              </div>
+            </div>
+            
+            {/* 클릭 아이콘 */}
+            <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600" />
+          </div>
 
-        {/* Swiper Carousel */}
-        <div className="mt-4">
-          <Swiper
-            effect={"coverflow"}
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={"auto"}
-            coverflowEffect={{
-              rotate: 0,
-              stretch: 0,
-              depth: 100,
-              modifier: 1,
-              slideShadows: false,
-            }}
-            modules={[EffectCoverflow]}
-            className="mySwiper"
-          >
-            {goals.map((goal) => (
-              <SwiperSlide key={goal.id} className="w-[280px] h-[280px]">
-                <div
-                  className={`${goal.bgColor} ${goal.textColor} rounded-3xl shadow-lg p-5 h-full flex flex-col`}
-                  onClick={() => navigate(`/trip/${goal.id}/portfolio`)}
-                >
-                  <div className="flex items-center mb-4">
-                    <span className="text-2xl mr-2">{goal.flag}</span>
-                    <span className="text-lg font-medium">{goal.title}</span>
-                  </div>
-
-                  <div className="flex-1 flex items-center justify-center">
-                    <img
-                      src="/placeholder.svg?height=100&width=150"
-                      alt="Airplane"
-                      className="w-32 h-auto"
-                    />
-                  </div>
-
-                  <div className="flex justify-between items-end mt-4">
-                    <div>
-                      <div className="text-sm opacity-80">목표 금액</div>
-                      <div className="text-xl font-bold">{goal.amount}</div>
-                    </div>
-                    <div className="text-lg font-medium">D-{goal.daysLeft}</div>
-                  </div>
-
-                  <button
-                    className={`mt-4 text-sm py-2 w-full text-center rounded-full ${
-                      goal.bgColor === "bg-white" ? "text-black" : "text-white"
-                    }`}
-                  >
-                    수익 확인하러 가기
-                  </button>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+          {/* 하단: 금액 (오른쪽 정렬) */}
+          <div className="flex justify-end mt-2">
+            <p className="text-xl font-semibold">5,000,000원</p>
+          </div>
         </div>
+        {/* 여행 목표 리스트 */}
+        {Array.isArray(tripGoals) && tripGoals.length > 0 ? (
+          tripGoals.map((trip) => <TripCard key={trip.id} trip={trip} />)
+        ) : (
+          <p>여행 목표가 없습니다.</p>
+        )}
 
-        {/* Add Goal Button */}
-        <div className="mt-8 px-4">
-          <button
-            className="w-full py-4 bg-gray-100 text-gray-600 rounded-xl flex items-center justify-center"
-            onClick={() => {
-              navigate("/trip/tripgoal");
-            }}
-          >
-            <Plus size={20} className="mr-2" />
-            <span>목표 등록</span>
-          </button>
-        </div>
-      </div>
-      <Footer />
+        {/* 새로운 목표 추가 버튼 */}
+        <button
+          className="w-full py-4 mt-4 bg-gray-100 rounded-xl flex items-center justify-center"
+          onClick={() => navigate("/trip/tripgoal")}
+        >
+          <Plus className="w-5 h-5 text-gray-500 mr-1" />
+          <span className="text-gray-500">새로운 목표 등록</span>
+        </button>
+      </main>
     </div>
   );
-};
-
-export default TripMainPage;
+}

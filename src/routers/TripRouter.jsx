@@ -1,7 +1,6 @@
 import InfoPage from "../pages/MyTripPage/TripGoal/InfoPage";
 
 import PortfolioPage from "../pages/PortfolioPage/PortfolioPage";
-import TripEditPage from "../pages/MyTripPage/TripEditPage";
 import RankingPage from "../pages/PortfolioPage/RankingPage";
 
 import FailedPage from "../pages/MyTripPage/TripGoal/FailedPage";
@@ -11,19 +10,21 @@ import SuccessDetailPage from "../pages/MyTripPage/TripGoal/SuccessDetailPage";
 import StockPage from "../pages/StockPage/StockPage";
 import StockTradingPage from "../pages/StockPage/StockTradingPage";
 import TripGoalSetup from "../pages/MyTripPage/TripGoal/TripGoalFlow";
-
+import GoalProgressPage from "../pages/PortfolioPage/GoalProgressPage";
+import TripEditPage from "../pages/PortfolioPage/TripEditPage";
 
 const TripRouter = {
   path: "/trip",
   children: [
-    // 여행 목표 생성
+    // 여행 목표 생성 
     { path: "tripgoal", element: <TripGoalSetup /> },
     { path: "service/info", element: <InfoPage /> },
 
     // 포트폴리오
-    { path: ":tripGoal/portfolio", element: <PortfolioPage /> },
-    { path: ":tripGoal/portfolio/edit", element: <TripEditPage /> },
-    { path: ":tripGoal/portfolio/rank", element: <RankingPage /> },
+    { path: ":tripId/portfolio", element: <PortfolioPage /> },
+    { path: ":tripId/portfolio/progress", element: <GoalProgressPage /> },
+    { path: ":tripId/portfolio/progress/edit", element: <TripEditPage /> },
+    { path: ":tripId/portfolio/rank", element: <RankingPage /> },
 
     // 여행 목표 성공&실패
     { path: ":tripGoal/failed", element: <FailedPage /> },

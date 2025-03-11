@@ -1,8 +1,25 @@
-import { IoChevronForwardOutline } from "react-icons/io5";
-
 import MenuItem from "../../components/UserComponent/MenuItem";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchUserInfo } from "../../apis/users";
+import { logout } from "../../apis/users";
 
 export default function UserPage() {
+
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const loadUserInfo = async () => {
+      const userData = await fetchUserInfo();
+      if (userData) {
+        setUser(userData);
+        console.log(userData);
+      }
+    };
+    loadUserInfo();
+  }, []);
+
   const menuItems = [
     { icon: "📊", label: "내 주식", path: "/" },
     { icon: "💳", label: "전체 계좌", path: "/mypage/transfer/recipient" },
@@ -23,20 +40,40 @@ export default function UserPage() {
           className="w-24 h-24 rounded-lg"
         />
 
-        <div className="w-full space-y-4">
-          <div className="flex items-center justify-between">
-            <p className="font-bold">김신한</p>
-            <button className="text-custom-gray-3 text-xs flex items-center space-x-1">
-              <span>내 정보 확인</span>
-              <IoChevronForwardOutline className="w-4 h-4" />
-            </button>
-          </div>
+    <div className="w-full space-y-4">
+      <div className="flex items-center justify-between">
+        <p className="font-bold">{user ? user.name : "로딩 중..."}</p>
 
-          <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-            <span className="text-xs text-gray-600">목표 달성</span>
-            <span className="text-xs">3회</span>
-          </div>
+        {/* 내 정보 & 로그아웃 버튼 */}
+        <div className="flex items-center space-x-2">
+          <button
+            className="text-custom-gray-3 text-xs flex items-center"
+            onClick={() => navigate("profile", { state: { user } })}
+          >
+            <span>내 정보</span>
+          </button>
+
+          {/* 얇은 선 */}
+          <div className="h-4 w-[1px] bg-gray-200"></div>
+
+          <button
+            className="text-custom-gray-3 text-xs flex items-center"
+            onClick={async () => {
+              await logout();
+              navigate("/auth/login"); // 로그인 페이지로 이동
+            }} 
+          >
+            <span>로그아웃</span>
+          </button>
         </div>
+      </div>
+
+  <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
+    <span className="text-xs text-gray-600">목표 달성</span>
+    <span className="text-xs">3회</span>
+  </div>
+</div>
+
       </div>
 
       <div className="left-0 right-0 top-[calc(50%-2px)] h-[4px] bg-custom-gray-2 z-0"></div>

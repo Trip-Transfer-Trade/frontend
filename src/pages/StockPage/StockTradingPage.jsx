@@ -17,6 +17,12 @@ export default function StockTradingPage() {
 
     const [stockItems, setStockItems] = useState({});
     const [tradeMode, setTradeMode] = useState(trademode || "buy");
+    const [price, setPrice] = useState("0");
+    const [stockChangeRate, setStockChangeRate] = useState("0");
+    const [askPrices, setAskPrices] = useState([]);
+    const [bidPrices, setBidPrices] = useState([]);
+    const [askQuantities, setAskQuantities] = useState([]);
+    const [bidQuantities, setBidQuantities] = useState([]);
     const [purchasePrice, setPurchasePrice] = useState("0")
     const [quantity, setQuantity] = useState(0)
     const [availableFunds] = useState(100000)
@@ -39,9 +45,21 @@ export default function StockTradingPage() {
         .then((response) => {
             console.log("📌 API 응답 데이터:", response.data);
             console.log("넘어온 ticker", code);
-            setStockItems(response.data);
 
-            const price = isCheckCode ? parseFloat(response.data.output2.stck_prpr, 10) : parseFloat(response.data.stockPrice ?? response.data.data.output1.last, 10);
+            const priceData = isCheckCode ? response.data.data.output2.stck_prpr : response.data.data.output1.last;
+            setPrice(priceData);
+
+            const changeRate = isCheckCode ? response.data.data.output2.antc_cntg_prdy_ctrt : (((parseFloat(response.data.data.output1.last) - parseFloat(response.data.data.output1.base)) / parseFloat(response.data.data.output1.base)) * 100).toFixed(2);
+            setStockChangeRate(changeRate);
+
+            const askP = Object.values(isCheckCode ? response.data.data.output1.askPrices || {} : response.data.data.output2.paskPrices || {});
+            const bidP = Object.values(isCheckCode ? response.data.data.output1.bidPrices || {} : response.data.data.output2.pbidPrices || {});
+            const askQ = Object.values(isCheckCode ? response.data.data.output1.askQuantities || {} : response.data.data.output2.vaskQuantities || {});
+            const bidQ = Object.values(isCheckCode ? response.data.data.output1.bidQuantities || {} : response.data.data.output2.vbidQuantities || {});
+            setAskPrices(askP);
+            setBidPrices(bidP);
+            setAskQuantities(askQ);
+            setBidQuantities(bidQ);
 
             setCurrencyPrice(price);
             setPurchasePrice(price);
@@ -53,12 +71,12 @@ export default function StockTradingPage() {
         .catch((err) => {
             console.error("API 호출 중 오류 발생:", err);
         })
-    }, [code])
+    }, [code, price])
 
     
     const handleTradeModeChange = (mode) => {
         setTradeMode(mode);
-        navigate(`/stocks/${mode}`, { state: {name, code}, replace: true });
+        navigate(`/trip/${tripGoal}/stocks/${mode}`, { state: {name, code}, replace: true });
     };
 
 
@@ -107,19 +125,6 @@ export default function StockTradingPage() {
         })
     }
 
-    const askPrices = Object.values(isCheckCode ? stockItems.output1?.askPrices || {} : stockItems.output2?.paskPrices || {});
-    const bidPrices = Object.values(isCheckCode ? stockItems.output1?.bidPrices || {} : stockItems.output2?.pbidPrices || {});
-    const askQuantities = Object.values(isCheckCode ? stockItems.output1?.askQuantities || {} : stockItems.output2?.vaskQuantities || {});
-    const bidQuantities = Object.values(isCheckCode ? stockItems.output1?.bidQuantities || {} : stockItems.output2?.vbidQuantities || {});
-
-    const stockPrice = isCheckCode ? Number(stockItems.output2?.stck_prpr) : Number(stockItems.output1?.last);
-
-    const stockChangeRate = isCheckCode ? stockItems.output2?.antc_cntg_prdy_ctrt
-    : stockItems.output1?.last && stockItems.output1?.base 
-        ? (((parseFloat(stockItems.output1.last) - parseFloat(stockItems.output1.base)) / parseFloat(stockItems.output1.base)) * 100).toFixed(2)
-        : null;
-
-
     return (
         <div>
             <BackNavigation text="" />
@@ -129,15 +134,17 @@ export default function StockTradingPage() {
                     <h1 className="text-xl font-bold text-center flex-1">{name}</h1>
                 </div>
                 <div className="text-center flex items-center justify-center gap-2">
-                    <div className="text-l font-bold text-blue-600">{stockPrice ? stockPrice.toLocaleString() : "데이터 없음"}{currencySymbol}</div>
+                    <div className="text-l font-bold text-blue-600">{price.toLocaleString()}{currencySymbol}</div>
                     <div className="text-xs text-blue-600">{stockChangeRate ?? "데이터 없음"}%</div>
                 </div>
             </div>
             <div className="flex">
                 <div className="w-2/5 border-r border-gray-100 flex flex-col min-h-0 h-[614px] overflow-y-auto scrollbar-hide " ref={scrollRef}>
-                    {askPrices.map((price, index) => (
+                    {[...askPrices]
+                    .sort((a, b) => b - a)
+                    .map((price, index) => (
                         <div key={`ask-${index}`} style={{ backgroundColor: "rgba(224, 231, 255, 0.1)" }} className="flex border-b border-gray-100 items-center">
-                        <div className="w-20 p-3 text-blue-600 font-medium text-center">
+                        <div className="w-20 p-3 text-red-600 font-medium text-center">
                             {Number(price).toLocaleString()}
                         </div>
                         <div className="w-20 p-3 text-sm text-gray-500 text-right text-center">
@@ -146,9 +153,11 @@ export default function StockTradingPage() {
                         </div>
                     ))}
 
-                    {bidPrices.map((price, index) => (
+                    {[...bidPrices]
+                    .sort((a, b) => b - a)
+                    .map((price, index) => (
                         <div key={`bid-${index}`} style={{ backgroundColor: "rgba(255, 233, 233, 0.1)" }} className="flex border-b border-gray-100 items-center">
-                        <div className="w-20 p-3 text-red-600 font-medium text-center">
+                        <div className="w-20 p-3 text-blue-600 font-medium text-center">
                             {Number(price).toLocaleString()}
                         </div>
                         <div className="w-20 p-3 text-sm text-gray-500 text-right text-center">
@@ -168,7 +177,7 @@ export default function StockTradingPage() {
 
                     <div className="py-2">
                         <div className="w-full flex flex-col items-left justify-between border rounded-lg px-4 py-3 border-gray-300">
-                            <div className="text-sm text-gray-600 mb-2">{tradeMode === "buy" ? "구매 가격" : "판매 가격"}</div>
+                            <div className="text-sm text-gray-600 mb-2">{tradeMode === "buy" ? "매수 가격" : "매도 가격"}</div>
                             <div className="flex">
                                 <p className="text-xl font-bold">{purchasePrice.toLocaleString()}{currencySymbol}</p>
                                 <div className="flex ml-auto">
@@ -185,7 +194,7 @@ export default function StockTradingPage() {
 
                     <div>
                         <div className="w-full flex flex-col items-left justify-between border rounded-lg px-4 py-3 border-gray-300">
-                            <div className="text-sm text-gray-600 mb-2">{tradeMode === "buy" ? "구매 수량" : "판매 수량"}</div>
+                            <div className="text-sm text-gray-600 mb-2">{tradeMode === "buy" ? "매수 수량" : "매도 수량"}</div>
                             <div className="flex">
                                 <p className="text-lg font-bold">{quantity} 주</p>
                                 <div className="flex ml-auto">
@@ -201,17 +210,17 @@ export default function StockTradingPage() {
                     </div>
 
                     <div className="p-2 flex justify-between items-center">
-                        <p className="text-sm text-gray-600">{tradeMode === "buy" ? "구매 가능 금액" : "판매 가능 금액"}</p>
+                        <p className="text-sm text-gray-600">{tradeMode === "buy" ? "매수 가능 금액" : "매도 가능 금액"}</p>
                         <p className="font-medium">{availableFunds.toLocaleString()}{currencySymbol}</p>
                     </div>
 
                     <div className="mt-auto">
                         <div className="p-2 flex justify-between items-center mt-auto">
-                            <p className="text-sm text-gray-600">{tradeMode === "buy" ? "주문 금액" : "판매 금액"}</p>
+                            <p className="text-sm text-gray-600">{tradeMode === "buy" ? "매수 금액" : "매도 금액"}</p>
                             <p className="text-xl font-semibold">{totalAmount.toLocaleString()}{currencySymbol}</p>
                         </div>
                         <button onClick={handlePurchase} className={`w-full p-2 text-xl font-bold h-[48px] text-white rounded-lg ${ tradeMode === "buy" ? "bg-red-500" : "bg-blue-500" }`}>
-                            {tradeMode === "buy" ? "구매하기" : "판매하기"}
+                            {tradeMode === "buy" ? "매수하기" : "매도하기"}
                         </button>
                     </div>
                 </div>
