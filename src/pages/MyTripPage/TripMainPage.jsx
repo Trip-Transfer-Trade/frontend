@@ -43,7 +43,7 @@ export default function TripMainPage() {
           {status === "failed" && <p>여행 목표 조회 실패: {error}</p>}
           
         {Array.isArray(tripGoals) && tripGoals.length > 0 ? (
-            tripGoals.map((trip) => <TripCard key={trip.id} trip={trip} />)
+            tripGoals.map((trip) => <TripCard key={trip.tripId} trip={trip} />)
           ) : (
             <p>여행 목표가 없습니다.</p>
           )}

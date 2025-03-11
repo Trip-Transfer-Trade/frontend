@@ -69,7 +69,7 @@ export const updateTrip = createAsyncThunk(
 const tripSlice = createSlice({
   name: "trip",
   initialState: {
-    id:"",
+    tripId:"",
     name:"",
     country: "",
     goalAmount: null,
