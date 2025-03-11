@@ -17,13 +17,13 @@ export default function Tabs({ children }) {
   return (
     <div>
       {/* 탭 헤더 */}
-      <div className="flex space-x-1 px-8">
+      <div className="flex space-x-1">
         {children.map((child) => {
           const { label, onClick } = child.props;
           return (
             <button
               key={label}
-              className={`relative w-[55px] h-[34px] flex items-center justify-center text-lg ${
+              className={`relative w-[55px] h-[34px] flex items-center justify-center text-md ${
                 activeTab === label
                   ? "font-bold text-black after:content-[''] after:absolute after:bottom-0 after:left-[50%] after:translate-x-[-50%] after:w-[55px] after:h-[2px] after:bg-black"
                   : "text-gray-400"
