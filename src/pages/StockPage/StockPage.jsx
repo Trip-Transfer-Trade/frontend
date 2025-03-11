@@ -60,15 +60,15 @@ export default function StockPage() {
         <div>
             <BackNavigation text="투자하기" />
             <div>
-                <section className="nation-container">
-                <Tabs className="stockTab">
+                <section className="nation-container  px-8">
+                <Tabs>
                     <Tab label="국내" onClick={() => { setNationTab("국내"); }}>
                         <div className="search-container">
                             <input type="text" className="searchInput" placeholder="검색어를 입력해 주세요."/>
                             <img src="/assets/images/stock/searchBtn.svg" alt="검색 돋보기 아이콘" className="searchBtn" />
                         </div>
                         <div className="ranking-title-k">실시간 랭킹</div>
-                        <section className="ranking-container">
+                        <section>
                             <Tabs>
                                 {[
                                     { label: "상승", value: "top"},

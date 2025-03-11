@@ -2,10 +2,20 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./MainPage.module.css";
 import { getAccountStatus } from "../../apis/accounts";
+import StockToggle from "../../components/StockToggle";
+import StockItem from "../../components/StockItem";
+import apiClient from "../../apis/apiClient";
+import Tabs from "../../components/Tabs";
+import Tab from "../../components/Tab";
 
 export default function MainPage() {
   const navigate = useNavigate();
   const [accountStatus, setAccountStatus] = useState(null);
+
+  const [selected, setSelected] = useState("국내");
+  const [stockItems, setStockItems] = useState({ list: [] });
+  const [exchangeRate, setExchangeRate] = useState(0);
+  const [type, setType] = useState("top");
 
   // 🔹 계좌 상태 확인
   useEffect(() => {
@@ -21,6 +31,39 @@ export default function MainPage() {
     }
     checkAccountStatus();
   }, []);
+
+  const convertType = (type) => ({
+    "상승": "top",
+    "하락": "low",
+    "인기": "popular",
+    "거래량": "volume"
+  }[type] || "top");
+
+  useEffect(() => {
+    if (selected === "해외") {
+      apiClient.get("/exchanges/rate/us")
+        .then((response) => {
+          const rate = parseFloat(response.data.rate.replace(/,/g, ""));
+          setExchangeRate(rate);
+        })
+        .catch((err) => {
+          console.error("환율 가져오기 실패", err);
+        });
+    }
+  }, [selected]);
+
+  useEffect(() => {
+    apiClient.get(selected === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking", {
+      params: { type: convertType(type) }
+    })
+      .then((response) => {
+        const stockData = selected === "국내" ? response.data.data.output : response.data.output2;
+        setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
+      })
+      .catch((err) => {
+        console.log("주식 데이터 조회 실패", err);
+      });
+  }, [selected, type]);
   
 
   const renderBanner = () => {
@@ -143,6 +186,41 @@ export default function MainPage() {
             />
           </div>
           <h5 className={styles.serviceTitle}>여행지 추천</h5>
+        </div>
+      </div>
+
+      <div>
+        <div className="pt-6">
+          <StockToggle selected={selected} setSelected={setSelected} />
+        </div>
+        <div className="pb-5">
+          <section className="px-3">
+            <Tabs>
+              {[
+                { label: "상승", value: "top" },
+                { label: "하락", value: "low" },
+                { label: "인기", value: "popular" },
+                { label: "거래량", value: "volume" },
+              ].map(({ label, value }) => (
+                <Tab key={value} label={label} onClick={() => { setType(label); }}>
+                  <div className="ranking-tab">
+                    {stockItems.list.slice(0, 10).map((item, index) => (
+                      <StockItem
+                        key={item.rank || index}
+                        rank={item.rank || index + 1}
+                        logo="https://via.placeholder.com/40"
+                        name={selected === "국내" ? item.hts_kor_isnm : item.knam}
+                        code={selected === "국내" ? item.ticker : item.symb}
+                        price={selected === "해외" ? (item.last * exchangeRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : item.stck_prpr}
+                        change={selected === "국내" ? item.prdy_ctrt : item.rate}
+                        isDollar={selected === "해외"}
+                      />
+                    ))}
+                  </div>
+                </Tab>
+              ))}
+            </Tabs>
+          </section>
         </div>
       </div>
     </div>

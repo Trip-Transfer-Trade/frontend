@@ -6,7 +6,6 @@
 .search-container {
     width: 100%;
     height: 59px;
-    padding: 30px 24px 50px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -38,7 +37,7 @@
 
 .ranking-title-k {
     font-size: 18px;
-    padding: 0 32px;
+    padding: 20px 0;
     font-weight: bold;
 }
 
@@ -52,7 +51,6 @@
     flex-direction: column;
     max-height: 320px;
     overflow-y: auto;
-    padding: 0 32px;
     gap: 4px;
     position: relative;
 }
@@ -72,7 +70,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 40px;
+    padding: 20px 10px;
 }
 
 
