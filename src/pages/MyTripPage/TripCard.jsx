@@ -18,9 +18,10 @@ function getCountryFlagURL(countryName) {
 
 export default function TripCard({ trip }) {
   const navigate = useNavigate();
-  const { id, name, country, goalAmount, profit, endDate } = trip;
-  const displayAmount = (goalAmount ?? 0).toLocaleString();
-  const progress = goalAmount > 0 ? Math.min((profit / goalAmount) * 100, 100) : 0;
+  const { tripId, name, country, goalAmount, totalProfit, totalAmountInKRW, endDate } = trip;
+  const displayAmount = (totalAmountInKRW ?? 0).toLocaleString();
+  const goalA = trip.goalAmount ?? 0; 
+  const progress = goalA > 0 ? Math.min((totalProfit / goalA) * 100, 100) : 0;
   const progressStyle = { width: `${progress}%` };
   const flagURL = getCountryFlagURL(country)
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function TripCard({ trip }) {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "ACCOUNT_CARD",
     drop: (item) => {
-      navigate(`/trip/transfer?account=${item.accountNumber}&trip=${id}`);
+      navigate(`/trip/transfer?account=${item.accountNumber}&trip=${trip.tripId}`);
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -40,7 +41,7 @@ export default function TripCard({ trip }) {
     if (goalAmount === 0) {
       setIsModalOpen(true);
     } else {
-      navigate(`/trip/${trip.id}/portfolio`);
+      navigate(`/trip/${trip.tripId}/portfolio`);
     }
   };
 
@@ -81,7 +82,7 @@ export default function TripCard({ trip }) {
             <p className="text-gray-600 text-center">계좌에 투자를 위한 돈이 부족합니다. 지금 바로 이체를 진행할까요?</p>
             <button
               onClick={() => {
-                navigate(`/trip/transfer?trip=${id}`);
+                navigate(`/trip/transfer?trip=${tripId}`);
                 setIsModalOpen(false);
               }}
               className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg"
