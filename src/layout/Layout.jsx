@@ -6,15 +6,11 @@ import Footer from "../layout/Footer";
 export default function Layout() {
   return (
     <div>
-      <header className="z-999">
-        <Header />
-      </header>
-      <div className="flex flex-col flex-grow pt-[6vh] pb-[10vh] w-full">
+      <Header />
+      <div className="flex flex-col flex-grow pt-[10vh] pb-[10vh] w-full">
         <Outlet />
       </div>
-      <footer className="z-999">
-        <Footer />
-      </footer>
+      <Footer />
     </div>
   );
 }

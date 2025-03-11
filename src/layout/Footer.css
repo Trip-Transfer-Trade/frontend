@@ -2,7 +2,16 @@
   position: fixed;
   bottom: 0;
   height: 10vh;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #ccc;
   background-color: white;
-  padding: 12px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.footer-icon {
+  color: var(--color-custom-gray-3);
+}
+
+.footer-icon-selected {
+  color: var(--color-brand-blue);
 }

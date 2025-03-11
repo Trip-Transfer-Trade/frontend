@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-import logo from "../../assets/images/logo.svg";
+import apiClient from "../../apis/apiClient"
+import InputField from "../../components/InputField";
 
 export default function LoginPage() {
+  const logo = "src/assets/images/logo.svg";
   const navigate = useNavigate();
-
-  const [id, setId] = useState("");
+  const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
-  function login() {
-    console.log(id);
-    console.log(password);
-  }
-
-  function signup() {
-    console.log(id);
-    console.log(password);
-    navigate("/auth/signup/profile");
+  async function login() {
+    setError(null);
+    try {
+      await apiClient.post("/members/login", { userName, password });
+      navigate("/");
+    } catch (error) {
+      setError(error, "아이디 또는 비밀번호가 잘못되었습니다.");
+    }
   }
 
   return (
@@ -26,39 +26,26 @@ export default function LoginPage() {
         <div className="p-12">
           <img src={logo} alt="Logo" />
         </div>
-
         <div className="w-full space-y-4">
           <h2 className="text-xl font-bold">로그인</h2>
-
-          <div className="space-y-3">
-            <input
-              type="text"
-              placeholder="아이디 입력"
-              className="h-12 w-full rounded-md border border-gray-300 bg-gray-50 px-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-              onChange={(e) => setId(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="비밀번호 입력"
-              className="h-12 w-full rounded-md border border-gray-300 bg-gray-50 px-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <div className="space-y-4">
-            <button
-              className="h-12 w-full rounded-md bg-brand-blue text-white"
-              onClick={login}
-            >
-              로그인하기
-            </button>
-            <button
-              className="h-12 w-full rounded-md bg-blue-100 text-blue-600"
-              onClick={signup}
-            >
-              회원가입
-            </button>
-          </div>
+          <InputField
+            label="아이디"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <InputField
+            label="비밀번호"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+          />
+          {error && <p className="text-red-500">{error}</p>}
+          <button
+            className="h-12 w-full rounded-md bg-brand-blue text-white"
+            onClick={login}
+          >
+            로그인하기
+          </button>
         </div>
       </div>
     </div>
