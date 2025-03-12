@@ -6,6 +6,7 @@
   background-color: white;
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
+  z-index: 10;
 }
 
 .footer-icon {
@@ -14,4 +15,8 @@
 
 .footer-icon-selected {
   color: var(--color-brand-blue);
+}
+
+.modal-overlay {
+  z-index: 50;
 }
