@@ -7,6 +7,9 @@ import StockItem from "../../components/StockItem";
 import apiClient from "../../apis/apiClient";
 import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
+import StockLogo from "../../components/StockLogo";
+import StockLogoUs from "../../components/StockLogoUs";
+import StockLogoRandom from "../../components/StockLogoRandom";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -37,6 +40,14 @@ export default function MainPage() {
     "인기": "popular",
     "거래량": "volume"
   }[type] || "top");
+
+  const getStockLogo = (stockCode, isKorean) => {
+    const stockLogos = isKorean ? StockLogo : StockLogoUs;
+    const stock = stockLogos.find(item => item.stockCode === stockCode);
+    const randomIndex = Math.floor(Math.random() * StockLogoRandom.length);
+
+    return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
+  };
 
   useEffect(() => {
     if (selected === "해외") {
@@ -208,10 +219,10 @@ export default function MainPage() {
                       <StockItem
                         key={item.rank || index}
                         rank={item.rank || index + 1}
-                        logo="https://via.placeholder.com/40"
+                        logo={selected === "국내" ? getStockLogo(item.ticker, true) : getStockLogo(item.symb, false)}
                         name={selected === "국내" ? item.hts_kor_isnm : item.knam ? item.knam.toLocaleString() : "undefined"}
                         code={selected === "국내" ? item.ticker : item.symb}
-                        price={selected === "국내" ? item.stck_prpr : item.last}
+                        price={selected === "국내" ? item.stck_prpr : Number(item.last).toFixed(2)}
                         change={selected === "국내" ? item.prdy_ctrt : item.rate}
                         isDollar={selected === "국내" ? false : true }
                       />
