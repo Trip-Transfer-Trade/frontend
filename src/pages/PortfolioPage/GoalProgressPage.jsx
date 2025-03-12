@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchTripById } from "../../redux/tripSlice";
-import BackNavigation from "../../components/BackNavigation"
+import BackNavigation from "../../components/BackNavigation";
+import GoalMidpointModal from "../../components/portfolio/GoalMidpointModal";
+import BulkSellWarningModal from "../../components/portfolio/BulkSellWarningModal";
 
 const GoalProgressPage = () => {
   const { tripId } = useParams();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,14 +28,16 @@ const GoalProgressPage = () => {
     krwDeposit = 0,
     usdDeposit = 0,
     status,
-    error
+    error,
   } = selectedTrip;
 
   const [endGoalChecked, setEndGoalChecked] = useState(false);
   const [sellAfterEnd, setSellAfterEnd] = useState(false);
 
-  if (status === "loading") return <div className="p-4 text-center">로딩 중...</div>
-  if (status === "failed") return <div className="p-4 text-center text-red-500">에러: {error}</div>
+  if (status === "loading")
+    return <div className="p-4 text-center">로딩 중...</div>;
+  if (status === "failed")
+    return <div className="p-4 text-center text-red-500">에러: {error}</div>;
 
   return (
     <div className="flex flex-col min-h-screen px-4">
@@ -62,7 +67,9 @@ const GoalProgressPage = () => {
           </div>
           <div className="flex justify-between py-3 border-b border-gray-100">
             <span className="text-gray-600">평가 금액</span>
-            <span className="font-medium">{evaluationAmount.toLocaleString()}원</span>
+            <span className="font-medium">
+              {evaluationAmount.toLocaleString()}원
+            </span>
           </div>
           <div className="flex justify-between py-3 border-b border-gray-100">
             <span className="text-gray-600">환화 예수금</span>
@@ -75,35 +82,55 @@ const GoalProgressPage = () => {
         </div>
 
         <div className="space-y-4 mb-6">
-          
           <div
-            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${sellAfterEnd ? "text-gray-400" : "text-black"}`}
-            onClick={() => { setEndGoalChecked(true); setSellAfterEnd(false); }}
+            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${
+              sellAfterEnd ? "text-gray-400" : "text-black"
+            }`}
+            onClick={() => {
+              setEndGoalChecked(true);
+              setSellAfterEnd(false);
+            }}
           >
             <div
-              className={`rounded-full border w-5 h-5 flex items-center justify-center shrink-0 ${endGoalChecked ? "bg-blue-500 border-blue-500" : "bg-white border-gray-300"}`}
+              className={`rounded-full border w-5 h-5 flex items-center justify-center shrink-0 ${
+                endGoalChecked
+                  ? "bg-blue-500 border-blue-500"
+                  : "bg-white border-gray-300"
+              }`}
             >
               {endGoalChecked && <span className="text-white text-sm">✓</span>}
             </div>
             <div>
               <p className="font-medium">목표만 종료하기</p>
-              <p className="text-sm text-gray-500">목표만 종료할 경우, 투자 종목은 유지됩니다.</p>
+              <p className="text-sm text-gray-500">
+                목표만 종료할 경우, 투자 종목은 유지됩니다.
+              </p>
             </div>
           </div>
 
           <div
-            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${endGoalChecked ? "text-gray-400" : "text-black"}`}
-            onClick={() => { setSellAfterEnd(true); setEndGoalChecked(false); }}
+            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${
+              endGoalChecked ? "text-gray-400" : "text-black"
+            }`}
+            onClick={() => {
+              setSellAfterEnd(true);
+              setEndGoalChecked(false);
+            }}
           >
             <div
-              className={`rounded-full border w-5 h-5 flex items-center justify-center shrink-0 ${sellAfterEnd ? "bg-blue-500 border-blue-500" : "bg-white border-gray-300"}`}
+              className={`rounded-full border w-5 h-5 flex items-center justify-center shrink-0 ${
+                sellAfterEnd
+                  ? "bg-blue-500 border-blue-500"
+                  : "bg-white border-gray-300"
+              }`}
             >
               {sellAfterEnd && <span className="text-white text-sm">✓</span>}
             </div>
             <div className="w-auto">
               <p className="font-medium">목표 종료 후, 보유 종목 매도하기</p>
               <p className="text-sm text-gray-500">
-                목표 종료 시, 해당 목표에서 투자한 종목은 모두 매도되어 예수금으로 전환됩니다.
+                목표 종료 시, 해당 목표에서 투자한 종목은 모두 매도되어
+                예수금으로 전환됩니다.
               </p>
             </div>
           </div>
@@ -111,12 +138,20 @@ const GoalProgressPage = () => {
 
         <button
           className="w-full py-3 bg-gray-100 hover:bg-gray-300 text-gray-500 rounded-lg font-medium mt-auto mb-2"
+          onClick={() => setIsModalOpen(!isModalOpen)}
         >
           목표 종료하기
         </button>
       </div>
+      {/* 모달 렌더링 */}
+      {/* {isModalOpen && (
+        <GoalMidpointModal onClose={() => setIsModalOpen(false)} />
+      )} */}
+      {isModalOpen && (
+        <BulkSellWarningModal onClose={() => setIsModalOpen(false)} />
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default GoalProgressPage;
