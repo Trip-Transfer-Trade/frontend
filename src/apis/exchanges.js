@@ -72,3 +72,14 @@ export const fetchTransaction = async (transactionData) => {
     throw error;
   }
 };
+
+export const fetchExchangeGoal = async (exchangeGoal) =>{
+  console.log("즉시 환전 실행");
+  try{
+    const response = await apiClient.post(`/exchanges/goal`,exchangeGoal);
+    return response.data.data;
+  } catch (error) {
+    console.error("즉시 환전 실패", error);
+    throw error;
+  }
+}
