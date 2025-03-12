@@ -3,25 +3,43 @@ import Confetti from "./Confetti";
 import SharedModal from "../../../components/Modal";
 import ExchangeMethod from "../../ExchangePage/ExchangeMethodPage";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { getCurrencyCodeFromCountryName } from "../../../constants/countryMappings";
+import { fetchTripByTripId } from "../../../apis/trips";
 
-export default function FailedPage() {
+export default function SuccessPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { tripGoal } = useParams();
+  const tripId = tripGoal.replace("tripGoal","");
+
+  const [modalData, setModalData] = useState({
+    tripId: "",
+    currencyCode: "",
+  });
 
   const navigate = useNavigate();
 
-  const handleExchangeClick = () => {
-    console.log("환전하러 가기");
-    setIsModalOpen(true);
+  const handleExchangeClick = async () => {
+    console.log(tripId);
+    try {
+      const response = await fetchTripByTripId(tripId);
+      const currencyCode = getCurrencyCodeFromCountryName(response.country);
+      setModalData({ tripId, currencyCode });
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("여행 정보를 가져오는 중 에러 발생", error);
+    }
   };
 
   const handleNextClick = () => {
     console.log("다음에 할게요");
-    navigate("/trip");
+    // 환전 지갑으로 넘어가기..? 확정해야함
+    // navigate("/exchange");
   };
 
-  const handleDetailClick = () => {
+  const handleDetailClick = (tripId) => {
     console.log("목표 내역 자세히 보기");
-    navigate("/trip/success/detail");
+    navigate(`/trip/${tripId}/portfolio`);
   };
 
   const handleQuestionClick = () => {
@@ -55,7 +73,7 @@ export default function FailedPage() {
         <div className="w-full text-center font-['Pretendard-Medium']">
           <h1 className="text-[22px] text-gray-900">목표에 도달했어요!</h1>
           <button
-            onClick={handleDetailClick}
+            onClick={handleDetailClick(tripId)}
             className="text-[13px] text-gray-500"
           >
             목표 내역 자세히 보러가기
@@ -69,7 +87,7 @@ export default function FailedPage() {
           </div>
           <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
           <button
-            onClick={handleExchangeClick}
+            onClick={() => handleExchangeClick()}
             className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-Bold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             환전하러 가기
@@ -84,7 +102,9 @@ export default function FailedPage() {
       </div>
       {isModalOpen && (
         <SharedModal onClose={() => setIsModalOpen(false)}>
-          <ExchangeMethod />
+          <ExchangeMethod 
+          tripId={modalData.tripId}
+          currencyCode={modalData.currencyCode}/>
         </SharedModal>
       )}
     </div>
