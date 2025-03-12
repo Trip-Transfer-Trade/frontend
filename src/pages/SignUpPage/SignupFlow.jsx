@@ -46,8 +46,10 @@ export default function SignupFlow() {
         code:formData.verificationCode
       });
       setIsVerified(true);
+      alert("인증 완료");
     } catch {
       alert("인증 번호가 올바르지 않습니다.")
+      setIsVerified(false);
     }
   }
 
@@ -111,23 +113,27 @@ export default function SignupFlow() {
       <div className="flex-grow w-full mx-auto p-6">
         {step === 0 && (
           <>
-            <InputField label="이름" name="name" value={formData.name} onChange={handleChange} />
-            <InputField label="성별" name="gender" value={formData.gender} onChange={handleChange} type="select" options={["M", "F"]} />
-            <InputField label="생년월일" name="birthDate" value={formData.birthDate} onChange={handleChange} type="date" />
+            <InputField className="mb-4" label="이름" name="name" value={formData.name} onChange={handleChange} />
+            <InputField className="mb-4" label="성별" name="gender" value={formData.gender} onChange={handleChange} type="select" options={["M", "F"]} />
+            <InputField className="mb-4" label="생년월일" name="birthDate" value={formData.birthDate} onChange={handleChange} type="date" />
           </>
         )}
         {step === 1 && (
           <>
             <InputField label="전화번호" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-            <button type="button" onClick={handleRequestVerificationCode} disabled={isVerificationRequested}>
+            <button className="mb-4 text-sm" type="button" onClick={handleRequestVerificationCode} disabled={isVerificationRequested}>
               {isVerificationRequested ? "인증번호 재요청" : "인증번호 요청"}
             </button>
-
             {isVerificationRequested && (
               <>
-                <InputField label="인증번호" name="verificationCode" value={formData.verificationCode} onChange={handleChange} />
-                <button type="button" onClick={handleCheckVerificationCode} disabled={isVerified}>
-                  {isVerified && <p style={{ color: "green" }}>✅ 인증 완료</p>}                
+                <InputField
+                  label="인증번호"
+                  name="verificationCode"
+                  value={formData.verificationCode}
+                  onChange={handleChange}
+                />
+                <button className="mb-4 text-sm" type="button" onClick={handleCheckVerificationCode}>
+                  인증번호 확인
                 </button>
               </>
             )}
@@ -158,7 +164,10 @@ export default function SignupFlow() {
 
       <div className="p-6">
         {step < 3 ? (
-          <NextConfirmButton text={step === 2 ? "완료" : "다음"} onClick={nextStep} />
+          <NextConfirmButton text={step === 2 ? "완료" : "다음"} onClick={() => {
+            if (step === 1 && !isVerified) return;
+            nextStep();
+          }} />
         ) : null}
       </div>
     </div>
