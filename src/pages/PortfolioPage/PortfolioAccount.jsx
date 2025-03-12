@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAccountData } from "../../redux/accountSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ModalCenter from "../../components/ModalCenter";
 
 export default function PortfolioAccount({activeTab}) {
 
   const { tripId } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data, status } = useSelector((state) => state.account);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function PortfolioAccount({activeTab}) {
     if (activeTab === "u" && data.depositAmount === 0) {
       setIsModalOpen(true);
     } else {
-      console.log("투자 진행 가능");
+      navigate(`/trip/${tripId}/stocks`);
     }
   };
 
@@ -65,7 +66,9 @@ export default function PortfolioAccount({activeTab}) {
       </div>
 
       <div className="grid grid-cols-3 gap-2 mt-3">
-        <button className="py-1 border border-gray-300 rounded-md text-sm">이체하기</button>
+        <button className="py-1 border border-gray-300 rounded-md text-sm" >
+          이체하기
+        </button>
         <button className="py-1 border border-gray-300 rounded-md text-sm" onClick={handleInvestClick}>
           투자하기
         </button>
@@ -80,7 +83,7 @@ export default function PortfolioAccount({activeTab}) {
         <div className="flex flex-col space-y-2 w-10/12 my-3 mx-auto">
           <button 
             className="w-full py-[10px] bg-blue-500 text-white text-base rounded-md transition-all hover:bg-blue-600"
-            onClick={() => console.log("환전 페이지로 이동")}
+            onClick={() => navigate(`/trip/${tripId}/exchange`)} //페이지 만들기
           >
             환전하러 가기
           </button>
