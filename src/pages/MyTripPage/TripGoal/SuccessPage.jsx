@@ -7,9 +7,11 @@ import { useParams } from "react-router-dom";
 import { getCurrencyCodeFromCountryName } from "../../../constants/countryMappings";
 import { fetchTripByTripId } from "../../../apis/trips";
 
-export default function FailedPage() {
+export default function SuccessPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { tripGoal } = useParams();
+  const tripId = tripGoal.replace("tripGoal","");
+
   const [modalData, setModalData] = useState({
     tripId: "",
     currencyCode: "",
@@ -18,7 +20,6 @@ export default function FailedPage() {
   const navigate = useNavigate();
 
   const handleExchangeClick = async () => {
-    const tripId = tripGoal.replace("tripGoal","");
     console.log(tripId);
     try {
       const response = await fetchTripByTripId(tripId);
@@ -32,13 +33,13 @@ export default function FailedPage() {
 
   const handleNextClick = () => {
     console.log("다음에 할게요");
-    // 환전 지갑으로 넘어가기기
-    navigate("/");
+    // 환전 지갑으로 넘어가기..? 확정해야함
+    // navigate("/exchange");
   };
 
-  const handleDetailClick = () => {
+  const handleDetailClick = (tripId) => {
     console.log("목표 내역 자세히 보기");
-    navigate("/trip/success/detail");
+    navigate(`/trip/${tripId}/portfolio`);
   };
 
   const handleQuestionClick = () => {
@@ -72,7 +73,7 @@ export default function FailedPage() {
         <div className="w-full text-center font-['Pretendard-Medium']">
           <h1 className="text-[22px] text-gray-900">목표에 도달했어요!</h1>
           <button
-            onClick={handleDetailClick}
+            onClick={handleDetailClick(tripId)}
             className="text-[13px] text-gray-500"
           >
             목표 내역 자세히 보러가기

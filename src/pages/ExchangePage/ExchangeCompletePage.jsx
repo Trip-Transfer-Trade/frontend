@@ -2,16 +2,19 @@ import { X } from "lucide-react"
 import ExchangeCompleteResultCard from "../../components/ExchangeComponent/ExchangCompleteResultCard";
 import { useLocation } from "react-router-dom";
 import { getCurrencySymbolFromCurrency } from "../../constants/currencyMappings";
+import { useNavigate } from "react-router-dom";
+
 export default function ExchangeCompletePage() {
   const { state } = useLocation();
   const exchanges = state?.exchanges;
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col items-center min-h-screen p-6">
       
-      {/* Close Button */}
       <div className="absolute top-6 right-6">
-        <button className="text-gray-400">
+        <button className="text-gray-400"
+          onClick={navigate(`/exchange`)}>
           <X size={28} strokeWidth={1.5} />
         </button>
       </div>

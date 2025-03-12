@@ -7,8 +7,6 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
   const [selectedOption, setSelectedOption] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-
-  console.log(tripId, currencyCode);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -29,6 +27,24 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
     } catch (error) {
       console.error("환전 완료 데이터 가져오기 실패", error);
     }          
+  };
+
+  const handleExchangeAfter = () =>{
+    navigate(`/exchange?tab=목표`);
+  }
+
+  const handleButtonClick = (option) => {
+    if (selectedOption !== option) {
+      // 처음 클릭: 선택 상태로 전환 (애니메이션 효과 등)
+      setSelectedOption(option);
+    } else {
+      // 이미 선택된 상태에서 다시 클릭 시 onClick 이벤트 실행
+      if (option === 0) {
+        handleExchangeClick();
+      } else if (option === 1) {
+        handleExchangeAfter();
+      }
+    }
   };
 
   return (
@@ -72,7 +88,7 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
                   ? "bg-blue-600 text-white border-0" 
                   : "bg-custom-gray-1 text-gray-700"
               }`}
-                onClick={() => {setSelectedOption(0); handleExchangeClick()}}>
+                onClick={() => {handleButtonClick(0)}}>
 
             <div className="p-5 text-left">
               <div className="font-['Pretendard-Medium'] text-[17px]">즉시 환전하기</div>
@@ -100,7 +116,7 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
                   ? "bg-blue-600 text-white border-0" 
                   : "bg-custom-gray-1 text-gray-700"
               }`}
-            onClick={() => setSelectedOption(1)}
+            onClick={() => {handleButtonClick(1);}}
           >
             <div className="p-5">
               <div className="font-['Pretendard-Medium'] text-[17px]">3일 뒤에 하기</div>
