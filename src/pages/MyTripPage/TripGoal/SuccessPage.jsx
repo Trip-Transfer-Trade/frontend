@@ -3,20 +3,37 @@ import Confetti from "./Confetti";
 import SharedModal from "../../../components/Modal";
 import ExchangeMethod from "../../ExchangePage/ExchangeMethodPage";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { getCurrencyCodeFromCountryName } from "../../../constants/countryMappings";
+import { fetchTripByTripId } from "../../../apis/trips";
 
 export default function FailedPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { tripGoal } = useParams();
+  const [modalData, setModalData] = useState({
+    tripId: "",
+    currencyCode: "",
+  });
 
   const navigate = useNavigate();
 
-  const handleExchangeClick = () => {
-    console.log("환전하러 가기");
-    setIsModalOpen(true);
+  const handleExchangeClick = async () => {
+    const tripId = tripGoal.replace("tripGoal","");
+    console.log(tripId);
+    try {
+      const response = await fetchTripByTripId(tripId);
+      const currencyCode = getCurrencyCodeFromCountryName(response.country);
+      setModalData({ tripId, currencyCode });
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("여행 정보를 가져오는 중 에러 발생", error);
+    }
   };
 
   const handleNextClick = () => {
     console.log("다음에 할게요");
-    navigate("/trip");
+    // 환전 지갑으로 넘어가기기
+    navigate("/");
   };
 
   const handleDetailClick = () => {
@@ -69,7 +86,7 @@ export default function FailedPage() {
           </div>
           <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
           <button
-            onClick={handleExchangeClick}
+            onClick={() => handleExchangeClick()}
             className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-Bold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             환전하러 가기
@@ -84,7 +101,9 @@ export default function FailedPage() {
       </div>
       {isModalOpen && (
         <SharedModal onClose={() => setIsModalOpen(false)}>
-          <ExchangeMethod />
+          <ExchangeMethod 
+          tripId={modalData.tripId}
+          currencyCode={modalData.currencyCode}/>
         </SharedModal>
       )}
     </div>
