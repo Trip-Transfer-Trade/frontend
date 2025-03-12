@@ -6,6 +6,7 @@ import { TbWorld } from "react-icons/tb";
 import { IoWalletOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa6";
 import { useAuth } from "../context/AuthProvider";
+import LoginModal from "../pages/LoginPage/LoginModal";
 
 import "./Footer.css";
 
@@ -14,6 +15,7 @@ export default function Footer() {
   const location = useLocation();
 
   const [selected, setSelected] = useState("home");
+  const [isModalOpen, setModalOpen] = useState(false);
 
   //로그인 상태 가져오기 
   const { isLoggedIn, updateLoginStatus } = useAuth();
@@ -38,9 +40,11 @@ export default function Footer() {
 
     if (isLoggedIn === false && selected !== "home") {
       console.warn("🚪 로그아웃 감지 - 로그인 페이지로 이동");
-      navigate("/auth/login");
+      navigate("/");
+      setSelected("home");
+      setModalOpen(true);
     }
-  }, [isLoggedIn, selected, navigate]); // selected가 변경될 때마다 실행
+  }, [isLoggedIn, selected]);
 
   function getIconClass(menu) {
     return selected === menu ? "footer-icon-selected" : "footer-icon";
@@ -75,6 +79,8 @@ export default function Footer() {
 
   return (
     <footer className="footer flex w-full items-center justify-between px-6">
+      <LoginModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
+
       {menus.map((menu) => (
         <div
           key={menu.id}

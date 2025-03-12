@@ -7,6 +7,9 @@ import StockItem from "../../components/StockItem";
 import apiClient from "../../apis/apiClient";
 import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
+import StockLogo from "../../components/StockLogo";
+import StockLogoUs from "../../components/StockLogoUs";
+import StockLogoRandom from "../../components/StockLogoRandom";
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -14,15 +17,14 @@ export default function MainPage() {
 
   const [selected, setSelected] = useState("국내");
   const [stockItems, setStockItems] = useState({ list: [] });
-  const [exchangeRate, setExchangeRate] = useState(0);
-  const [type, setType] = useState("top");
+  const [type, setType] = useState("상승");
 
   // 🔹 계좌 상태 확인
   useEffect(() => {
     async function checkAccountStatus() {
       try {
         const status = await getAccountStatus();
-        console.log("Account Status:", status); // 🔥 이제 항상 문자열 출력됨
+        console.log("Account Status:", status); 
         setAccountStatus(status);
       } catch (error) {
         console.error("계좌 상태 조회 실패:", error);
@@ -39,17 +41,25 @@ export default function MainPage() {
     "거래량": "volume"
   }[type] || "top");
 
+  const getStockLogo = (stockCode, isKorean) => {
+    const stockLogos = isKorean ? StockLogo : StockLogoUs;
+    const stock = stockLogos.find(item => item.stockCode === stockCode);
+    const randomIndex = Math.floor(Math.random() * StockLogoRandom.length);
+
+    return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
+  };
+
   useEffect(() => {
     if (selected === "해외") {
       apiClient.get("/exchanges/rate/us")
         .then((response) => {
           const rate = parseFloat(response.data.rate.replace(/,/g, ""));
-          setExchangeRate(rate);
         })
         .catch((err) => {
           console.error("환율 가져오기 실패", err);
         });
     }
+    setType("상승");
   }, [selected]);
 
   useEffect(() => {
@@ -57,6 +67,7 @@ export default function MainPage() {
       params: { type: convertType(type) }
     })
       .then((response) => {
+        console.log("API 응답 데이터:", response.data);
         const stockData = selected === "국내" ? response.data.data.output : response.data.output2;
         setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
       })
@@ -202,18 +213,18 @@ export default function MainPage() {
                 { label: "인기", value: "popular" },
                 { label: "거래량", value: "volume" },
               ].map(({ label, value }) => (
-                <Tab key={value} label={label} onClick={() => { setType(label); }}>
+                <Tab key={value} label={label} onClick={() => { setType(label); console.log("API 응답 데이터:", response.data) }}>
                   <div className="ranking-tab">
                     {stockItems.list.slice(0, 10).map((item, index) => (
                       <StockItem
                         key={item.rank || index}
                         rank={item.rank || index + 1}
-                        logo="https://via.placeholder.com/40"
-                        name={selected === "국내" ? item.hts_kor_isnm : item.knam}
+                        logo={selected === "국내" ? getStockLogo(item.ticker, true) : getStockLogo(item.symb, false)}
+                        name={selected === "국내" ? item.hts_kor_isnm : item.knam ? item.knam.toLocaleString() : "undefined"}
                         code={selected === "국내" ? item.ticker : item.symb}
-                        price={selected === "해외" ? (item.last * exchangeRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : item.stck_prpr}
+                        price={selected === "국내" ? item.stck_prpr : Number(item.last).toFixed(2)}
                         change={selected === "국내" ? item.prdy_ctrt : item.rate}
-                        isDollar={selected === "해외"}
+                        isDollar={selected === "국내" ? false : true }
                       />
                     ))}
                   </div>

@@ -2,6 +2,7 @@ import React from "react"
 import "./StockItem.css"
 
 const StockItem = ({ rank, logo, name, code, price, change, isDollar = false }) => {
+  console.log("📌 StockItem Props:", { rank, name, code, price, change });
   const formattedCode = code ?? "ticker"
   const formattedPrice = (price ?? 0).toLocaleString();
   const checkChange = change ?? "0";

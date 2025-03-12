@@ -5,6 +5,9 @@ import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
 import StockItem from "../../components/StockItem";
 import apiClient from "../../apis/apiClient";
+import StockLogo from "../../components/StockLogo";
+import StockLogoUs from "../../components/StockLogoUs";
+import StockLogoRandom from "../../components/StockLogoRandom";
 
 import "./StockPage.css"
 import { Link, Outlet, useParams } from "react-router-dom";
@@ -39,6 +42,15 @@ export default function StockPage() {
         "인기": "popular",
         "거래량": "volume"
     }[type] || "top");
+
+    const getStockLogo = (stockCode, isKorean) => {
+        const stockLogos = isKorean ? StockLogo : StockLogoUs;
+        const stock = stockLogos.find(item => item.stockCode === stockCode);
+        const randomIndex = Math.floor(Math.random() * StockLogoRandom.length);
+
+        return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
+    };
+    
 
     useEffect(() => {
         console.log("🟢 API 호출! nationTab:", nationTab, "type:", type);
@@ -82,7 +94,7 @@ export default function StockPage() {
                                                 <Link key={item.data_rank} to={`/trip/${tripGoal}/stocks/buy`} state={{ name: item.hts_kor_isnm, code: item.ticker, tripGoal }}>
                                                     <StockItem 
                                                         rank={item.data_rank}
-                                                        logo="https://via.placeholder.com/40"
+                                                        logo={getStockLogo(item.ticker, true)}
                                                         name={item.hts_kor_isnm}
                                                         code={item.ticker}
                                                         price={item.stck_prpr}
@@ -123,10 +135,10 @@ export default function StockPage() {
                                                 <Link key={item.rank} to={`/trip/${tripGoal}/stocks/buy`} state={{ name: item.knam, code: item.symb, tripGoal }}>
                                                 <StockItem 
                                                     rank={item.rank > 0 ? item.rank : index + 1}
-                                                    logo="https://via.placeholder.com/40"
+                                                    logo={getStockLogo(item.symb, false)}
                                                     name={item.knam ? item.knam.toLocaleString() : "undefined"}
                                                     code={item.symb}
-                                                    price={isToggled ? (item.last * exchangeRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : item.last}
+                                                    price={isToggled ? (item.last * exchangeRate).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : Number(item.last).toFixed(2)}
                                                     change={item.rate}
                                                     isDollar={!isToggled}
                                                 />
