@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 
-export default function ExchangeModal({ onClose, toCurrency }) {
+export default function ExchangeModal({ onClose, toCurrency, goalId }) {
   const navigate = useNavigate();
 
   return (
@@ -23,7 +23,7 @@ export default function ExchangeModal({ onClose, toCurrency }) {
           <button
             onClick={() => {
               navigate("/exchange/currency", {
-                state: { fromCurrency: "USD", toCurrency },
+                state: { fromCurrency: "USD", toCurrency, goalId }, // ✅ goalId 추가
               });
             }}
             className="flex flex-col bg-custom-gray-1 px-8 py-4 rounded-2xl justify-center items-center"
@@ -38,7 +38,7 @@ export default function ExchangeModal({ onClose, toCurrency }) {
           <button
             onClick={() => {
               navigate("/exchange/currency", {
-                state: { fromCurrencyCode: "KRW", toCurrency },
+                state: { fromCurrencyCode: "KRW", toCurrency, goalId },
               });
             }}
             className="flex flex-col bg-custom-gray-1 px-8 py-4 rounded-2xl justify-center items-center"

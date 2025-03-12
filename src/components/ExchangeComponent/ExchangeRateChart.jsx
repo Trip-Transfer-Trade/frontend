@@ -9,7 +9,10 @@ import {
 } from "recharts";
 import { fetchExchangeRateChart } from "../../apis/exchanges";
 
-export default function ExchangeRateChart({ currencyCode = "USD" }) {
+export default function ExchangeRateChart({
+  currencyCode = "USD",
+  showPeriodButtons = true,
+}) {
   const [selectedPeriod, setSelectedPeriod] = useState("1M");
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -117,27 +120,29 @@ export default function ExchangeRateChart({ currencyCode = "USD" }) {
           </ResponsiveContainer>
         )}
       </div>
-      <div className="flex justify-between space-x-2 px-6">
-        {["1M", "3M", "6M", "1Y"].map((period) => (
-          <button
-            key={period}
-            className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
-              selectedPeriod === period
-                ? "bg-brand-blue text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-            onClick={() => setSelectedPeriod(period)}
-          >
-            {period === "1M"
-              ? "1개월"
-              : period === "3M"
-              ? "3개월"
-              : period === "6M"
-              ? "6개월"
-              : "1년"}
-          </button>
-        ))}
-      </div>
+      {showPeriodButtons && (
+        <div className="flex justify-between space-x-2 px-6">
+          {["1M", "3M", "6M", "1Y"].map((period) => (
+            <button
+              key={period}
+              className={`flex-1 py-2 text-sm font-medium rounded-lg transition-all ${
+                selectedPeriod === period
+                  ? "bg-brand-blue text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+              onClick={() => setSelectedPeriod(period)}
+            >
+              {period === "1M"
+                ? "1개월"
+                : period === "3M"
+                ? "3개월"
+                : period === "6M"
+                ? "6개월"
+                : "1년"}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
