@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchTripById } from "../../redux/tripSlice";
-import Footer from "../../layout/Footer"
 import BackNavigation from "../../components/BackNavigation"
 
 const GoalProgressPage = () => {
@@ -116,8 +115,6 @@ const GoalProgressPage = () => {
           목표 종료하기
         </button>
       </div>
-
-      <Footer />
     </div>
   )
 }

@@ -3,6 +3,8 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 import signupReducer from "./signupSlice";
 import assetsReducer from "./assetsSlice";
 import tripReducer from "./tripSlice";
+import nomalAccountReducer from "./nomalAccountSlice";
+import accountReducer from "./accountSlice";
 
 // ✅ 이체 관련 transfer slice 추가
 const transferSlice = createSlice({
@@ -39,6 +41,8 @@ export default configureStore({
     signup: signupReducer,
     assets: assetsReducer,
     trip: tripReducer,
-    transfer: transferSlice.reducer, // 여기 추가
+    nomalAccount: nomalAccountReducer,
+    account: accountReducer,
+    transfer: transferSlice.reducer,
   },
 });
