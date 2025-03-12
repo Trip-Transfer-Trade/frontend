@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { fetchExchangeGoal } from "../../apis/exchanges";
 import { X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-export default function ExchangeMethodPage({ onClose }) {
+export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
   const [selectedOption, setSelectedOption] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
+  console.log(tripId, currencyCode);
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
@@ -12,6 +16,20 @@ export default function ExchangeMethodPage({ onClose }) {
     
     return () => clearTimeout(timer);
   }, []);
+
+  const handleExchangeClick = async () => {
+    console.log("id" , tripId,"code", currencyCode);   
+    try {
+      const response = await fetchExchangeGoal({
+        tripId : tripId,
+        toCurrency : currencyCode
+      }); 
+      console.log(response.exchanges)
+      navigate('/exchange/complete',{state: { exchanges: response.exchanges }});
+    } catch (error) {
+      console.error("환전 완료 데이터 가져오기 실패", error);
+    }          
+  };
 
   return (
     <div 
@@ -54,7 +72,7 @@ export default function ExchangeMethodPage({ onClose }) {
                   ? "bg-blue-600 text-white border-0" 
                   : "bg-custom-gray-1 text-gray-700"
               }`}
-                onClick={() => setSelectedOption(0)}>
+                onClick={() => {setSelectedOption(0); handleExchangeClick()}}>
 
             <div className="p-5 text-left">
               <div className="font-['Pretendard-Medium'] text-[17px]">즉시 환전하기</div>
