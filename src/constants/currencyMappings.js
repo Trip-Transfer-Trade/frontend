@@ -1,7 +1,7 @@
 export const currencyToCountryCodeMap = {
   // 유럽
   CHF: "CH", // 스위스
-  DKK: "DK", // 덴마크
+  DKK: "DK", // 덴마아크
   EUR: "EU", // 유럽연합
   GBP: "GB", // 영국
   NOK: "NO", // 노르웨이
@@ -11,14 +11,14 @@ export const currencyToCountryCodeMap = {
   AED: "AE", // 아랍에미리트
   BHD: "BH", // 바레인
   BND: "BN", // 브루나이
-  CNY: "CN", // 중국
+  CNH: "CN", // 중국
   HKD: "HK", // 홍콩
   IDR: "ID", // 인도네시아
   JPY: "JP", // 일본
   KRW: "KR", // 대한민국
   KWD: "KW", // 쿠웨이트
-  MYR: "MY", // 말레이시아
-  SAR: "SA", // 사우디아라비아
+  MYR: "MY", // 말레이지아
+  SAR: "SA", // 사우디
   SGD: "SG", // 싱가포르
   THB: "TH", // 태국
 
@@ -34,7 +34,7 @@ export const currencyToCountryCodeMap = {
 export const currencyToCountryNameMap = {
   // 유럽
   CHF: "스위스",
-  DKK: "덴마크",
+  DKK: "덴마아크",
   EUR: "유럽연합",
   GBP: "영국",
   NOK: "노르웨이",
@@ -44,14 +44,14 @@ export const currencyToCountryNameMap = {
   AED: "아랍에미리트",
   BHD: "바레인",
   BND: "브루나이",
-  CNY: "중국",
+  CNH: "중국",
   HKD: "홍콩",
   IDR: "인도네시아",
   JPY: "일본",
   KRW: "대한민국",
   KWD: "쿠웨이트",
-  MYR: "말레이시아",
-  SAR: "사우디아라비아",
+  MYR: "말레이지아",
+  SAR: "사우디",
   SGD: "싱가포르",
   THB: "태국",
 
@@ -67,8 +67,8 @@ export const currencyToCountryNameMap = {
 export const currencyToSymbolMap = {
   // 유럽
   CHF: "CHF", // 스위스 프랑
-  DKK: "kr", // 덴마크 크로네
-  EUR: "€", // 유로
+  DKK: "kr", // 덴마아크 크로네
+  EUR: "€", // 유럽연합 유로
   GBP: "£", // 영국 파운드
   NOK: "kr", // 노르웨이 크로네
   SEK: "kr", // 스웨덴 크로나
@@ -77,14 +77,14 @@ export const currencyToSymbolMap = {
   AED: "د.إ", // 아랍에미리트 디르함
   BHD: ".د.ب", // 바레인 디나르
   BND: "B$", // 브루나이 달러
-  CNY: "¥", // 중국 위안
+  CNH: "¥", // 중국 위안
   HKD: "HK$", // 홍콩 달러
   IDR: "Rp", // 인도네시아 루피아
   JPY: "¥", // 일본 엔
   KRW: "₩", // 대한민국 원
   KWD: "د.ك", // 쿠웨이트 디나르
-  MYR: "RM", // 말레이시아 링깃
-  SAR: "﷼", // 사우디아라비아 리얄
+  MYR: "RM", // 말레이지아 링기트
+  SAR: "﷼", // 사우디 리얄
   SGD: "S$", // 싱가포르 달러
   THB: "฿", // 태국 바트
 
@@ -100,8 +100,8 @@ export const currencyToSymbolMap = {
 export const currencyToKoreanUnitMap = {
   // 유럽
   CHF: "스위스 프랑",
-  DKK: "덴마크 크로네",
-  EUR: "유로",
+  DKK: "덴마아크 크로네",
+  EUR: "유럽연합 유로",
   GBP: "영국 파운드",
   NOK: "노르웨이 크로네",
   SEK: "스웨덴 크로나",
@@ -110,14 +110,14 @@ export const currencyToKoreanUnitMap = {
   AED: "아랍에미리트 디르함",
   BHD: "바레인 디나르",
   BND: "브루나이 달러",
-  CNY: "중국 위안",
+  CNH: "중국 위안",
   HKD: "홍콩 달러",
   IDR: "인도네시아 루피아",
   JPY: "일본 엔",
   KRW: "대한민국 원",
   KWD: "쿠웨이트 디나르",
-  MYR: "말레이시아 링깃",
-  SAR: "사우디아라비아 리얄",
+  MYR: "말레이지아 링기트",
+  SAR: "사우디 리얄",
   SGD: "싱가포르 달러",
   THB: "태국 바트",
 

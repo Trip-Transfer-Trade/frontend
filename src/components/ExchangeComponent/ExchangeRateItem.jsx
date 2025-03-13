@@ -14,12 +14,21 @@ export default function ExchangeRateItem({
 
   function parseCountryName(cur_nm) {
     if (!cur_nm || typeof cur_nm !== "string") return "UNKNOWN";
-    return cur_nm.split(" ")[0];
+
+    if (cur_nm.split(" ")[0] === "위안화") {
+      return "중국";
+    } else if (cur_nm.split(" ")[0] === "유로") {
+      return "유럽연합";
+    } else {
+      return cur_nm.split(" ")[0];
+    }
   }
 
   function handleClick() {
     const countryName = parseCountryName(cur_nm);
     const currencyCode = getCurrencyCodeFromCountryName(countryName);
+    console.log("countryName", countryName);
+
     navigate(`/exchange/rates/${currencyCode}`, {
       state: { changePrice, changeRate, cur_nm, tts },
     });
@@ -40,9 +49,9 @@ export default function ExchangeRateItem({
           )} flag`}
           className="h-10"
         />
-        <span className="font-bold">{cur_nm}</span>
+        <span>{cur_nm}</span>
       </span>
-      <span className="text-right font-bold">
+      <span className="text-right">
         <span className="block text-lg">{tts}원</span>
         <span
           className={`text-sm ${
