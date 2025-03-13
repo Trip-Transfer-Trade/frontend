@@ -83,3 +83,25 @@ export const fetchExchangeGoal = async (exchangeGoal) =>{
     throw error;
   }
 }
+
+export const fetchExchangeBatch = async (exchangeData) => {
+  console.log("다른 목표까지 같이 환전하기");
+  try{
+    const response = await apiClient.post(`/exchanges/batch`,exchangeData);
+    return response.data.data;
+  } catch (error){
+    console.error("환전하기 오류",error);
+    throw error;
+  }
+}
+
+export const fetchExchange = async (exchangeData) =>{
+  console.log("환전하기");
+  try{
+    const response = await apiClient.post(`/exchanges`,exchangeData);
+    return response.data.data;
+  } catch (error){
+    console.error("환전하기 오류",error);
+    throw error;
+  }
+}
