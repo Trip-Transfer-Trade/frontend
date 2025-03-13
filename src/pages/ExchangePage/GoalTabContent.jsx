@@ -48,22 +48,20 @@ export default function GoalTabContent() {
                 }}
                 className="flex justify-between items-center p-6 bg-white rounded-lg border border-gray-300 cursor-pointer"
               >
-                <div className="flex flex-col">
-                  <p className="text-xs text-custom-gray-3">
-                    {tripGoal.tripName}
-                  </p>
-                  <p className="text-xl font-bold">
-                    {tripGoal.availableAmount.toLocaleString()}원
-                  </p>
-                </div>
+                <p>{tripGoal.tripName}</p>
+                <p className="text-xl font-bold">
+                  {tripGoal.availableAmount.toLocaleString()}원
+                </p>
 
-                <img
+                {/* <img
                   src={`https://flagsapi.com/${getCountryCodeFromCountryName(
                     tripGoal.country
                   )}/flat/64.png`}
-                  alt={`${tripGoal.country} flag`}
+                  alt={`${getCountryCodeFromCountryName(
+                    tripGoal.country
+                  )} flag`}
                   className="w-16 h-16 rounded-lg"
-                />
+                /> */}
               </div>
             ))}
           </div>

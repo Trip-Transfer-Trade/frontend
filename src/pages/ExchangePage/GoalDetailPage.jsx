@@ -8,6 +8,8 @@ import {
   getKoreanUnitFromCurrency,
 } from "../../constants/currencyMappings";
 
+import { getCurrencyCodeFromCountryName } from "../../constants/countryMappings";
+
 import BackNavigation from "../../components/BackNavigation";
 import ExchangeModal from "../../components/ExchangeComponent/ExchangeModal";
 
@@ -15,7 +17,7 @@ export default function GoalDetailPage() {
   const { goalId } = useParams();
 
   const location = useLocation();
-  const country = location.state?.country || "KR";
+  const country = location.state?.country || "대한민국";
   const tripName = location.state?.tripName || "";
   const availableAmount = location.state?.availableAmount || 0;
 
@@ -82,11 +84,9 @@ export default function GoalDetailPage() {
                 )} flag`}
                 className="h-10"
               />
-              <span className="font-bold">
-                {getKoreanUnitFromCurrency(currency.currencyCode)}
-              </span>
+              <span>{getKoreanUnitFromCurrency(currency.currencyCode)}</span>
             </span>
-            <span className="text-right font-bold">
+            <span className="text-right">
               {currency.availableAmount.toLocaleString()}{" "}
               {currency.currencyCode}
             </span>
@@ -97,7 +97,8 @@ export default function GoalDetailPage() {
       {isModalOpen && (
         <ExchangeModal
           onClose={() => setIsModalOpen(false)}
-          toCurrency={country}
+          toCurrency={getCurrencyCodeFromCountryName(country)}
+          goalId={goalId}
         />
       )}
     </div>
