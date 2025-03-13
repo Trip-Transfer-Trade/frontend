@@ -19,6 +19,11 @@ pipeline {
                 }
             }
         }
+        stage('Copy Environment Variables') {
+            steps {
+                sh 'cp /var/lib/jenkins/workspace/frontend-cicd/.env .env'  // ✅ `.env` 파일 복사
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
