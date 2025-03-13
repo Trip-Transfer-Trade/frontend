@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchTripById } from "../../redux/tripSlice";
 import { fetchAssets } from "../../redux/assetsSlice";
-import AssetsList from "../../components/Portfolio/AssetList";
+import AssetsList from "../../components/portfolio/AssetList";
 import Footer from "../../layout/Footer";
 import BackNavigation from "../../components/BackNavigation";
 import PortfolioChart from "./Portfoliochart";
