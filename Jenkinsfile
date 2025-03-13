@@ -22,14 +22,17 @@ pipeline {
         stage('Copy Environment Variables') {
             steps {
                 script {
-                    // ✅ `.env` 파일 복사 및 환경 변수 로드
                     sh '''
-                    cp /var/lib/jenkins/workspace/frontend-cicd/.env .env
-                    export $(grep -v '^#' .env | xargs)
+                    if [ ! -f .env ]; then
+                        cp /var/lib/jenkins/workspace/frontend-cicd/.env .env
+                    else
+                        echo ".env file already exists, skipping copy."
+                    fi
                     '''
                 }
             }
         }
+
 
         stage('Install Dependencies') {
             steps {
