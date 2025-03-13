@@ -297,7 +297,7 @@ export default function CurrencyExchangePage() {
 
         {/* 환전 카드 */}
         <div className="mb-10">
-          <ExchangeCardSlider cards={cards} exchangeAmount={amount} />
+          <ExchangeCardSlider cards={cards} goalId={goalId} exchangeAmount={amount} rate={exchangeRate} fromCurrency={fromCurrency} toCurrency={toCurrency}/>
         </div>
       </div>
     </div>
