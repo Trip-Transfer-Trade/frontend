@@ -14,7 +14,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 export default function TripMainPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { tripGoals, status, error } = useSelector((state) => state.trip);
+  const { tripGoals, status } = useSelector((state) => state.trip);
   const account = useSelector((state) => state.nomalAccount.account);
 
   useEffect(() => {
@@ -44,8 +44,6 @@ export default function TripMainPage() {
           )}
 
           {status === "loading" && <p>로딩 중...</p>}
-          {status === "failed" && <p>여행 목표 조회 실패: {error}</p>}
-
           {Array.isArray(tripGoals) && tripGoals.length > 0 ? (
             tripGoals.map((trip) => <TripCard key={trip.tripId} trip={trip} />)
           ) : (

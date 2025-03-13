@@ -12,10 +12,14 @@ export default function TripList({ tripGoals, account, selectedTripId, setSelect
           }`}
           onClick={() => setSelectedTripId(trip.tripId)}
         >
-          <span className="text-2xl">🌍</span>
+          <span className="text-2xl">
+            {trip.isAccount ? "💰" : "🌍"}
+          </span>
           <div className="flex-1">
-            <p className="text-gray-700 font-medium">{trip.name}</p>
-            <p className="text-sm text-gray-500">{trip.goalAmount.toLocaleString()}원 목표</p>
+            <p className="text-gray-700 font-medium">{trip.isAccount ? "내 일반 계좌" : trip.name}</p>
+            <p className="text-sm text-gray-500">
+              {trip.isAccount ? (account ? account.totalAmountInKRW.toLocaleString() + "원" : "정보 없음") : trip.totalAmountInKRW.toLocaleString() + "원"}
+            </p>
           </div>
 
           <div

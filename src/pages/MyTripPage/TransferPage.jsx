@@ -5,66 +5,70 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { TripAll } from "../../redux/tripSlice";
 import TripList from "./TripList";
-import { TbHandClick } from "react-icons/tb";
+
 
 export default function TransferPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { tripGoals, status } = useSelector((state) => state.trip);
   const account = useSelector((state) => state.nomalAccount.account);
-
   const [searchParams] = useSearchParams();
 
-  const initialTripId = searchParams.get("trip");
-  const [selectedTripId, setSelectedTripId] = useState(initialTripId);
-
-
+  const sourceId = searchParams.get("sourceId");
+  const sourceType = searchParams.get("sourceType");
+  const destId = searchParams.get("destId");
+  const destType = searchParams.get("destType");
+  const tripId = searchParams.get("tripId");
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(TripAll());
-    }
-  }, [dispatch, status]);
+    dispatch(TripAll());
+  }, [dispatch]);
 
-  const handleConfirmSelection = () => {
-    if (!selectedTripId) {
-      alert("이체할 여행 목표를 선택하세요!");
-      return;
-    }
-    navigate(`/trip/transfer/amount?trip=${selectedTripId}`);
-  };
+  const tripListWithAccount = [
+    {
+      tripId: account.amountNumber,
+      name: "내 일반 계좌",
+      goalAmount: account.totalAmountInKRW,
+      isAccount: true,
+    },
+    ...tripGoals.map(trip => ({ ...trip, isAccount: false })),
+  ];
 
+  const initialSelectedTripId = destType === "account" ? account.amountNumber : destId;
+  const [selectedTripId, setSelectedTripId] = useState(initialSelectedTripId);
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col min-h-screen bg-white p-5">
         <h1 className="text-xl font-bold mb-4">이체하기</h1>
-        <div className="bg-white rounded-xl py-5 px-6 shadow-lg flex flex-col relative">
-          <div className="flex items-center justify-between ">
-              <div className="flex items-center gap-3">
-              <img src="/assets/images/trip/ShinhanIcon.svg" alt="로그인" className="w-8 h-8" />
-              <div>
-                  <p className="text-sm font-medium text-black">내 메인 계좌</p>
-                  <p className="text-xs text-gray-500">{account.accountNumber}</p>
-              </div>
-              </div>
-              <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600" />
+
+        {sourceId && (
+          <div className="bg-gray-100 p-4 rounded-xl mb-4">
+            <p className="text-sm text-gray-500">출발 계좌</p>
+            <p className="text-lg font-bold">{sourceId}</p>
           </div>
-        </div>
-        <h3 className="text-lg font-semibold items-center my-10">입금할 여행 목표를 선택하세요.</h3>
+        )}
+
+        <h3 className="text-lg font-semibold items-center my-10">입금할 계좌를 선택하세요.</h3>
         <p className="text-gray-700 mb-4">
-          여행 계좌 {tripGoals.length}
+          도착 계좌 {tripListWithAccount.length}
         </p>
-        {status === "loading" && <p>여행 목표 불러오는 중...</p>}
-        {status === "failed" && <p>여행 목표를 불러오는데 실패했습니다.</p>}
-        {tripGoals.length > 0 ? (
-          <TripList tripGoals={tripGoals}  account selectedTripId={selectedTripId} setSelectedTripId={setSelectedTripId} />
+        {tripListWithAccount.length > 0 ? (
+          <TripList
+            tripGoals={tripListWithAccount}
+            selectedTripId={selectedTripId}
+            setSelectedTripId={setSelectedTripId}
+          />
         ) : (
-          <p>여행 목표가 없습니다.</p>
+          <p>이체할 수 있는 계좌가 없습니다.</p>
         )}
 
         <button
-          onClick={handleConfirmSelection}
+          onClick={() =>
+            navigate(
+              `/trip/transfer/amount?sourceId=${sourceId}&sourceType=${sourceType}&destId=${selectedTripId}&destType=trip&tripId=${tripId}`
+            )
+          }
           className={`w-full py-4 mt-6 rounded-lg text-white font-medium transition ${
             selectedTripId ? "bg-blue-600" : "bg-gray-300"
           }`}

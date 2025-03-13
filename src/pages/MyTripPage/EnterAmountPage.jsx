@@ -6,20 +6,24 @@ import { SkipBackIcon } from "lucide-react";
 export default function EnterAmountPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const tripId = searchParams.get("trip");
   
-  const [amount, setAmount] = useState("");
-  const { tripGoals, status } = useSelector((state) => state.trip);
-  const account = useSelector((state) => state.nomalAccount.account) || {};
-  const selectedTrip = tripGoals.find((trip) => trip.id == tripId);
+  const sourceId = searchParams.get("sourceId");
+  const sourceType = searchParams.get("sourceType");
+  const destId = searchParams.get("destId");
+  const destType = searchParams.get("destType");
+  const tripId = searchParams.get("tripId");
 
+  const [amount, setAmount] = useState("");
+  const { tripGoals } = useSelector((state) => state.trip);
+  const account = useSelector((state) => state.nomalAccount.account) || {};
+
+  const selectedTrip = tripGoals.find((trip) => trip.tripId == tripId);
 
   const handleNumberPress = (num) => {
     if (amount.length < 10) {
       setAmount((prev) => prev + num);
     }
   };
-
 
   const handleBackspace = () => {
     setAmount((prev) => prev.slice(0, -1));
@@ -53,14 +57,18 @@ export default function EnterAmountPage() {
           {amount ? `${Number(amount).toLocaleString()} 원` : "0원"}
         </p>
       </div>
-
-      <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-35">
+      {/* 출발 계좌 정보 */}
+      <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-5">
         <div>
-          <p className="text-sm text-gray-500">내 계좌 {account.amountNumber}</p>
+          <p className="text-sm text-gray-500">출발 계좌 {sourceId}</p>
         </div>
-        <p className="font-bold text-gray-900">
-          {account.totalAmountInKRW.toLocaleString()} 원
-        </p>
+      </div>
+      {/* 도착 계좌 정보 (여행 계좌) */}
+      <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-3">
+        <div>
+          <p className="text-sm text-gray-500">도착 계좌 {destId}</p>
+          <p className="text-sm font-medium text-gray-600">{selectedTrip ? selectedTrip.name : "알 수 없음"}</p>
+        </div>
       </div>
 
       <div className="p-6 mt-auto px-0">

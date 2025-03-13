@@ -82,14 +82,10 @@ const GoalProgressPage = () => {
         </div>
 
         <div className="space-y-4 mb-6">
-          <div
-            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${
-              sellAfterEnd ? "text-gray-400" : "text-black"
-            }`}
-            onClick={() => {
-              setEndGoalChecked(true);
-              setSellAfterEnd(false);
-            }}
+          
+          {/* <div
+            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${sellAfterEnd ? "text-gray-400" : "text-black"}`}
+            onClick={() => { setEndGoalChecked(true); setSellAfterEnd(false); }}
           >
             <div
               className={`rounded-full border w-5 h-5 flex items-center justify-center shrink-0 ${
@@ -106,7 +102,7 @@ const GoalProgressPage = () => {
                 목표만 종료할 경우, 투자 종목은 유지됩니다.
               </p>
             </div>
-          </div>
+          </div> */}
 
           <div
             className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${
@@ -140,7 +136,7 @@ const GoalProgressPage = () => {
           className="w-full py-3 bg-gray-100 hover:bg-gray-300 text-gray-500 rounded-lg font-medium mt-auto mb-2"
           onClick={() => setIsModalOpen(!isModalOpen)}
         >
-          목표 종료하기
+          일괄 매도하기
         </button>
       </div>
       {/* 모달 렌더링 */}

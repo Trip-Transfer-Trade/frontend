@@ -34,6 +34,8 @@ export default function TripCard({ trip }) {
   const navigate = useNavigate();
   const {
     tripId,
+    accountId,
+    accountNumber,
     name,
     country,
     goalAmount,
@@ -42,8 +44,10 @@ export default function TripCard({ trip }) {
     endDate,
   } = trip;
   
-  const progress = goalAmount > 0 ? Math.min((totalProfit / goalAmount) * 100, 100) : 0;
-  const progressStyle = { width: `${progress}%` };
+  const progressText = goalAmount > 0 ? ((totalProfit / goalAmount) * 100).toFixed(0) : "0";
+  const progressBarWidth = goalAmount > 0 ? Math.max(0, Math.min((totalProfit / goalAmount) * 100, 100)) : 0;
+  const progressStyle = { width: `${progressBarWidth}%` };
+
   const flagURL = getCountryFlagURL(country);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,18 +58,19 @@ export default function TripCard({ trip }) {
       isDragging: monitor.isDragging(),
     }),
   }));
-
+  
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["trip", "account"],
     drop: (item) => {
       navigate(
-        `/trip/transfer?account=${item.accountNumber}&trip=${trip.tripId}`
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripId}&destType=trip`
       );
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
+  
 
   const handleCardClick = () => {
     if (isModalOpen) return;
@@ -99,11 +104,11 @@ export default function TripCard({ trip }) {
           <p className="text-2xl font-bold">{totalAmountInKRW}원</p>
         </div>
       </div>
-
+      <p className="text-xs text-gray-500">계좌 번호 {accountNumber}?? 1234567</p>
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
           <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
-            {progress.toFixed(0)}% 달성
+            {progressText}% 달성
           </div>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">

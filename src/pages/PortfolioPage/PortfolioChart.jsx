@@ -94,6 +94,9 @@ export default function PortfolioChart({ activeTab }) {
           <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
             목표 수정하기
           </a>
+          <a href={`/trip/${tripId}/portfolio/rank`} className="text-gray-400 text-sm font-medium underline">
+            포트폴리오 추천
+          </a>
         </div>
       </div>
     </div>

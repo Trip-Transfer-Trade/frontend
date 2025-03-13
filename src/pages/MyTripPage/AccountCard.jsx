@@ -10,24 +10,25 @@ export default function AccountCard({ account }) {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "account",
-    item: { amountNumber, totalAmountInKRW },
+    item: { sourceType: "account", sourceId: amountNumber, account },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
-
+  
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["trip", "account"],
     drop: (item) => {
       const tripId = item?.trip?.tripId || null;
       navigate(
-        `/trip/transfer?account=${item.accountNumber}&trip=${tripId}`
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripId}&destType=trip`
       );
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
+  
 
   return (
     <div
