@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { saveToken } from "./apis/users";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_APP_API_KEY,
@@ -29,7 +30,10 @@ async function requestPermission() {
     vapidKey: import.meta.env.VITE_REACT_APP_VAPID_KEY,
   });
 
-  if (token) console.log("token: ", token);
+  if (token) {
+    console.log("fcm 토큰 발급 성공");
+    saveToken(token);
+  }
   else console.log("Can not get Token");
 
   onMessage(messaging, (payload) => {
