@@ -19,6 +19,20 @@ pipeline {
                 }
             }
         }
+        stage('Copy Environment Variables') {
+            steps {
+                script {
+                    sh '''
+                    if [ ! -f .env ]; then
+                        cp /var/lib/jenkins/workspace/frontend-cicd/.env .env
+                    else
+                        echo ".env file already exists, skipping copy."
+                    fi
+                    '''
+                }
+            }
+        }
+
 
         stage('Install Dependencies') {
             steps {

@@ -15,7 +15,6 @@ export default function StockTradingPage() {
     const { name, code } = location.state || {};
     console.log("📌 tripGoal 값:", tripGoal); 
 
-    const [stockItems, setStockItems] = useState({});
     const [tradeMode, setTradeMode] = useState(trademode || "buy");
     const [price, setPrice] = useState("0");
     const [stockChangeRate, setStockChangeRate] = useState("0");
@@ -25,9 +24,11 @@ export default function StockTradingPage() {
     const [bidQuantities, setBidQuantities] = useState([]);
     const [purchasePrice, setPurchasePrice] = useState("0")
     const [quantity, setQuantity] = useState(0)
-    const [availableFunds] = useState(100000)
+    const [availableQuantity,setAvailableQuantity] = useState(0);
+    const [availableFunds, setAvaliableFunds] = useState(0)
     const [currencyPrice, setCurrencyPrice] = useState();
     const [currencySymbol, setCurrencySymbol] = useState("원");
+    const [isTradeCompleted, setIsTradeCompleted] = useState(false);
     const scrollRef = useRef(null);
 
     const isCheckCode = /^\d+$/.test(code);
@@ -35,6 +36,30 @@ export default function StockTradingPage() {
     useEffect(() => {
         setCurrencySymbol(isCheckCode ? "원" : "$");
     }, [currencySymbol])
+
+    useEffect(() => {
+        apiClient.get(`/exchanges/order/amount/${tripGoal}`)
+        .then((response) => {
+            console.log("📌 API 금액 확인:", response.data);
+            setAvaliableFunds(response.data.data.amount);
+            setIsTradeCompleted(false); 
+        })
+        .catch((err) => {
+            console.error("API 호출 중 오류 발생:", err);
+        })
+    }, [isTradeCompleted])
+
+    useEffect(() => {
+        apiClient.get(`/exchanges/order/quantity/${tripGoal}/${code}`)
+        .then((response) => {
+            console.log("📌 API 금액 확인:", response.data);
+            setAvailableQuantity(response.data.data.quantity);
+            setIsTradeCompleted(false); 
+        })
+        .catch((err) => {
+            console.error("API 호출 중 오류 발생:", err);
+        })
+    }, [isTradeCompleted])
 
     useEffect (() => {
         const apiUrl = isCheckCode
@@ -118,6 +143,7 @@ export default function StockTradingPage() {
         .then((response) => {
             console.log("📌 API 응답:", response.data);
             toast.success(`${tradeMode === "buy" ? "매수" : "매도"} 완료!`, { position:"bottom-center", autoClose: 1000, style: {bottom: "80px"} } )
+            setIsTradeCompleted(true); 
         })
         .catch((err) => {
             console.error("🚨 거래 실패! 서버 응답:", err.response?.data || err.message);
@@ -134,7 +160,7 @@ export default function StockTradingPage() {
                     <h1 className="text-xl font-bold text-center flex-1">{name}</h1>
                 </div>
                 <div className="text-center flex items-center justify-center gap-2">
-                    <div className="text-l font-bold text-blue-600">{price.toLocaleString()}{currencySymbol}</div>
+                    <div className="text-l font-bold text-blue-600">{Number(price).toLocaleString()}{currencySymbol}</div>
                     <div className="text-xs text-blue-600">{stockChangeRate ?? "데이터 없음"}%</div>
                 </div>
             </div>
@@ -179,7 +205,7 @@ export default function StockTradingPage() {
                         <div className="w-full flex flex-col items-left justify-between border rounded-lg px-4 py-3 border-gray-300">
                             <div className="text-sm text-gray-600 mb-2">{tradeMode === "buy" ? "매수 가격" : "매도 가격"}</div>
                             <div className="flex">
-                                <p className="text-xl font-bold">{purchasePrice.toLocaleString()}{currencySymbol}</p>
+                                <p className="text-xl font-bold">{Number(purchasePrice).toLocaleString()}{currencySymbol}</p>
                                 <div className="flex ml-auto">
                                     <button onClick={decreasePurchasePrice} className="p-1">
                                         -
@@ -210,8 +236,13 @@ export default function StockTradingPage() {
                     </div>
 
                     <div className="p-2 flex justify-between items-center">
-                        <p className="text-sm text-gray-600">{tradeMode === "buy" ? "매수 가능 금액" : "매도 가능 금액"}</p>
+                        <p className="text-sm text-gray-600">{tradeMode === "buy" ? "매수 가능 금액" : "매도 가능 수량"}</p>
+                        {/* <p className="font-medium">{availableFunds.toLocaleString()}{currencySymbol}</p> */}
+                        {tradeMode === "buy" ? (
                         <p className="font-medium">{availableFunds.toLocaleString()}{currencySymbol}</p>
+                        ) : (
+                            <p className="font-medium">{availableQuantity} 주</p>
+                        )}
                     </div>
 
                     <div className="mt-auto">

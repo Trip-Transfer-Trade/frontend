@@ -18,7 +18,7 @@ export default function StockPage() {
     const portfoliBanner = "/assets/images/stock/portfolioBanner.svg";
 
     const [nationTab, setNationTab] = useState("국내");
-    const [type, setType] = useState("top");
+    const [type, setType] = useState("popular");
     const [stockItems, setStockItems] = useState({ list: [] });
     const [isToggled, setIsToggled] = useState(false);
     const [exchangeRate, setExchangeRate] = useState(0);
@@ -41,7 +41,7 @@ export default function StockPage() {
         "하락": "low",
         "인기": "popular",
         "거래량": "volume"
-    }[type] || "top");
+    }[type] || "popular");
 
     const getStockLogo = (stockCode, isKorean) => {
         const stockLogos = isKorean ? StockLogo : StockLogoUs;
@@ -83,10 +83,10 @@ export default function StockPage() {
                         <section>
                             <Tabs>
                                 {[
-                                    { label: "상승", value: "top"},
-                                    { label: "하락", value: "low"},
                                     { label: "인기", value: "popular"},
                                     { label: "거래량", value: "volume"},
+                                    { label: "상승", value: "top"},
+                                    { label: "하락", value: "low"},
                                 ].map(({ label, value }) => (
                                     <Tab key={value} label={label} onClick={() => setType(label)} >
                                         <div className="ranking-tab">
@@ -124,10 +124,10 @@ export default function StockPage() {
                         <section className="ranking-container">
                             <Tabs>
                                 {[
-                                    { label: "상승", value: "top"},
-                                    { label: "하락", value: "low"},
                                     { label: "인기", value: "popular"},
                                     { label: "거래량", value: "volume"},
+                                    { label: "상승", value: "top"},
+                                    { label: "하락", value: "low"},
                                 ].map(({ label, value }) => (
                                     <Tab key={value} label={label} onClick={() => {console.log(label); setType(label)}} >
                                         <div className="ranking-tab">
