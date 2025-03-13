@@ -49,7 +49,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://52.78.46.146:8080',
+        target: 'https://api.triptransfertrade.shop',
         changeOrigin: true,
         secure: false,
       }
