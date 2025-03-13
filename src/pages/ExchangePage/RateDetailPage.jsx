@@ -20,6 +20,7 @@ export default function RateDetailPage() {
     tts = "N/A",
   } = location.state || {};
 
+  console.log("currencyCode", currencyCode);
   return (
     <div className="flex flex-col">
       <BackNavigation
@@ -30,7 +31,7 @@ export default function RateDetailPage() {
                 currencyCode
               )}/flat/64.png`}
               alt={`${getCountryCodeFromCurrency(currencyCode)} flag`}
-              className="h-10 inline-block mr-2"
+              className="h-8 inline-block mr-2"
             />
             {cur_nm} 환율
           </span>
@@ -50,12 +51,12 @@ export default function RateDetailPage() {
         <div className="w-full mb-10">
           <ExchangeRateChart currencyCode={currencyCode} />
         </div>
-        <button
+        {/* <button
           onClick={() => setIsModalOpen(true)}
           className="bg-custom-gray-1 border border-custom-gray-2 rounded-lg p-2"
         >
           환전하러가기
-        </button>
+        </button> */}
       </div>
       {/* 모달 렌더링 */}
       {isModalOpen && (

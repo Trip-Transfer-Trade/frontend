@@ -1,7 +1,7 @@
 export default function ExchangeTabs({ children, selectedTab, onTabChange }) {
   return (
     <div>
-      <div className="flex border-b border-custom-gray-2 relative">
+      <div className="sticky top-[10vh] bg-white flex z-999 border-b border-custom-gray-2 relative">
         {children.map(({ props: { label } }) => (
           <button
             key={label}

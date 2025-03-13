@@ -9,36 +9,36 @@ import ExchangeRateList from "../../components/ExchangeComponent/ExchangeRateLis
 export default function RateTabContent() {
   const [exchangeRates, setExchangeRates] = useState([
     // 수정 필요
-    {
-      changePrice: 0.32,
-      changeRate: 0.08,
-      cur_nm: "아랍에미리트 디르함",
-      tts: "393.74",
-    },
-    {
-      changePrice: -5.01,
-      changeRate: -0.55,
-      cur_nm: "호주 달러",
-      tts: "912.35",
-    },
-    {
-      changePrice: 3.05,
-      changeRate: 0.08,
-      cur_nm: "바레인 디나르",
-      tts: "3,836.97",
-    },
-    {
-      changePrice: -0.91,
-      changeRate: -0.08,
-      cur_nm: "브루나이 달러",
-      tts: "1,080.63",
-    },
-    {
-      changePrice: -1.37,
-      changeRate: -0.14,
-      cur_nm: "캐나다 달러",
-      tts: "1,008.55",
-    },
+    // {
+    //   changePrice: 0.32,
+    //   changeRate: 0.08,
+    //   cur_nm: "아랍에미리트 디르함",
+    //   tts: "393.74",
+    // },
+    // {
+    //   changePrice: -5.01,
+    //   changeRate: -0.55,
+    //   cur_nm: "호주 달러",
+    //   tts: "912.35",
+    // },
+    // {
+    //   changePrice: 3.05,
+    //   changeRate: 0.08,
+    //   cur_nm: "바레인 디나르",
+    //   tts: "3,836.97",
+    // },
+    // {
+    //   changePrice: -0.91,
+    //   changeRate: -0.08,
+    //   cur_nm: "브루나이 달러",
+    //   tts: "1,080.63",
+    // },
+    // {
+    //   changePrice: -1.37,
+    //   changeRate: -0.14,
+    //   cur_nm: "캐나다 달러",
+    //   tts: "1,008.55",
+    // },
   ]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +46,8 @@ export default function RateTabContent() {
     (async () => {
       try {
         const rates = await fetchExchangeRates();
-        setExchangeRates(rates);
+        const filteredRates = rates.filter((rate) => rate.cur_nm !== "한국 원");
+        setExchangeRates(filteredRates);
       } catch (error) {
         console.error("환율 정보 불러오기 실패", error);
       } finally {

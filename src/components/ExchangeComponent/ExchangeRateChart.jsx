@@ -54,7 +54,7 @@ export default function ExchangeRateChart({
       const formattedData = response
         .map((data) => ({
           date: formatDate(data.date),
-          rate: Number.parseFloat(data.rate),
+          rate: Number.parseFloat(data.rate.replace(/,/g, "")), // 쉼표 제거 후 숫자로 변환
         }))
         .reverse();
       setChartData(formattedData);
@@ -88,7 +88,7 @@ export default function ExchangeRateChart({
       <div className="relative h-[300px] mb-10">
         {loading ? (
           <p className="text-center text-gray-500 pt-16">
-            ⏳ 환율 데이터를 불러오는 중...
+            환율 데이터를 불러오는 중...
           </p>
         ) : error ? (
           <p className="text-center text-red-500 pt-16">{error}</p>

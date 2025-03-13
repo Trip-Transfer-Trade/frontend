@@ -1,7 +1,7 @@
 export const countryNameToCountryCodeMap = {
   // 유럽
   스위스: "CH",
-  덴마크: "DK",
+  덴마아크: "DK",
   유럽연합: "EU",
   영국: "GB",
   노르웨이: "NO",
@@ -17,8 +17,8 @@ export const countryNameToCountryCodeMap = {
   일본: "JP",
   대한민국: "KR",
   쿠웨이트: "KW",
-  말레이시아: "MY",
-  사우디아라비아: "SA",
+  말레이지아: "MY",
+  사우디: "SA",
   싱가포르: "SG",
   태국: "TH",
 
@@ -34,7 +34,7 @@ export const countryNameToCountryCodeMap = {
 export const countryNameToCurrencyMap = {
   // 유럽
   스위스: "CHF",
-  덴마크: "DKK",
+  덴마아크: "DKK",
   유럽연합: "EUR",
   영국: "GBP",
   노르웨이: "NOK",
@@ -44,14 +44,14 @@ export const countryNameToCurrencyMap = {
   아랍에미리트: "AED",
   바레인: "BHD",
   브루나이: "BND",
-  중국: "CNY",
+  중국: "CNH",
   홍콩: "HKD",
   인도네시아: "IDR",
   일본: "JPY",
   대한민국: "KRW",
   쿠웨이트: "KWD",
-  말레이시아: "MYR",
-  사우디아라비아: "SAR",
+  말레이지아: "MYR",
+  사우디: "SAR",
   싱가포르: "SGD",
   태국: "THB",
 
