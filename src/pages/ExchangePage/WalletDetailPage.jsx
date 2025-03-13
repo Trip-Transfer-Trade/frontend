@@ -46,7 +46,8 @@ export default function WalletDetailPage() {
         <div>
           <p className="text-custom-gray-3 font-bold mb-2">총 보유 금액</p>
           <p className="text-4xl font-bold">
-            {getCurrencySymbolFromCurrency(currencyCode)} {totalAmount}
+            {getCurrencySymbolFromCurrency(currencyCode)}{" "}
+            {totalAmount.toLocaleString()}
           </p>
         </div>
 
@@ -67,10 +68,11 @@ export default function WalletDetailPage() {
                   alt={`${getCountryCodeFromCountryName(goal.country)} flag`}
                   className="h-10"
                 />
-                <span className="font-bold">{goal.tripName}</span>
+                <span>{goal.tripName}</span>
               </div>
-              <div className="text-right font-bold">
-                {goal.amount} {currencyCode}
+              <div className="text-right">
+                {getCurrencySymbolFromCurrency(currencyCode)}{" "}
+                {goal.amount.toLocaleString()}
               </div>
             </div>
           ))}

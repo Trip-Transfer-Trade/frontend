@@ -26,12 +26,11 @@ export default function OwnedCurrencyItem({ currencyCode, totalAmount }) {
           alt={`${getCountryCodeFromCurrency(currencyCode)} flag`}
           className="h-10"
         />
-        <span className="font-bold">
-          {getKoreanUnitFromCurrency(currencyCode)}
-        </span>
+        <span>{getKoreanUnitFromCurrency(currencyCode)}</span>
       </span>
-      <span className="text-right font-bold">
-        {getCurrencySymbolFromCurrency(currencyCode)} {totalAmount}
+      <span className="text-right">
+        {getCurrencySymbolFromCurrency(currencyCode)}{" "}
+        {totalAmount.toLocaleString()}
       </span>
     </div>
   );
