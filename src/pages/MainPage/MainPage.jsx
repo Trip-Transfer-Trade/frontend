@@ -17,7 +17,7 @@ export default function MainPage() {
 
   const [selected, setSelected] = useState("국내");
   const [stockItems, setStockItems] = useState({ list: [] });
-  const [type, setType] = useState("상승");
+  const [type, setType] = useState("popular");
 
   // 🔹 계좌 상태 확인
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function MainPage() {
     "하락": "low",
     "인기": "popular",
     "거래량": "volume"
-  }[type] || "top");
+  }[type] || "popular");
 
   const getStockLogo = (stockCode, isKorean) => {
     const stockLogos = isKorean ? StockLogo : StockLogoUs;
@@ -208,10 +208,10 @@ export default function MainPage() {
           <section className="px-3">
             <Tabs>
               {[
-                { label: "상승", value: "top" },
-                { label: "하락", value: "low" },
                 { label: "인기", value: "popular" },
                 { label: "거래량", value: "volume" },
+                { label: "상승", value: "top" },
+                { label: "하락", value: "low" },
               ].map(({ label, value }) => (
                 <Tab key={value} label={label} onClick={() => { setType(label); console.log("API 응답 데이터:", response.data) }}>
                   <div className="ranking-tab">
