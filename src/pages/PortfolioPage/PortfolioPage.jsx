@@ -6,7 +6,7 @@ import { fetchAssets } from "../../redux/assetsSlice";
 import AssetsList from "../../components/portfolio/AssetList";
 import Footer from "../../layout/Footer";
 import BackNavigation from "../../components/BackNavigation";
-import PortfolioChart from "./Portfoliochart";
+import PortfolioChart from "./PortfolioChart";
 import PortfolioAccount from "./PortfolioAccount";
 
 export default function Portfolio() {
