@@ -1,7 +1,18 @@
 import { useSelector } from "react-redux";
+import StockLogo from "../../components/StockLogo";
+import StockLogoUs from "../../components/StockLogoUs";
+import StockLogoRandom from "../../components/StockLogoRandom";
 
 export default function AssetsList({ activeTab }) {
   const assets = useSelector((state) => state.assets.assets);
+
+  const getStockLogo = (stockCode) => {
+    const stockLogos = activeTab === "u" ? StockLogoUs : StockLogo;
+    const stock = stockLogos.find(item => item.stockCode === stockCode);
+    const randomIndex = Math.floor(Math.random() * StockLogoRandom.length);
+
+    return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
+};
 
   return (
     <div className="px-4 overflow-y-auto max-h-[400px]">
@@ -10,7 +21,7 @@ export default function AssetsList({ activeTab }) {
           assets.map((asset) => (
             <div key={asset.stockCode} className="flex items-center bg-white rounded-lg p-3 shadow-sm">
               <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-                <span className="text-white text-xl">$</span>
+                <img src={getStockLogo(asset.stockCode)} alt="Stock Logo" className="w-full h-full object-cover rounded-full" />
               </div>
               <div className="flex-1">
                 <div className="flex justify-between">
