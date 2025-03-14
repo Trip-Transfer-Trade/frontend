@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { IoSearchOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
@@ -11,6 +11,7 @@ import "./Header.css";
 export default function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   function getTitle() {
     if (location.pathname === "/trip") return "마이 트립 ✈️";
@@ -36,7 +37,9 @@ export default function Header() {
         {/* 아이콘 */}
         <div className="flex items-center space-x-4">
           <IoSearchOutline className="text-2xl" />
-          <GoBell className="text-2xl" />
+          <GoBell 
+            className="text-2xl"
+            onClick={() => navigate("/mypage/alarm")}/>
           <RxHamburgerMenu
             className="text-2xl"
             onClick={() => setIsMenuOpen(true)}
