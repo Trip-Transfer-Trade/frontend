@@ -9,25 +9,24 @@ export default function PortfolioAccount({activeTab}) {
   const { tripId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, status } = useSelector((state) => state.account);
+  const accountData = useSelector((state) => state.account.data) || {};
+  const currentData = activeTab === "k" ? accountData.KRW : accountData.USD;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     if (tripId) {
-      const currency = activeTab === "k" ? "KRW" : "US";
-      dispatch(fetchAccountData({ tripId, currency }));
+      dispatch(fetchAccountData({ tripId, currency: "KRW" }));
+      dispatch(fetchAccountData({ tripId, currency: "USD" }));
     }
-  }, [dispatch, tripId, activeTab]);
+  }, [dispatch, tripId]);
 
-  if (status === "loading") return <p>로딩 중...</p>;
-  if (status === "failed") return <p>계좌 데이터를 불러오는 데 실패했습니다.</p>;
-  if (!data) return <p>계좌 데이터가 없습니다.</p>;
+  if (!currentData) return <p>계좌 데이터가 없습니다.</p>;
   
-  const formatCurrency = (amount) => (activeTab === "k" ? `${amount.toLocaleString()}원` : `$${amount.toLocaleString()}`);
-
+  const formatCurrency = (amount) =>
+    activeTab === "k" ? `${amount.toLocaleString()}원` : `$${amount.toLocaleString()}`;
 
   const handleInvestClick = () => {
-    if (activeTab === "u" && data.depositAmount === 0) {
+    if (activeTab === "u" && currentData.depositAmount === 0) {
       setIsModalOpen(true);
     } else {
       navigate(`/trip/${tripId}/stocks`);
@@ -40,7 +39,7 @@ export default function PortfolioAccount({activeTab}) {
         <span className="text-lg font-medium">누적수익금</span>
         <div className="flex items-center">
           <span className="text-lg font-medium text-red-500">
-            {formatCurrency(data.profit)}
+            {formatCurrency(currentData.profit)}
           </span>
         </div>
       </div>
@@ -48,26 +47,26 @@ export default function PortfolioAccount({activeTab}) {
       <div className="grid grid-cols-2 gap-4 mt-4 px-3 text-sm">
         <div className="flex justify-between">
           <span className="text-gray-500">평가금액</span>
-          <span>{formatCurrency(data.evaluationAmount)}</span>
+          <span>{formatCurrency(currentData.evaluationAmount)}</span>
 
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">매입금액</span>
-          <span>{formatCurrency(data.purchaseAmount)}</span>
+          <span>{formatCurrency(currentData.purchaseAmount)}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">총 자산</span>
-          <span>{formatCurrency(data.totalAssets)}</span>
+          <span>{formatCurrency(currentData.totalAssets)}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-500">예수금</span>
-          <span>{formatCurrency(data.depositAmount)}</span>
+          <span>{formatCurrency(currentData.depositAmount)}</span>
         </div>
       </div>
 
       <div className="grid grid-cols-3 gap-2 mt-3">
         <button className="py-1 border border-gray-300 rounded-md text-sm" 
-          onClick={() => navigate(`/mypage/transfer/recipient`)}>
+          onClick={() => navigate(`/trip/transfer?sourceType=trip&sourceId=${tripId.accountId}`)}>
           이체하기
         </button>
         <button className="py-1 border border-gray-300 rounded-md text-sm" 
@@ -88,7 +87,7 @@ export default function PortfolioAccount({activeTab}) {
         <div className="flex flex-col space-y-2 w-10/12 my-3 mx-auto">
           <button 
             className="w-full py-[10px] bg-blue-500 text-white text-base rounded-md transition-all hover:bg-blue-600"
-            onClick={() => navigate('/trip')} //투자를 위한 환전 페이지 만들기기
+            onClick={() => navigate('/exchange/currency')} //투자를 위한 환전 페이지 만들기ㅜㅜㅜ
           >
             환전하러 가기
           </button>

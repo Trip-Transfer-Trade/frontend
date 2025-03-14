@@ -6,7 +6,7 @@ export const submitTranfer = createAsyncThunk("transfer/submittransfer", async (
       const response = await apiClient.post("/exchanges/transactions", transferData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || "송금금 실패");
+      return thunkAPI.rejectWithValue(error.response?.data || "송금 실패");
     }
   });
 

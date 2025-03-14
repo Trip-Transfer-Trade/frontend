@@ -58,7 +58,7 @@ export default function TripMainPage() {
 
           {status === "loading" && <p>로딩 중...</p>}
           {Array.isArray(tripGoals) && tripGoals.length > 0 ? (
-            tripGoals.map((trip) => <TripCard key={trip.tripId} trip={trip} />)
+            tripGoals.map((trip) => <TripCard key={trip.tripId} trip={trip} accountId={account.accountId} />)
           ) : (
             <p>여행 목표가 없습니다.</p>
           )}

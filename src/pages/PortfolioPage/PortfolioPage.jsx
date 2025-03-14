@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { fetchTripById } from "../../redux/tripSlice";
 import { fetchAssets } from "../../redux/assetsSlice";
-import AssetsList from "../../components/portfolio/AssetList";
-import Footer from "../../layout/Footer";
+import AssetsList from "../../components/Portfolio/AssetList";
 import BackNavigation from "../../components/BackNavigation";
 import PortfolioChart from "./PortfolioChart";
 import PortfolioAccount from "./PortfolioAccount";
@@ -12,8 +11,11 @@ import PortfolioAccount from "./PortfolioAccount";
 export default function Portfolio() {
   const { tripId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { selectedTrip, status, error } = useSelector((state) => state.trip);
+  const { assets } = useSelector((state) => state.assets);
   const [activeTab, setActiveTab] = useState("k");
+
   useEffect(() => {
     if(tripId){
       dispatch(fetchTripById(tripId));
@@ -51,14 +53,19 @@ export default function Portfolio() {
         </div>
       </div>
       <PortfolioAccount activeTab={activeTab} />
-      <PortfolioChart trip={selectedTrip} activeTab={activeTab} />
+      <PortfolioChart activeTab={activeTab} assets={assets} title="나의 자산"/>
+      <img 
+          src="/assets/images/stock/portfolioBanner.svg"
+          alt="포트폴리오 추천"
+          className="cursor-pointer px-4"
+          onClick={() => navigate(`/trip/${tripId}/portfolio/rank`)}
+        />
       <main className="flex-1 overflow-hidden flex flex-col">
         <div className="flex-1 overflow-y-auto pb-16">
          <h3 className="text-lg font-medium mb-4 ml-8">자산</h3>
          <AssetsList activeTab={activeTab} />
         </div>
       </main>
-      <Footer />
     </div>
   );
 }

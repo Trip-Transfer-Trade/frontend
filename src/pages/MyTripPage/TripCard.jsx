@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import ModalCenter from "../../components/ModalCenter";
 import FormattedAccountNumber from "../../components/FormattedAccountNumber";
-
+import { TbHandClick } from "react-icons/tb";
 
 const countryCodeMap = {
   "미국": "US",
@@ -32,11 +32,11 @@ function getCountryFlagURL(countryName) {
   return `https://flagsapi.com/${countryCode}/flat/64.png`;
 }
 
-export default function TripCard({ trip }) {
+export default function TripCard({ trip, accountId }) {
   const navigate = useNavigate();
   const {
     tripId,
-    accountId,
+    accountId: tripAccountId,
     accountNumber,
     name,
     country,
@@ -55,7 +55,7 @@ export default function TripCard({ trip }) {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "trip",
-    item: { sourceType: "trip", sourceId: accountId, trip },
+    item: { sourceType: "trip", sourceId: tripAccountId, trip },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -65,7 +65,7 @@ export default function TripCard({ trip }) {
     accept: ["trip", "account"],
     drop: (item) => {
       navigate(
-        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${accountId}&destType=trip`
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripAccountId}&destType=trip`
       );
     },
     collect: (monitor) => ({
@@ -98,14 +98,16 @@ export default function TripCard({ trip }) {
       } ${isDragging ? "opacity-50" : "opacity-100"}`}
       onClick={handleCardClick}
     >
-      <img src={flagURL} alt={country} className="absolute top-3 right-3 w-10 h-10" />
-
-      <div className="flex justify-between items-start mb-2">
-        <div>
-          <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
-          <p className="text-2xl font-bold">{totalAmountInKRW}원</p>
-        </div>
+      <div className="flex justify-between items-center mb-2">
+      <div>
+        <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
+        <p className="text-2xl font-bold">{totalAmountInKRW.toLocaleString()}원</p>
       </div>
+      <div className="flex flex-col items-center">
+        <img src={flagURL} alt={country} className="w-10 h-10" />
+        <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600 mt-1" />
+      </div>
+    </div>
       <p className="text-xs text-gray-500">계좌 번호 <FormattedAccountNumber accountNumber={accountNumber ?? "1234567891011"} /></p>
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
@@ -132,7 +134,7 @@ export default function TripCard({ trip }) {
             </p>
             <button
               onClick={() => {
-                navigate(`/trip/transfer?sourceType=trip&sourceId=${tripId}&destType=trip&destId=${tripId}`);
+                navigate(`/trip/transfer?sourceType=account&sourceId=${accountId}&destType=trip&destId=${tripAccountId}`);
                 handleCloseModal();
               }}
               className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"

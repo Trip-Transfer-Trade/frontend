@@ -5,6 +5,7 @@ import assetsReducer from "./assetsSlice";
 import tripReducer from "./tripSlice";
 import nomalAccountReducer from "./nomalAccountSlice";
 import accountReducer from "./accountSlice";
+import exchangeReducer from "./exchangeSlice";
 
 // ✅ 이체 관련 transfer slice 추가
 const transferSlice = createSlice({
@@ -44,5 +45,6 @@ export default configureStore({
     nomalAccount: nomalAccountReducer,
     account: accountReducer,
     transfer: transferSlice.reducer,
+    exchange: exchangeReducer,
   },
 });

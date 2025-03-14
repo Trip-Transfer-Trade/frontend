@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchTripById } from "../../redux/tripSlice";
+import { fetchAccountData } from "../../redux/accountSlice";
+import { fetchExchangeRate } from "../../redux/exchangeSlice";
 import BackNavigation from "../../components/BackNavigation";
 import GoalMidpointModal from "../../components/portfolio/GoalMidpointModal";
 import BulkSellWarningModal from "../../components/portfolio/BulkSellWarningModal";
@@ -11,32 +13,41 @@ const GoalProgressPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     if (tripId) {
+      dispatch(fetchAccountData({ tripId, currency: "KRW" }));
+      dispatch(fetchAccountData({ tripId, currency: "USD" }));
       dispatch(fetchTripById(tripId));
+      dispatch(fetchExchangeRate());
     }
   }, [dispatch, tripId]);
 
   const selectedTrip = useSelector((state) => state.trip.selectedTrip) || {};
+  const { data: accountData, status: accountStatus } = useSelector((state) => state.account);
+  const exchangeRate = useSelector((state) => state.exchange.rate);
+
+  const krwDeposit = accountData?.KRW?.depositAmount || 0;
+  const usdDeposit = accountData?.USD?.depositAmount || 0;
+  const profitKRW = accountData?.KRW?.profit || 0;
+  const profitUSD = accountData?.USD?.profit || 0;
 
   const {
     name = "목표 없음",
     endDate = "없음",
     goalAmount = 0,
-    evaluationAmount = 0,
-    krwDeposit = 0,
-    usdDeposit = 0,
-    status,
+    status: tripStatus,
     error,
   } = selectedTrip;
+
+  const totalProfitConverted = profitKRW + (profitUSD * exchangeRate);
 
   const [endGoalChecked, setEndGoalChecked] = useState(false);
   const [sellAfterEnd, setSellAfterEnd] = useState(false);
 
-  if (status === "loading")
+  if (accountStatus === "loading")
     return <div className="p-4 text-center">로딩 중...</div>;
-  if (status === "failed")
+  if (accountStatus === "failed")
     return <div className="p-4 text-center text-red-500">에러: {error}</div>;
 
   return (
@@ -66,9 +77,9 @@ const GoalProgressPage = () => {
             <span className="font-medium">{goalAmount.toLocaleString()}원</span>
           </div>
           <div className="flex justify-between py-3 border-b border-gray-100">
-            <span className="text-gray-600">평가 금액</span>
+            <span className="text-gray-600">누적수익금</span>
             <span className="font-medium">
-              {evaluationAmount.toLocaleString()}원
+            {totalProfitConverted.toLocaleString()}원
             </span>
           </div>
           <div className="flex justify-between py-3 border-b border-gray-100">

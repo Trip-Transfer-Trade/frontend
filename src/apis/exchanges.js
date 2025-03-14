@@ -3,8 +3,13 @@ import apiClient from "./apiClient";
 // 내 지갑 조회
 export const fetchWallet = async () => {
   console.log("fetchWallet 호출");
-  const response = await apiClient.get("/exchanges/myWallet");
-  return response.data.data;
+  try{
+    const response = await apiClient.get("/exchanges/myWallet");
+    console.log(response.data.data);
+    return response.data.data;
+  } catch(error){
+    console.error(error);
+  }
 };
 
 // 내 지갑 상세 조회
