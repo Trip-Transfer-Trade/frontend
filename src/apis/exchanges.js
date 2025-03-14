@@ -110,3 +110,30 @@ export const fetchExchange = async (exchangeData) =>{
     throw error;
   }
 }
+
+//전체 랭킹 조회
+export const fetchRankAll = async (currencyCode) =>{
+  console.log("랭킹 조회");
+  try{
+    const response = await apiClient.get(`/exchanges/ranking/all`,{
+      params:{currencyCode:currencyCode}
+    });
+    return response.data.data;
+  } catch(error){
+    console.error("랭킹 조회 오류",error);
+    throw error;
+  }
+}
+
+//랭킹 조회
+export const fetchRank = async (tripId, currencyCode) =>{
+  console.log(tripId,"과 유사한 랭킹 조회");
+  try{
+    const response = await apiClient.get(`/exchanges/ranking/${tripId}`, {
+      params: { currencyCode:  currencyCode}});
+    return response.data.data;
+  } catch(error){
+    console.error("조회 오류");
+    throw error;
+  }
+}
