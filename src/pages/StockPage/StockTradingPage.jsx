@@ -29,16 +29,18 @@ export default function StockTradingPage() {
     const [currencyPrice, setCurrencyPrice] = useState();
     const [currencySymbol, setCurrencySymbol] = useState("원");
     const [isTradeCompleted, setIsTradeCompleted] = useState(false);
+    const [currencyCode, setCurrencyCode] = useState("KRW");
     const scrollRef = useRef(null);
 
     const isCheckCode = /^\d+$/.test(code);
 
     useEffect(() => {
         setCurrencySymbol(isCheckCode ? "원" : "$");
-    }, [currencySymbol])
+        setCurrencyCode(isCheckCode ? "KRW" : "USD");
+    }, [currencySymbol, currencyCode])
 
     useEffect(() => {
-        apiClient.get(`/exchanges/order/amount/${tripGoal}`)
+        apiClient.get(`/exchanges/order/amount/${tripGoal}/${currencyCode}`)
         .then((response) => {
             console.log("📌 API 금액 확인:", response.data);
             setAvaliableFunds(response.data.data.amount);
