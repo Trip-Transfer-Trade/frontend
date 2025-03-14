@@ -12,6 +12,7 @@ export default function WalletTabContent() {
     (async () => {
       try {
         const data = await fetchWallet();
+        console.log(data);
         setOwnedCurrencies(data);
       } catch (error) {
         console.error("내 지갑 정보 불러오기 실패", error);

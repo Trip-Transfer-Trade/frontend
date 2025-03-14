@@ -14,6 +14,7 @@ import GoalProgressPage from "../pages/PortfolioPage/GoalProgressPage";
 import TripEditPage from "../pages/PortfolioPage/TripEditPage";
 import TransferPage from "../pages/MyTripPage/TransferPage";
 import EnterAmountPage from "../pages/MyTripPage/EnterAmountPage";
+import SuggestPortfolioPage from "../pages/PortfolioPage/SuggestPortfolioPage";
 
 
 
@@ -32,6 +33,8 @@ const TripRouter = {
     { path: ":tripId/portfolio/progress", element: <GoalProgressPage /> },
     { path: ":tripId/portfolio/progress/edit", element: <TripEditPage /> },
     { path: ":tripId/portfolio/rank", element: <RankingPage /> },
+    { path: ":tripId/portfolio/rank/suggest", element: <SuggestPortfolioPage /> },
+    
 
     // 여행 목표 성공&실패
     { path: ":tripGoal/failed", element: <FailedPage /> },

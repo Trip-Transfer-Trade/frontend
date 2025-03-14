@@ -7,7 +7,9 @@ import { submitTranfer, setTransferData } from "../../redux/transferSlice";
 export default function EnterAmountPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const [activeTab, setActiveTab] = useState("KRW");
+
 
   const sourceId = searchParams.get("sourceId");
   const destId = searchParams.get("destId");
@@ -92,6 +94,26 @@ export default function EnterAmountPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
+              <div className="ml-auto">
+        <div className="w-[160px] h-8 bg-gray-100 rounded-lg p-1 flex">
+        <button
+              className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
+                activeTab === "k" ? "bg-white shadow-sm" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("KRW")}
+            >
+              국내
+            </button>
+            <button
+              className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
+                activeTab === "u" ? "bg-white shadow-sm" : "text-gray-500"
+              }`}
+              onClick={() => setActiveTab("USD")}
+            >
+              해외
+            </button>
+          </div>
+        </div>
       <div className="flex flex-col mt-4">
         <p className="text-l font-medium mt-10 ml-4">
           {destinationAccountInfo
