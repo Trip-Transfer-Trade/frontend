@@ -1,4 +1,3 @@
-import LoginModal from "../pages/LoginPage/LoginModal";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import SignupFlow from "../pages/SignUpPage/SignupFlow";
 
