@@ -97,6 +97,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       try{
         const response = await fetchExchange(exchangeData);
         console.log(response);
+        response.currency=toCurrency
         navigate('/exchange/complete',{state:{exchanges:[response]}});
       } catch(error){
         console.error("환전 오류",error);
@@ -142,6 +143,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
     
     try{
       const response =await fetchExchangeBatch(exchangeData);
+      response.currency=toCurrency
       console.log(response);
       navigate('/exchange/complete',{state:{exchanges:[response]}});
     } catch(error){

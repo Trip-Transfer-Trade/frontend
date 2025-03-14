@@ -14,7 +14,7 @@ export default function ExchangeCompletePage() {
       
       <div className="absolute top-6 right-6">
         <button className="text-gray-400"
-          onClick={navigate(`/exchange`)}>
+          onClick={() => {navigate(`/exchange`);}}>
           <X size={28} strokeWidth={1.5} />
         </button>
       </div>
@@ -38,13 +38,14 @@ export default function ExchangeCompletePage() {
       </div>
       {Object.keys(exchanges).map((currency) => {
         const data = exchanges[currency];
+        console.log(currency, exchanges);
         return (
           <ExchangeCompleteResultCard
             key={currency}
             title={currency === "KRW" ? "국내 투자금" : "해외 투자금"}
             principal={currency === "KRW" ? `${data.amount.toLocaleString()}원` : `$${data.amount}`}
             exchangeRate={parseFloat(data.rate).toFixed(2)}
-            exchangeAmount={`${data.toAmount.toLocaleString()}${getCurrencySymbolFromCurrency(currency)}`}
+            exchangeAmount={`${data.toAmount.toLocaleString()}${getCurrencySymbolFromCurrency(data.currency)}`}
             bgColor={currency === "KRW" ? "bg-blue-50" : "bg-amber-50"}
             subBgColor={currency === "KRW" ? "bg-blue-100" : "bg-amber-100"}
           />
