@@ -87,7 +87,7 @@ export default function GoalDetailPage() {
               <span>{getKoreanUnitFromCurrency(currency.currencyCode)}</span>
             </span>
             <span className="text-right">
-              {currency.availableAmount.toLocaleString()}{" "}
+              {currency.availableAmount?.toLocaleString()}{0}
               {currency.currencyCode}
             </span>
           </div>
