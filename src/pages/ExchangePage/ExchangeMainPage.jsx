@@ -22,7 +22,7 @@ export default function ExchangeMainPage() {
           <WalletTabContent />
         </ExchangeTab>
 
-        <ExchangeTab label="목표">
+        <ExchangeTab label="환전">
           <GoalTabContent />
         </ExchangeTab>
 

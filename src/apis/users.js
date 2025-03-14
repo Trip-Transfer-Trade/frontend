@@ -35,3 +35,15 @@ export const checkCode = async (checkData) =>{
     }
 }
 
+
+export const saveToken = async (token) =>{
+  console.log("fcm 토큰 저장");
+  try{
+    const response = await apiClient.post("/alarms/fcm",token);
+    console.log(response);
+    return response;
+  } catch (error){
+    console.error("fcm 토큰 저장 실패");
+    throw error;
+  }
+}

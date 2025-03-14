@@ -66,13 +66,18 @@ export default function PortfolioAccount({activeTab}) {
       </div>
 
       <div className="grid grid-cols-3 gap-2 mt-3">
-        <button className="py-1 border border-gray-300 rounded-md text-sm" >
+        <button className="py-1 border border-gray-300 rounded-md text-sm" 
+          onClick={() => navigate(`/mypage/transfer/recipient`)}>
           이체하기
         </button>
-        <button className="py-1 border border-gray-300 rounded-md text-sm" onClick={handleInvestClick}>
+        <button className="py-1 border border-gray-300 rounded-md text-sm" 
+          onClick={handleInvestClick}>
           투자하기
         </button>
-        <button className="py-1 border border-gray-300 rounded-md text-sm">환전하기</button>
+        <button className="py-1 border border-gray-300 rounded-md text-sm" 
+          onClick={() => navigate(`/exchange/goals/${tripId}`)}>
+          환전하기
+        </button>
       </div>
       <ModalCenter isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <h2 className="text-lg font-bold text-center mt-5">미국 달러가 없어요!</h2>
@@ -83,7 +88,7 @@ export default function PortfolioAccount({activeTab}) {
         <div className="flex flex-col space-y-2 w-10/12 my-3 mx-auto">
           <button 
             className="w-full py-[10px] bg-blue-500 text-white text-base rounded-md transition-all hover:bg-blue-600"
-            onClick={() => navigate(`/trip/${tripId}/exchange`)} //페이지 만들기
+            onClick={() => navigate('/trip')} //투자를 위한 환전 페이지 만들기기
           >
             환전하러 가기
           </button>
