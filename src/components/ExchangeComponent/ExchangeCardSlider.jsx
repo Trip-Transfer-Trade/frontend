@@ -18,15 +18,12 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
   const [selectedCards, setSelectedCards] = useState([0]); // 첫 번째 카드 기본 선택
   const [selectedTotal, setSelectedTotal] = useState(0);
   const [selectedLess, setSelectedLess] = useState(false);
-  const [tripId, setTripId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (cards.length > 0) {
       setSelectedTotal(cards[0].amount); // 첫 번째 카드 금액으로 초기화
     }
-    setTripId(goalId);
-    console.log(goalId);
   }, [cards]);
 
   useEffect(() => {
@@ -88,7 +85,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
         accountId: singleCard.accountId,
         fromCurrency: fromCurrency,
         toCurrency:toCurrency,
-        exchangeRate: rate, // 환율 연결  
+        exchangeRate: rate,
         fromAmount: fromAmount,
         toAmount:toAmount
       };
@@ -141,7 +138,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
 
     console.log("요청 data :",exchangeData);
     
-    try{
+    try{  
       const response =await fetchExchangeBatch(exchangeData);
       response.currency=toCurrency
       console.log(response);
