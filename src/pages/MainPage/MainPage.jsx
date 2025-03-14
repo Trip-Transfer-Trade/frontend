@@ -18,6 +18,7 @@ export default function MainPage() {
   const [selected, setSelected] = useState("국내");
   const [stockItems, setStockItems] = useState({ list: [] });
   const [type, setType] = useState("popular");
+  const [count, setCount] = useState(0);
 
   // 🔹 계좌 상태 확인
   useEffect(() => {
@@ -33,6 +34,17 @@ export default function MainPage() {
     }
     checkAccountStatus();
   }, []);
+
+  useEffect(() => {
+    apiClient.get("/trips/count")
+    .then((response) => {
+      setCount(response.data);
+      console.log("진행 중 목표 : " + count);
+    })
+    .catch((err) => {
+      console.error("목표 count 가져오기 실패", err);
+    })
+  }, [count])
 
   const convertType = (type) => ({
     "상승": "top",
@@ -59,21 +71,29 @@ export default function MainPage() {
           console.error("환율 가져오기 실패", err);
         });
     }
-    setType("상승");
+    setType("인기");
   }, [selected]);
 
   useEffect(() => {
-    apiClient.get(selected === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking", {
-      params: { type: convertType(type) }
-    })
-      .then((response) => {
-        console.log("API 응답 데이터:", response.data);
-        const stockData = selected === "국내" ? response.data.data.output : response.data.output2;
-        setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
+    // const fetchStockData = () => {
+      apiClient.get(selected === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking", {
+        params: { type: convertType(type) }
       })
-      .catch((err) => {
-        console.log("주식 데이터 조회 실패", err);
-      });
+        .then((response) => {
+          console.log("API 응답 데이터:", response.data);
+          const stockData = selected === "국내" ? response.data.data.output : response.data.output2;
+          setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
+        })
+        .catch((err) => {
+          console.log("주식 데이터 조회 실패", err);
+        });
+    // }
+
+    // fetchStockData();
+
+    // const interval = setInterval(fetchStockData, 5000);
+
+    // return () => clearInterval(interval);
   }, [selected, type]);
   
 
@@ -136,8 +156,9 @@ export default function MainPage() {
               <p className={styles.description}>새로운 목표를 생성해보세요.</p>
               <div className={styles.cardContent}>
                 <div className={styles.cardText}>
-                  <p className={styles.countGoal}> 도전 중 목표  4개</p>
-                  <p className={styles.countGoal}> 도전 중 목표  5개</p>
+                  <p className={styles.countGoal}> 도전 중 목표&nbsp; </p>
+                  <p className={styles.countGoalCount}> {count} </p>
+                  <p className={styles.countGoal}>개 </p>
                 </div>
                 <div className={styles.cardImage}>
                   <img src="/assets/images/main/Dart.svg" alt="목표 확인" />
