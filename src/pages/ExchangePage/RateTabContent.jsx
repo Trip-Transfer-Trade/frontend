@@ -8,7 +8,6 @@ import ExchangeRateList from "../../components/ExchangeComponent/ExchangeRateLis
 
 export default function RateTabContent() {
   const [exchangeRates, setExchangeRates] = useState([
-    // 수정 필요
     // {
     //   changePrice: 0.32,
     //   changeRate: 0.08,
