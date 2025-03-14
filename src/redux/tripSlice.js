@@ -31,7 +31,7 @@ export const TripAll = createAsyncThunk(
   async (_, thunkAPI) => {
     try{
       const response = await apiClient.get("/exchanges/tripAccount/info?currencyCodes=KRW,USD");
-      return response.data;
+      return Array.isArray(response.data) ? response.data : [];
     }catch(error){
       return thunkAPI.rejectWithValue(error.response?.data || "여행 목표 조회 실패");
     }
@@ -74,12 +74,18 @@ const tripSlice = createSlice({
     country: "",
     goalAmount: null,
     endDate: null,
+    accountId: null,
+    accountNumber: null,
     tripGoals: [],
     selectedTrip: null,
     status: "idle",
     error: null,
   },
   reducers: {
+    resetTrips: (state)=>{
+      state.tripGoals = [];
+      state.status = "idle";
+    },
     setName:(state, action)=>{
       state.name = action.payload;
     },
@@ -119,6 +125,7 @@ const tripSlice = createSlice({
       .addCase(TripAll.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+
       })
       .addCase(submitTripGoal.fulfilled, (state, action) => { 
         state.status = "succeeded";
@@ -149,5 +156,5 @@ const tripSlice = createSlice({
   },
 });
 
-export const { setName, setCountry, setGoalAmount, setEndDate, setProfit } = tripSlice.actions;
+export const { setName, setCountry, setGoalAmount, setEndDate, setProfit, resetTrips } = tripSlice.actions;
 export default tripSlice.reducer;

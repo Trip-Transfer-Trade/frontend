@@ -3,11 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchUserInfo } from "../../apis/users";
 import { logout } from "../../apis/users";
+import { useDispatch } from "react-redux";
+import { resetTrips } from "../../redux/tripSlice";
 
 export default function UserPage() {
 
   const [user, setUser] = useState(null);
   const navigate = useNavigate(); 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadUserInfo = async () => {
@@ -59,6 +62,7 @@ export default function UserPage() {
           <button
             className="text-custom-gray-3 text-xs flex items-center"
             onClick={async () => {
+              dispatch(resetTrips());
               await logout();
               navigate("/auth/login"); // 로그인 페이지로 이동
             }} 

@@ -1,6 +1,7 @@
 import { useDrag, useDrop } from "react-dnd";
 import { TbHandClick } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import FormattedAccountNumber from "../../components/FormattedAccountNumber";
 
 
 export default function AccountCard({ account }) {
@@ -8,26 +9,31 @@ export default function AccountCard({ account }) {
   const { amountNumber, totalAmountInKRW } = account; 
   const bankName = "신한";
 
+  const displayName = account.isAccount ? "일반계좌" : account.name;
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "account",
-    item: { amountNumber, totalAmountInKRW },
+    item: { sourceType: "account", sourceId: account.accountId, account },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   }));
+  
 
+  
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["trip", "account"],
     drop: (item) => {
-      const tripId = item?.trip?.tripId || null;
+      const destId = account.accountId;
       navigate(
-        `/trip/transfer?account=${item.accountNumber}&trip=${tripId}`
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${destId}&destType=account`
       );
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
     }),
   }));
+  
 
   return (
     <div
@@ -47,9 +53,9 @@ export default function AccountCard({ account }) {
             className="w-8 h-8"
           />
           <div>
-            <p className="text-sm font-medium text-black">내 메인 계좌</p>
+            <p className="text-sm font-medium text-black">{displayName}</p>
             <p className="text-xs text-gray-500">
-              {bankName} {amountNumber}
+              {bankName} <FormattedAccountNumber accountNumber={amountNumber ?? "1234567891011"} />
             </p>
           </div>
         </div>
