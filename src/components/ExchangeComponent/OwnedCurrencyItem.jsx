@@ -52,7 +52,7 @@ export default function OwnedCurrencyItem({ currencyCode, totalAmount }) {
         </span>
         <span className="text-right">
           {getCurrencySymbolFromCurrency(currencyCode)}{" "}
-          {totalAmount.toLocaleString()}
+          {totalAmount?.toLocaleString()}
         </span>
       </div>
 

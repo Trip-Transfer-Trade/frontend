@@ -4,6 +4,7 @@ import TransferConfirmPage from "../pages/UserPage/TransferConfirmPage";
 import HistoryPage from "../pages/UserPage/HistoryPage";
 import ProfilePage from "../pages/UserPage/ProfilePage";
 import MyAccountPage from "../pages/UserPage/MyAccountPage";
+import AlarmHistoryPage from "../pages/UserPage/AlarmHistoryPage";
 
 const UserRouter = {
   path: "/mypage",
@@ -42,6 +43,15 @@ const UserRouter = {
         },
       ],
     },
+    {
+      path: "alarm",
+      children: [
+        {
+          index: "alarm",
+          element: <AlarmHistoryPage />,
+        }
+      ]
+    }
   ],
 };
 
