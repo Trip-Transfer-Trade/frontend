@@ -82,6 +82,10 @@ const tripSlice = createSlice({
     error: null,
   },
   reducers: {
+    resetTrips: (state)=>{
+      state.tripGoals = [];
+      state.status = "idle";
+    },
     setName:(state, action)=>{
       state.name = action.payload;
     },
@@ -121,7 +125,7 @@ const tripSlice = createSlice({
       .addCase(TripAll.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
-        
+
       })
       .addCase(submitTripGoal.fulfilled, (state, action) => { 
         state.status = "succeeded";
@@ -152,5 +156,5 @@ const tripSlice = createSlice({
   },
 });
 
-export const { setName, setCountry, setGoalAmount, setEndDate, setProfit } = tripSlice.actions;
+export const { setName, setCountry, setGoalAmount, setEndDate, setProfit, resetTrips } = tripSlice.actions;
 export default tripSlice.reducer;

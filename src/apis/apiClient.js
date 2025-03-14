@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "https://api.triptransfertrade.shop/api",
+  baseURL: "http://localhost:8080/api",
   withCredentials: true, // 쿠키 기반 인증
 });
 

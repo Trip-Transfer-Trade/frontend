@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import ModalCenter from "../../components/ModalCenter";
+import FormattedAccountNumber from "../../components/FormattedAccountNumber";
+
 
 const countryCodeMap = {
   "미국": "US",
@@ -53,7 +55,7 @@ export default function TripCard({ trip }) {
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "trip",
-    item: { sourceType: "trip", sourceId: tripId, trip },
+    item: { sourceType: "trip", sourceId: accountId, trip },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
@@ -63,7 +65,7 @@ export default function TripCard({ trip }) {
     accept: ["trip", "account"],
     drop: (item) => {
       navigate(
-        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripId}&destType=trip`
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${accountId}&destType=trip`
       );
     },
     collect: (monitor) => ({
@@ -104,7 +106,7 @@ export default function TripCard({ trip }) {
           <p className="text-2xl font-bold">{totalAmountInKRW}원</p>
         </div>
       </div>
-      <p className="text-xs text-gray-500">계좌 번호 {accountNumber}?? 1234567</p>
+      <p className="text-xs text-gray-500">계좌 번호 <FormattedAccountNumber accountNumber={accountNumber ?? "1234567891011"} /></p>
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
           <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">

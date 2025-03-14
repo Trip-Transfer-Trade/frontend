@@ -1,23 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { SkipBackIcon } from "lucide-react";
+import { submitTranfer, setTransferData } from "../../redux/transferSlice";
 
 export default function EnterAmountPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch()
+
   const sourceId = searchParams.get("sourceId");
-  const sourceType = searchParams.get("sourceType");
   const destId = searchParams.get("destId");
-  const destType = searchParams.get("destType");
   const tripId = searchParams.get("tripId");
 
-  const [amount, setAmount] = useState("");
   const { tripGoals } = useSelector((state) => state.trip);
   const account = useSelector((state) => state.nomalAccount.account) || {};
 
-  const selectedTrip = tripGoals.find((trip) => trip.tripId == tripId);
+  let sourceAccountInfo = null;
+  if (account && String(account.accountId) === String(sourceId)) {
+    sourceAccountInfo = { ...account, isAccount: true };
+  } else {
+    const found = tripGoals.find(
+      (t) => String(t.accountId) === String(sourceId)
+    );
+    if (found) {
+      sourceAccountInfo = { ...found, isAccount: false };
+    }
+  }
+
+  let destinationAccountInfo = null;
+  if (account && String(account.accountId) === String(destId)) {
+    destinationAccountInfo = { ...account, isAccount: true };
+  } else {
+    const found = tripGoals.find(
+      (t) => String(t.accountId) === String(destId)
+    );
+    if (found) {
+      destinationAccountInfo = { ...found, isAccount: false };
+    }
+  }
+
+  const [amount, setAmount] = useState("");
 
   const handleNumberPress = (num) => {
     if (amount.length < 10) {
@@ -34,17 +57,48 @@ export default function EnterAmountPage() {
       alert("이체할 금액을 입력하세요!");
       return;
     }
-    alert(`${amount}원이 여행 목표 "${selectedTrip?.name}"로 이체되었습니다.`);
-    navigate("/trip");
-  };
+    if (!sourceAccountInfo || !destinationAccountInfo) {
+      alert("계좌 정보를 확인할 수 없습니다.");
+      return;
+    }
 
+    const payload = {
+      accountId: sourceAccountInfo.accountId,
+      amount: Number(amount),
+      targetAccountNumber: destinationAccountInfo.isAccount
+        ? destinationAccountInfo.amountNumber
+        : destinationAccountInfo.accountNumber,
+      description: "",
+      currencyCode: "KRW",
+    };
+
+    dispatch(submitTranfer(payload))
+      .unwrap()
+      .then(() => {
+        alert(
+          `${Number(amount).toLocaleString()}원이 ${
+            destinationAccountInfo.isAccount
+              ? "내 일반 계좌"
+              : destinationAccountInfo.name
+          }로 이체되었습니다.`
+        );
+        navigate("/trip");
+      })
+      .catch((err) => {
+        alert("이체 실패: " + err);
+      });
+    };
 
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <div className="flex flex-col mt-4">
         <p className="text-l font-medium mt-10 ml-4">
-          {selectedTrip ? selectedTrip.name : "알 수 없음"}
+          {destinationAccountInfo
+            ? destinationAccountInfo.isAccount
+              ? "내 일반 계좌"
+              : destinationAccountInfo.name
+            : "알 수 없음"}
         </p>
       </div>
 
@@ -54,20 +108,44 @@ export default function EnterAmountPage() {
 
       <div className="flex flex-col items-center mt-6">
         <p className="text-3xl font-bold text-gray-600">
-          {amount ? `${Number(amount).toLocaleString()} 원` : "0원"}
+        {amount ? `${Number(amount).toLocaleString()} 원` : "0원"}
         </p>
       </div>
-      {/* 출발 계좌 정보 */}
+
       <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-5">
         <div>
-          <p className="text-sm text-gray-500">출발 계좌 {sourceId}</p>
+          <p className="text-sm text-gray-500">출발 계좌 {" "}
+            {sourceAccountInfo
+            ? sourceAccountInfo.isAccount
+              ? sourceAccountInfo.amountNumber
+              : sourceAccountInfo.accountNumber
+            : sourceId}
+          </p>
+          <p className="text-sm text-gray-500">
+            잔액:{" "}
+            {sourceAccountInfo &&
+              sourceAccountInfo.totalAmountInKRW?.toLocaleString() + "원"}
+          </p>
         </div>
       </div>
-      {/* 도착 계좌 정보 (여행 계좌) */}
+
       <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-3">
         <div>
-          <p className="text-sm text-gray-500">도착 계좌 {destId}</p>
-          <p className="text-sm font-medium text-gray-600">{selectedTrip ? selectedTrip.name : "알 수 없음"}</p>
+          <p className="text-sm text-gray-500">
+            도착 계좌:{" "}
+            {destinationAccountInfo
+              ? destinationAccountInfo.isAccount
+                ? destinationAccountInfo.amountNumber
+                : destinationAccountInfo.accountNumber
+              : destId}
+          </p>
+          <p className="text-sm font-medium text-gray-600">
+            {destinationAccountInfo
+              ? destinationAccountInfo.isAccount
+                ? "내 일반 계좌"
+                : destinationAccountInfo.name
+              : "알 수 없음"}
+          </p>
         </div>
       </div>
 
