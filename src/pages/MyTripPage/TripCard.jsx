@@ -6,25 +6,25 @@ import FormattedAccountNumber from "../../components/FormattedAccountNumber";
 import { TbHandClick } from "react-icons/tb";
 
 const countryCodeMap = {
-  "미국": "US",
-  "캐나다": "CA",
-  "프랑스": "FR",
-  "이탈리아": "IT",
-  "일본": "JP",
-  "한국": "KR",
-  "독일": "DE",
-  "영국": "GB",
-  "스페인": "ES",
-  "중국": "CN",
-  "호주": "AU",
-  "멕시코": "MX",
-  "인도": "IN",
-  "브라질": "BR",
-  "아르헨티나": "AR",
-  "칠레": "CL",
-  "이집트": "EG",
-  "남아프리카공화국": "ZA",
-  "이름없음": "UN",
+  미국: "US",
+  캐나다: "CA",
+  프랑스: "FR",
+  이탈리아: "IT",
+  일본: "JP",
+  한국: "KR",
+  독일: "DE",
+  영국: "GB",
+  스페인: "ES",
+  중국: "CN",
+  호주: "AU",
+  멕시코: "MX",
+  인도: "IN",
+  브라질: "BR",
+  아르헨티나: "AR",
+  칠레: "CL",
+  이집트: "EG",
+  남아프리카공화국: "ZA",
+  이름없음: "UN",
 };
 
 function getCountryFlagURL(countryName) {
@@ -45,9 +45,13 @@ export default function TripCard({ trip, accountId }) {
     totalAmountInKRW,
     endDate,
   } = trip;
-  
-  const progressText = goalAmount > 0 ? ((totalProfit / goalAmount) * 100).toFixed(0) : "0";
-  const progressBarWidth = goalAmount > 0 ? Math.max(0, Math.min((totalProfit / goalAmount) * 100, 100)) : 0;
+
+  const progressText =
+    goalAmount > 0 ? ((totalProfit / goalAmount) * 100).toFixed(0) : "0";
+  const progressBarWidth =
+    goalAmount > 0
+      ? Math.max(0, Math.min((totalProfit / goalAmount) * 100, 100))
+      : 0;
   const progressStyle = { width: `${progressBarWidth}%` };
 
   const flagURL = getCountryFlagURL(country);
@@ -60,10 +64,13 @@ export default function TripCard({ trip, accountId }) {
       isDragging: monitor.isDragging(),
     }),
   }));
-  
+
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ["trip", "account"],
     drop: (item) => {
+      navigate(
+        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripAccountId}&destType=trip`
+      );
       navigate(
         `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripAccountId}&destType=trip`
       );
@@ -72,7 +79,6 @@ export default function TripCard({ trip, accountId }) {
       isOver: monitor.isOver(),
     }),
   }));
-  
 
   const handleCardClick = () => {
     if (isModalOpen) return;
@@ -99,16 +105,23 @@ export default function TripCard({ trip, accountId }) {
       onClick={handleCardClick}
     >
       <div className="flex justify-between items-center mb-2">
-      <div>
-        <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
-        <p className="text-2xl font-bold">{totalAmountInKRW.toLocaleString()}원</p>
+        <div>
+          <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
+          <p className="text-2xl font-bold">
+            {totalAmountInKRW.toLocaleString()}원
+          </p>
+        </div>
+        <div className="flex flex-col items-center">
+          <img src={flagURL} alt={country} className="w-10 h-10" />
+          <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600 mt-1" />
+        </div>
       </div>
-      <div className="flex flex-col items-center">
-        <img src={flagURL} alt={country} className="w-10 h-10" />
-        <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600 mt-1" />
-      </div>
-    </div>
-      <p className="text-xs text-gray-500">계좌 번호 <FormattedAccountNumber accountNumber={accountNumber ?? "1234567891011"} /></p>
+      <p className="text-xs text-gray-500">
+        계좌 번호{" "}
+        <FormattedAccountNumber
+          accountNumber={accountNumber ?? "1234567891011"}
+        />
+      </p>
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
           <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
@@ -116,6 +129,10 @@ export default function TripCard({ trip, accountId }) {
           </div>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2">
+          <div
+            className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+            style={progressStyle}
+          ></div>
           <div
             className="bg-blue-500 h-2 rounded-full transition-all duration-500"
             style={progressStyle}
@@ -132,9 +149,14 @@ export default function TripCard({ trip, accountId }) {
             <p className="text-gray-600 text-center">
               계좌에 투자를 위한 돈이 부족합니다. 지금 바로 이체를 진행할까요?
             </p>
+            <p className="text-gray-600 text-center">
+              계좌에 투자를 위한 돈이 부족합니다. 지금 바로 이체를 진행할까요?
+            </p>
             <button
               onClick={() => {
-                navigate(`/trip/transfer?sourceType=account&sourceId=${accountId}&destType=trip&destId=${tripAccountId}`);
+                navigate(
+                  `/trip/transfer?sourceType=account&sourceId=${accountId}&destType=trip&destId=${tripAccountId}`
+                );
                 handleCloseModal();
               }}
               className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"

@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setName, setCountry, setGoalAmount, setEndDate, submitTripGoal, fetchTripGoals } from "../../../redux/tripSlice";
+import {
+  setName,
+  setCountry,
+  setGoalAmount,
+  setEndDate,
+  submitTripGoal,
+  fetchTripGoals,
+} from "../../../redux/tripSlice";
 import { useNavigate } from "react-router-dom";
 import CountrySelect from "./CountrySelect";
 import TargetForm from "./TargetForm";
@@ -15,7 +22,7 @@ export default function TripGoalFlow() {
   const navigate = useNavigate();
   const tripData = useSelector((state) => state.trip);
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState({ name:"", amount: "", date: "" });
+  const [formData, setFormData] = useState({ name: "", amount: "", date: "" });
 
   function handleCountrySelect(country) {
     dispatch(setCountry(country));
@@ -28,7 +35,7 @@ export default function TripGoalFlow() {
 
   function handleNextStep() {
     if (step === 1) {
-      if(!formData.name){
+      if (!formData.name) {
         alert("여행 이름을 입력해주세요!");
         return;
       }
@@ -53,7 +60,12 @@ export default function TripGoalFlow() {
   }
 
   function handleConfirmGoal() {
-    if (!tripData.name || !tripData.country || !tripData.goalAmount || !tripData.endDate) {
+    if (
+      !tripData.name ||
+      !tripData.country ||
+      !tripData.goalAmount ||
+      !tripData.endDate
+    ) {
       alert("모든 정보를 입력해주세요!");
       return;
     }
@@ -72,9 +84,14 @@ export default function TripGoalFlow() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {step < 3 && <BackNavigation text={`여행 목표 - ${steps[step]}`} onBack={handlePrevStep} />}
+      {step < 3 && (
+        <BackNavigation
+          text={`여행 목표 - ${steps[step]}`}
+          onBack={handlePrevStep}
+        />
+      )}
 
-      <div className="flex-grow w-full mx-auto p-6">
+      <div className="flex-grow w-full mx-auto px-6">
         {step === 0 && <CountrySelect onSelect={handleCountrySelect} />}
         {step === 1 && <TargetForm onChange={handleTargetChange} />}
         {step === 2 && <MyTripGoalSet />}
@@ -86,12 +103,15 @@ export default function TripGoalFlow() {
             text="다음"
             onClick={handleNextStep}
             disabled={
-              (step === 0 && !tripData.country) || 
+              (step === 0 && !tripData.country) ||
               (step === 1 && (!formData.amount || !formData.date))
             }
           />
         ) : (
-          <NextConfirmButton text="목표 설정 완료" onClick={handleConfirmGoal} />
+          <NextConfirmButton
+            text="목표 설정 완료"
+            onClick={handleConfirmGoal}
+          />
         )}
       </div>
     </div>

@@ -13,7 +13,7 @@ const GoalProgressPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     if (tripId) {
       dispatch(fetchAccountData({ tripId, currency: "KRW" }));
@@ -24,7 +24,9 @@ const GoalProgressPage = () => {
   }, [dispatch, tripId]);
 
   const selectedTrip = useSelector((state) => state.trip.selectedTrip) || {};
-  const { data: accountData, status: accountStatus } = useSelector((state) => state.account);
+  const { data: accountData, status: accountStatus } = useSelector(
+    (state) => state.account
+  );
   const exchangeRate = useSelector((state) => state.exchange.rate);
 
   const krwDeposit = accountData?.KRW?.depositAmount || 0;
@@ -40,7 +42,7 @@ const GoalProgressPage = () => {
     error,
   } = selectedTrip;
 
-  const totalProfitConverted = profitKRW + (profitUSD * exchangeRate);
+  const totalProfitConverted = profitKRW + profitUSD * exchangeRate;
 
   const [endGoalChecked, setEndGoalChecked] = useState(false);
   const [sellAfterEnd, setSellAfterEnd] = useState(false);
@@ -51,12 +53,10 @@ const GoalProgressPage = () => {
     return <div className="p-4 text-center text-red-500">에러: {error}</div>;
 
   return (
-    <div className="flex flex-col min-h-screen px-4">
-      <div className="pt-4">
-        <BackNavigation text={name} />
-      </div>
+    <div className="flex flex-col">
+      <BackNavigation text={name} />
 
-      <div className="flex-1 p-4">
+      <div className="flex-1 px-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">목표 진행 상황</h2>
           <button
@@ -79,7 +79,7 @@ const GoalProgressPage = () => {
           <div className="flex justify-between py-3 border-b border-gray-100">
             <span className="text-gray-600">누적수익금</span>
             <span className="font-medium">
-            {totalProfitConverted.toLocaleString()}원
+              {totalProfitConverted.toLocaleString()}원
             </span>
           </div>
           <div className="flex justify-between py-3 border-b border-gray-100">
@@ -93,7 +93,6 @@ const GoalProgressPage = () => {
         </div>
 
         <div className="space-y-4 mb-6">
-          
           {/* <div
             className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer ${sellAfterEnd ? "text-gray-400" : "text-black"}`}
             onClick={() => { setEndGoalChecked(true); setSellAfterEnd(false); }}
