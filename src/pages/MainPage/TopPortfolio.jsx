@@ -44,6 +44,7 @@ const RankingItem = ({ rank, name, profit }) => {
     2: 'bg-purple-500',
     3: 'bg-orange-500'
   };
+  if (profit==0) return;
 
   return (
     <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
@@ -64,30 +65,6 @@ const RankingItem = ({ rank, name, profit }) => {
     </div>
   );
 };
-
-// const domesticRankingData = [
-//   { id: 1, rank: 1, name: '김신한', profit: 123323 },
-//   { id: 2, rank: 2, name: '홍길동', profit: 112233 },
-//   { id: 3, rank: 3, name: '이몽룡', profit: 101010 },
-//   { id: 4, rank: 4, name: '김신한', profit: 123323 },
-//   { id: 5, rank: 5, name: '홍길동', profit: 112233 },
-//   { id: 6, rank: 6, name: '이몽룡', profit: 101010 },
-//   { id: 7, rank: 7, name: '김신한', profit: 123323 },
-//   { id: 8, rank: 8, name: '홍길동', profit: 112233 },
-//   { id: 9, rank: 9, name: '이몽룡', profit: 101010 },
-//   { id: 10, rank: 10, name: '박보검', profit: 99999 },
-//   { id: 11, rank: 11, name: '정우성', profit: 88888 },
-//   { id: 12, rank: 12, name: '손예진', profit: 77777 },
-// ];
-
-// const usaRankingData = [
-//   { id: 1, rank: 1, name: 'John Doe', profit: 456789 },
-//   { id: 2, rank: 2, name: 'Jane Doe', profit: 412345 },
-//   { id: 3, rank: 3, name: 'Jim Beam', profit: 389012 },
-//   { id: 4, rank: 4, name: 'Sarah Smith', profit: 356789 },
-//   { id: 5, rank: 5, name: 'Mike Johnson', profit: 321456 },
-//   { id: 6, rank: 6, name: 'Emily Wilson', profit: 298765 },
-// ];
 
 const TabsContainer = () => {
   const [activeTab, setActiveTab] = useState("KRW");
@@ -118,7 +95,7 @@ const TabsContainer = () => {
         
         // 수익 기준으로 정렬
         const sortedData = processedData.sort((a, b) => b.profit - a.profit);
-        
+
         setRankingData(prev => ({
           ...prev,
           domestic: sortedData
@@ -127,6 +104,7 @@ const TabsContainer = () => {
         console.error("국내 랭킹 데이터 로딩 실패:", error);
       } finally {
         setIsLoading(prev => ({ ...prev, domestic: false }));
+        console.log(loading);
       }
     };
 
@@ -134,8 +112,9 @@ const TabsContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (activeTab === "usa") {
+    if (activeTab === "USD") {
       const fetchUSARanking = async () => {
+        console.log("USD")
         // 이미 데이터가 있으면 다시 로드하지 않음
         if (rankingData.usa.length > 0) return;
         
@@ -170,9 +149,9 @@ const TabsContainer = () => {
       fetchUSARanking();
     }
   }, [activeTab, rankingData.usa.length]);
-  // const data = activeTab === "KRW" ? domesticRankingData : usaRankingData;
+
   const data = activeTab === "KRW" ? rankingData.domestic: rankingData.usa;
-  const loading = activeTab === "domestic" ? isLoading.domestic : isLoading.usa;
+  const loading = activeTab === "KRW" ? isLoading.domestic : isLoading.usa;
   const currencySymbol = activeTab === "domestic" ? "원" : "$";
 
   return (
