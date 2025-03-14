@@ -1,13 +1,26 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Tab from "../../components/Tab";
 import Tabs from "../../components/Tabs";
 import BackNavigation from "../../components/BackNavigation";
+import { fetchRank } from "../../apis/exchanges";
+import { useParams } from "react-router-dom";
+
+// 랜덤 이름 생성을 위한 배열
+const koreanNames = ['김투자', '이수익', '박포트', '최주식', '정펀드', '강수익', '윤투자', '장금융', '임증권', '한재테크'];
+const englishNames = ['Mike Invest', 'Jane Stock', 'Peter Fund', 'Sarah Trade', 'Tom Market', 'Amy Capital', 'John Finance', 'Lisa Money', 'David Cash', 'Emma Wealth'];
+
+// 랜덤 이름 생성 함수
+const getRandomName = (isKorean) => {
+  const nameList = isKorean ? koreanNames : englishNames;
+  return nameList[Math.floor(Math.random() * nameList.length)];
+};
 
 const RankingHeader = () => (
   <div className="px-6 pt-12 pb-8 text-center bg-white">
-      <h1 className="text-[16px] text-center font-bold">
-      투자를 도와줄</h1>
-      <h1 className="text-[24px] text-center font-bold mb-2">
+    <h1 className="text-[16px] text-center font-bold">
+      투자를 도와줄
+    </h1>
+    <h1 className="text-[24px] text-center font-bold mb-2">
       수익 TOP 랭킹
     </h1>
     <p className="text-sm text-gray-400">
@@ -31,7 +44,19 @@ const RankingItem = ({ rank, name, profit }) => {
     2: 'bg-purple-500',
     3: 'bg-orange-500'
   };
-
+  if (profit===0){
+    return(
+      <div className='text-center text-[14px] mt-24 text-gray-500'>나와 비슷한 목표를 가진 사람들이 없어요.</div>
+  //     <div className="flex justify-center items-center mt-16">
+  //   <div className="w-3/4 bg-blue-50 text-center rounded-xl text-gray-500 text-[12px] mt-6 mb-2 p-4">
+  //     나와 비슷한 목표를 가진 사람들이 없어요.
+  //     <button className="w-full p-2 rounded-lg bg-blue-100 mt-2">
+  //       전체 랭킹 보러가기
+  //     </button>
+  //   </div>
+  // </div>
+  )
+  }
   return (
     <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
       <span className="text-xl font-bold w-8 text-gray-700">{rank}</span>
@@ -52,20 +77,73 @@ const RankingItem = ({ rank, name, profit }) => {
   );
 };
 
-const domesticRankingData = [
-  { id: 1, rank: 1, name: '김신한', profit: 123323, percentage: 32.3 },
-  { id: 2, rank: 2, name: '김신한', profit: 123323, percentage: 32.3 },
-  { id: 3, rank: 3, name: '김신한', profit: 123323, percentage: 32.3 }
-];
-const usaRankingData = [
-  { id: 1, rank: 1, name: '신한', profit: 123323, percentage: 32.3 },
-  { id: 2, rank: 2, name: '신한', profit: 123323, percentage: 32.3 },
-  { id: 3, rank: 3, name: '신한', profit: 123323, percentage: 32.3 }
-];
-
 const TabsContainer = () => {
   const [activeTab, setActiveTab] = useState("KRW");
+  const [domesticRankingData, setDomesticRankingData] = useState([]);
+  const [usaRankingData, setUsaRankingData] = useState([]);
+  const [isLoading, setIsLoading] = useState({
+    domestic: false,
+    usa: false
+  });
+  const { tripId } = useParams();
+  console.log(tripId);
+  // 국내 랭킹 데이터 불러오기 (KRW)
+  useEffect(() => {
+    if (activeTab === "KRW") {
+      const fetchDomesticData = async () => {
+        try {
+          setIsLoading(prev => ({ ...prev, domestic: true }));
+          const data = await fetchRank(tripId,'KRW');
+          const processedData = data.map((item, index) => ({
+            id: item.tripId,
+            rank: index + 1,
+            name: getRandomName(true),
+            profit: item.assessmentAmountSum
+          }));
+          const sortedData = processedData.sort((a, b) => b.profit - a.profit);
+          setDomesticRankingData(sortedData);
+        } catch (error) {
+          console.error("국내 랭킹 데이터 로딩 실패:", error);
+        } finally {
+          setIsLoading(prev => ({ ...prev, domestic: false }));
+        }
+      };
+      fetchDomesticData();
+    }
+  }, [activeTab]);
+
+  // 미국 랭킹 데이터 불러오기 (USD)
+  useEffect(() => {
+    if (activeTab === "USD") {
+      const fetchUSAData = async () => {
+        // 만약 이미 데이터가 있다면 다시 호출하지 않음
+        if (usaRankingData.length > 0) return;
+        try {
+          setIsLoading(prev => ({ ...prev, usa: true }));
+          const data = await fetchRank(tripId,'USD'); // fetchRanking 호출
+          // 응답 데이터 처리
+          const processedData = data.map((item, index) => ({
+            id: item.tripId,
+            rank: index + 1,
+            name: getRandomName(false),
+            profit: item.assessmentAmountSum
+          }));
+          // 수익 기준 내림차순 정렬
+          const sortedData = processedData.sort((a, b) => b.profit - a.profit);
+          setUsaRankingData(sortedData);
+        } catch (error) {
+          console.error("미국 랭킹 데이터 로딩 실패:", error);
+        } finally {
+          setIsLoading(prev => ({ ...prev, usa: false }));
+        }
+      };
+      fetchUSAData();
+    }
+  }, [activeTab, usaRankingData.length]);
+
   const data = activeTab === "KRW" ? domesticRankingData : usaRankingData;
+  const loading = activeTab === "KRW" ? isLoading.domestic : isLoading.usa;
+  const currencySymbol = activeTab === "KRW" ? "원" : "$";
 
   return (
     <div className="flex flex-col h-full">
@@ -76,9 +154,23 @@ const TabsContainer = () => {
         </Tabs>
       </div>
       <div className="overflow-y-auto h-full px-6 pb-20">
-        {data.map(item => (
-          <RankingItem key={item.id} {...item} />
-        ))}
+        {loading ? (
+          <div className="flex justify-center items-center h-32">
+            <p className="text-gray-500">랭킹 데이터를 불러오는 중...</p>
+          </div>
+        ) : data.length > 0 ? (
+          data.map(item => (
+            <RankingItem 
+              key={item.id} 
+              {...item} 
+              currencySymbol={currencySymbol}
+            />
+          ))
+        ) : (
+          <div className="flex justify-center items-center h-32">
+            <p className="text-gray-500">랭킹 데이터가 없습니다.</p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -90,10 +182,10 @@ const RankingPage = () => (
       <BackNavigation />
       <RankingHeader />
     </div>
-  <div className="flex-1 flex flex-col overflow-hidden">
-    <TabsContainer />
+    <div className="flex-1 flex flex-col overflow-hidden">
+      <TabsContainer/>
+    </div>
   </div>
-  </div>
-  )
+);
 
 export default RankingPage;
