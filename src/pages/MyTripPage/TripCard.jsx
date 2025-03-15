@@ -25,6 +25,23 @@ const countryCodeMap = {
   이집트: "EG",
   남아프리카공화국: "ZA",
   이름없음: "UN",
+  스위스: "CH",
+  덴마아크: "DK",
+  유럽연합: "EU",
+  노르웨이: "NO",
+  스웨덴: "SE",
+  아랍에미리트: "AE",
+  바레인: "BH",
+  브루나이: "BN",
+  홍콩: "HK",
+  인도네시아: "ID",
+  대한민국: "KR",
+  쿠웨이트: "KW",
+  말레이지아: "MY",
+  사우디: "SA",
+  싱가포르: "SG",
+  태국: "TH",
+  뉴질랜드: "NZ",
 };
 
 function getCountryFlagURL(countryName) {
@@ -108,7 +125,7 @@ export default function TripCard({ trip, accountId }) {
         <div>
           <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
           <p className="text-2xl font-bold">
-            {totalAmountInKRW.toLocaleString()}원
+            {(totalAmountInKRW || 0).toLocaleString()}원
           </p>
         </div>
         <div className="flex flex-col items-center">

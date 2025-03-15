@@ -31,6 +31,7 @@ export default function Portfolio() {
     <div className="flex flex-col">
       <BackNavigation />
       <div className="flex items-center px-4 bg-white">
+      <p className="text-lg font-semibold p-1 ">{selectedTrip.name} ✈️</p>
         <div className="ml-auto">
           <div className="w-[160px] h-8 bg-gray-100 rounded-lg p-1 flex">
             <button
