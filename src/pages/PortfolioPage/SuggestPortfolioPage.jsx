@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { fetchAssets } from "../../redux/assetsSlice";
 import AssetsList from "../../components/portfolio/AssetList";
 import BackNavigation from "../../components/BackNavigation";

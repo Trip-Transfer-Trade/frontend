@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Tab from "../../components/Tab";
 import Tabs from "../../components/Tabs";
 import BackNavigation from "../../components/BackNavigation";
@@ -44,11 +44,34 @@ const RankingHeader = () => (
 );
 
 // RankingItem Component
-const RankingItem = ({ rank, name, profit, currencySymbol }) => {
+// const RankingItem = ({ rank, name, profit, currencySymbol }) => {
+//   const colors = { 1: 'bg-blue-500', 2: 'bg-purple-500', 3: 'bg-orange-500' };
+//   if (profit === 0) return null; // profit이 0이면 렌더링하지 않음
+//   return (
+//     <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
+//       <span className="text-xl font-bold w-8 text-gray-700">{rank}</span>
+//       <div className={`w-8 h-8 rounded-xl ${colors[rank] || 'bg-gray-500'} flex items-center justify-center mr-8`}>
+//         <img 
+//           src="/assets/images/main/portfolio.svg?height=32&width=32" 
+//           alt="Profile" 
+//           className="w-8 h-8"
+//         />
+//       </div>
+//       <div className="flex-1">
+//         <h3 className="font-medium">{name}</h3>
+//         <p className="text-red-500 text-sm">
+//           {currencySymbol} {profit.toLocaleString()}
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
+const RankingItem = ({ rank, name, profit, currencySymbol, onClick }) => {
   const colors = { 1: 'bg-blue-500', 2: 'bg-purple-500', 3: 'bg-orange-500' };
   if (profit === 0) return null; // profit이 0이면 렌더링하지 않음
   return (
-    <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
+    <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2 cursor-pointer" onClick={onClick}>
       <span className="text-xl font-bold w-8 text-gray-700">{rank}</span>
       <div className={`w-8 h-8 rounded-xl ${colors[rank] || 'bg-gray-500'} flex items-center justify-center mr-8`}>
         <img 
@@ -66,7 +89,6 @@ const RankingItem = ({ rank, name, profit, currencySymbol }) => {
     </div>
   );
 };
-
 // TabsContainer Component (자신과 비슷한 목표 랭킹 + fallback)
 const TabsContainer = () => {
   const [activeTab, setActiveTab] = useState("KRW");
@@ -135,6 +157,12 @@ const TabsContainer = () => {
   const loading = activeTab === "KRW" ? isLoading.domestic : isLoading.usa;
   const currencySymbol = activeTab === "KRW" ? "₩" : "$";
   const usedFallback = activeTab === "KRW" ? fallbackUsed.domestic : fallbackUsed.usa;
+  const navigate = useNavigate();
+
+  const handleClickItem = async (tripId) =>{
+    console.log("jere")
+      navigate(`suggest`,{state:{suggestedTripId:tripId}});
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -159,6 +187,7 @@ const TabsContainer = () => {
               <RankingItem 
                 key={item.id} 
                 {...item} 
+                onClick={() =>{handleClickItem(item.id); console.log(item)}}
                 currencySymbol={currencySymbol}
               />
             ))}
