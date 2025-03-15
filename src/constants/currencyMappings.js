@@ -80,7 +80,7 @@ export const currencyToSymbolMap = {
   CNH: "¥", // 중국 위안
   HKD: "HK$", // 홍콩 달러
   IDR: "Rp", // 인도네시아 루피아
-  JPY: "¥", // 일본 엔
+  JPY: "¥", // 일본 옌
   KRW: "₩", // 대한민국 원
   KWD: "د.ك", // 쿠웨이트 디나르
   MYR: "RM", // 말레이지아 링기트
@@ -113,7 +113,7 @@ export const currencyToKoreanUnitMap = {
   CNH: "중국 위안",
   HKD: "홍콩 달러",
   IDR: "인도네시아 루피아",
-  JPY: "일본 엔",
+  JPY: "일본 옌",
   KRW: "대한민국 원",
   KWD: "쿠웨이트 디나르",
   MYR: "말레이지아 링기트",

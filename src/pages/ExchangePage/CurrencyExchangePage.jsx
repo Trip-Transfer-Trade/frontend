@@ -93,6 +93,19 @@ export default function CurrencyExchangePage() {
         let fromRate = 1;
         let toRate = 1;
 
+        // 특정 통화(일본 엔, 인도네시아 루피아) 확인 후 보정 처리하는 함수
+        const getAdjustedRate = (currency, rateObj) => {
+          if (!rateObj) return NaN;
+          let rate = parseFloat(rateObj.tts.replace(/,/g, ""));
+
+          // 일본 엔(JPY) 또는 인도네시아 루피아(IDR)일 경우 100으로 나눠 보정
+          if (currency === "JPY" || currency === "IDR") {
+            rate /= 100;
+          }
+
+          return rate;
+        };
+
         if (fromCurrency !== "KRW") {
           const fromRateObj = filteredRates.find(
             (rate) => rate.cur_nm === getKoreanUnitFromCurrency(fromCurrency)
@@ -105,7 +118,7 @@ export default function CurrencyExchangePage() {
             return;
           }
 
-          fromRate = parseFloat(fromRateObj.tts.replace(/,/g, ""));
+          fromRate = getAdjustedRate(fromCurrency, fromRateObj);
         }
 
         if (toCurrency !== "KRW") {
@@ -120,7 +133,7 @@ export default function CurrencyExchangePage() {
             return;
           }
 
-          toRate = parseFloat(toRateObj.tts.replace(/,/g, ""));
+          toRate = getAdjustedRate(toCurrency, toRateObj);
         }
 
         console.log("fromRate:", fromRate);
