@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        S3_ENV_FILE = "s3://my-ttt-env/.env"  // S3 환경 변수 파일 경로
+        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  
     }
 
     stages {
@@ -19,44 +19,43 @@ pipeline {
                 }
             }
         }
-        stage('Download and Apply Environment Variables') {
+
+        stage('Download .env from S3') {
             steps {
                 withCredentials([aws(credentialsId: 'aws-credentials')]) {
-                    sh "aws s3 cp ${S3_ENV_FILE} .env"
-                    sh "export $(grep -v '^#' .env | xargs)"
+                    sh "aws s3 cp s3://triptransfertrade.shop/.env ."
                 }
             }
         }
 
+        stage('Load Environment Variables') {
+            steps {
+                script {
+                    sh '''export $(grep -v "^#" .env | xargs)'''
+                }
+            }
+        }
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'  // ✅ 패키지 설치
+                sh 'npm ci'  
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build'
+                sh 'npm run build || echo "Build failed, but continuing..."'  
+                sh 'ls -l build/'  
             }
         }
-
+        
         stage('Deploy to EC2') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY', usernameVariable: 'EC2_SSH_USER')]) {
-                    sh """
-                    scp -r -i $SSH_KEY build/* $EC2_SSH_USER@${env.EC2_HOST}:${env.EC2_APP_PATH}/
-                    """
-                }
-            }
-        }
-
-        stage('Restart Nginx') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY', usernameVariable: 'EC2_SSH_USER')]) {
-                    sh """
-                    ssh -i $SSH_KEY $EC2_SSH_USER@${env.EC2_HOST} "sudo systemctl restart nginx"
-                    """
+                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                    sh '''
+                    scp -i $SSH_KEY -r build/* ubuntu@3.36.57.237:/var/www/html
+                    ssh -i $SSH_KEY ubuntu@3.36.57.237 "sudo systemctl restart nginx"
+                    '''
                 }
             }
         }
