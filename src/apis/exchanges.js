@@ -137,3 +137,14 @@ export const fetchRank = async (tripId, currencyCode) =>{
     throw error;
   }
 }
+
+//노멀 계좌 생성 시 초기 잔액 설정
+export const fetchSetAmount = async(accountNumber) =>{
+  console.log(accountNumber, "잔액 설정");
+  try{
+    await apiClient.post(`/exchanges/init/${accountNumber}`)
+  } catch (error){
+    console.error("잔액 갱신 실패");
+    throw error;
+  }
+}
