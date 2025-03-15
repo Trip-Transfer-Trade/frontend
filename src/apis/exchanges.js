@@ -31,10 +31,10 @@ export const fetchAvailableAmount = async () => {
 };
 
 // 목표 별 보유 통화 조회
-export const fetchCurrenciesByGoal = async (accountId) => {
-  console.log(`fetchCurrenciesByGoal 호출: accountId=${accountId}`);
+export const fetchCurrenciesByGoal = async (tripId) => {
+  console.log(`fetchCurrenciesByGoal 호출: accountId=${tripId}`);
   const response = await apiClient.get("/exchanges/myWallet/trip/all", {
-    params: { accountId },
+    params: { tripId },
   });
 
   return response.data.data;
