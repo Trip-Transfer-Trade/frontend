@@ -5,7 +5,6 @@ import { fetchTripById } from "../../redux/tripSlice";
 import { fetchAccountData } from "../../redux/accountSlice";
 import { fetchExchangeRate } from "../../redux/exchangeSlice";
 import BackNavigation from "../../components/BackNavigation";
-import GoalMidpointModal from "../../components/portfolio/GoalMidpointModal";
 import BulkSellWarningModal from "../../components/portfolio/BulkSellWarningModal";
 
 const GoalProgressPage = () => {
@@ -154,7 +153,7 @@ const GoalProgressPage = () => {
         <GoalMidpointModal onClose={() => setIsModalOpen(false)} />
       )} */}
       {isModalOpen && (
-        <BulkSellWarningModal onClose={() => setIsModalOpen(false)} />
+        <BulkSellWarningModal onClose={() => setIsModalOpen(false)}  tripId={tripId} />
       )}
     </div>
   );

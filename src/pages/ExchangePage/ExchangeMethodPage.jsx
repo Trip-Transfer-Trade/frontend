@@ -18,6 +18,7 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
   const handleExchangeClick = async () => {
     console.log("id" , tripId,"code", currencyCode);   
     try {
+      //즉시 환전
       const response = await fetchExchangeGoal({
         tripId : tripId,
         toCurrency : currencyCode
@@ -30,15 +31,13 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
   };
 
   const handleExchangeAfter = () =>{
-    navigate(`/exchange?tab=목표`);
+    navigate(`/exchange?tab=환전`);
   }
 
   const handleButtonClick = (option) => {
     if (selectedOption !== option) {
-      // 처음 클릭: 선택 상태로 전환 (애니메이션 효과 등)
       setSelectedOption(option);
     } else {
-      // 이미 선택된 상태에서 다시 클릭 시 onClick 이벤트 실행
       if (option === 0) {
         handleExchangeClick();
       } else if (option === 1) {

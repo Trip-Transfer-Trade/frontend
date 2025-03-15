@@ -142,7 +142,7 @@ export const getCountryNameFromCurrency = (currencyCode) => {
 
 // 통화 코드에서 화폐 기호 반환
 export const getCurrencySymbolFromCurrency = (currencyCode) => {
-  return currencyToSymbolMap[currencyCode] || "UNKNOWN";
+  return currencyToSymbolMap[currencyCode] || "";
 };
 
 // 통화 코드에서 한글 단위 반환

@@ -9,7 +9,7 @@ export default function ExchangeCompletePage() {
   const exchanges = state?.exchanges;
   const goal = state?.goal;
   const navigate = useNavigate();
-
+  console.log(exchanges);
   return (
     <div className="flex flex-col items-center min-h-screen p-6">
       <div className="absolute top-6 right-6">
@@ -48,7 +48,7 @@ export default function ExchangeCompletePage() {
       </div>
       {Object.keys(exchanges).map((currency) => {
         const data = exchanges[currency];
-        // console.log(data);
+        console.log(data);
         // console.log("currency",currency, exchanges);
         return (
           <ExchangeCompleteResultCard
@@ -61,9 +61,7 @@ export default function ExchangeCompletePage() {
                 : `$ ${data.amount?.toLocaleString()}`
             }
             exchangeRate={parseFloat(data.rate).toFixed(2)}
-            exchangeAmount={`${getCurrencySymbolFromCurrency(
-              data.currency
-            )} ${data.toAmount.toLocaleString()}`}
+            exchangeAmount={`${getCurrencySymbolFromCurrency(data.currency)} ${data.toAmount?.toLocaleString()}`}
             bgColor={currency === "KRW" ? "bg-blue-50" : "bg-amber-50"}
             subBgColor={currency === "KRW" ? "bg-blue-100" : "bg-amber-100"}
           />

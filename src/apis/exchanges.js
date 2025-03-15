@@ -78,6 +78,18 @@ export const fetchTransaction = async (transactionData) => {
   }
 };
 
+//일괄 매도
+export const fetchBulkSell = async (tripId)=>{
+  console.log("일괄 매도 실행");
+  try{
+    await apiClient.post(`/exchanges/stocks/bulksell?tripId=${tripId}`) 
+  } catch(error){
+    console.error("매도 실패",error);
+    throw error;
+  }
+}
+
+//즉시 환전
 export const fetchExchangeGoal = async (exchangeGoal) =>{
   console.log("즉시 환전 실행");
   try{
