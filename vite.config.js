@@ -58,5 +58,6 @@ export default defineConfig({
   },
   build: {
     outDir: "build", // ✅ `dist/` 대신 `build/` 폴더로 생성
+    assetsInclude: ['**/*.otf', '**/*.svg'],
   },
 });
