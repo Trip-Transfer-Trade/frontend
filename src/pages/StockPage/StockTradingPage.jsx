@@ -114,7 +114,7 @@ export default function StockTradingPage() {
         setBidQuantities(bidQ);
 
         setCurrencyPrice(price);
-        setPurchasePrice(price);
+        setPurchasePrice(Number(price));
 
         if (scrollRef.current) {
           scrollRef.current.scrollTop = 150;
@@ -135,9 +135,8 @@ export default function StockTradingPage() {
 
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => setQuantity(Math.max(0, quantity - 1));
-  const increasePurchasePrice = () => setPurchasePrice(purchasePrice + 10);
-  const decreasePurchasePrice = () =>
-    setPurchasePrice(Math.max(0, purchasePrice - 10));
+  const increasePurchasePrice = () => setPurchasePrice(prev => Number(prev) + 10);
+  const decreasePurchasePrice = () => setPurchasePrice(prev => Math.max(0, Number(prev) - 10));
 
   const totalAmount = purchasePrice * quantity;
 
