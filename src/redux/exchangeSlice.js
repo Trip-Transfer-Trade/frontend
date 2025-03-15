@@ -13,14 +13,15 @@ export const fetchExchangeRate = createAsyncThunk(
   }
 );
 
-export const submitExchange = createAsyncThunk("exchange/submitExchange", async (payload, { rejectWithValue }) => {
+export const submitExchange = createAsyncThunk("/exchange/submitExchange", async (payload, { rejectWithValue }) => {
   try {
-    const response = await apiClient.post("/api/exchange", payload);
-    return response.data;
+    const response = await apiClient.post("/exchanges", payload);
+    return response.data.data;
   } catch (error) {
     return rejectWithValue(error.response.data);
   }
 });
+
 const exchangeSlice = createSlice({
   name: "exchange",
   initialState: {

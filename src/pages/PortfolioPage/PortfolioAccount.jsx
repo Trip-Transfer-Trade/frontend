@@ -82,8 +82,8 @@ export default function PortfolioAccount({activeTab}) {
               state: {
                 tripId,
                 activeTab,
-                amount: currentData.amount,
-                amountUS: currentData.amountUS,
+                depositKRW: accountData.KRW?.depositAmount || 0,
+                depositUSD: accountData.USD?.depositAmount || 0
               }
             })}
           >
@@ -103,8 +103,8 @@ export default function PortfolioAccount({activeTab}) {
               state: {
                 tripId,
                 activeTab,
-                amount: currentData.amount,
-                amountUS: currentData.amountUS,
+                depositKRW: accountData.KRW?.depositAmount || 0,
+                depositUSD: accountData.USD?.depositAmount || 0
               }
             })}
           >
