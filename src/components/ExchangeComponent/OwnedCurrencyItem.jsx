@@ -34,6 +34,12 @@ export default function OwnedCurrencyItem({ currencyCode, totalAmount }) {
     }
   };
 
+  const countryCode = getCountryCodeFromCurrency(currencyCode);
+  const flagSrc =
+    countryCode === "EU"
+      ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+      : `https://flagsapi.com/${countryCode}/flat/64.png`;
+
   return (
     <div className="bg-white rounded-lg border border-gray-300">
       <div
@@ -42,11 +48,13 @@ export default function OwnedCurrencyItem({ currencyCode, totalAmount }) {
       >
         <span className="flex items-center space-x-2">
           <img
-            src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-              currencyCode
-            )}/flat/64.png`}
-            alt={`${getCountryCodeFromCurrency(currencyCode)} flag`}
-            className="h-10"
+            src={flagSrc}
+            alt={`${countryCode} flag`}
+            className="h-8"
+            style={{
+              objectFit: "cover", // 국기 크기를 동일하게 조절
+              aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+            }}
           />
           <span>{getKoreanUnitFromCurrency(currencyCode)}</span>
         </span>
