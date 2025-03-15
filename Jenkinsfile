@@ -1,9 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  
-    }
 
     stages {
         stage('Clone Repository') {
@@ -23,7 +20,7 @@ pipeline {
         stage('Download .env from S3') {
             steps {
                 withCredentials([aws(credentialsId: 'aws-credentials')]) {
-                    sh "aws s3 cp s3://triptransfertrade.shop/.env ."
+                    sh "aws s3 cp s3://my-ttt-env/.env ."
                 }
             }
         }
