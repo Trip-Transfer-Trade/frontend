@@ -31,6 +31,7 @@ const TripRouter = {
     
 
     // 포트폴리오
+    { path: "suggest", element : <SuggestPortfolioPage />},
     { path: ":tripId/portfolio", element: <PortfolioPage /> },
     { path: ":tripId/portfolio/progress", element: <GoalProgressPage /> },
     { path: ":tripId/portfolio/progress/edit", element: <TripEditPage /> },

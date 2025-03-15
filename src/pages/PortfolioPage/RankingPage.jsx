@@ -187,7 +187,7 @@ const TabsContainer = () => {
               <RankingItem 
                 key={item.id} 
                 {...item} 
-                onClick={() =>{handleClickItem(item.id); console.log(item)}}
+                onClick={() =>handleClickItem(item.id)}
                 currencySymbol={currencySymbol}
               />
             ))}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Tab from "../../components/Tab";
 import Tabs from "../../components/Tabs";
 import BackNavigation from "../../components/BackNavigation";
@@ -38,7 +39,7 @@ const RankingHeader = () => (
   </div>
 );
 
-const RankingItem = ({ rank, name, profit, currencySymbol }) => {
+const RankingItem = ({ rank, name, profit, currencySymbol, onClick }) => {
   const colors = {
     1: 'bg-blue-500',
     2: 'bg-purple-500',
@@ -47,7 +48,7 @@ const RankingItem = ({ rank, name, profit, currencySymbol }) => {
   if (profit==0) return;
 
   return (
-    <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
+    <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2 " onClick={onClick}>
       <span className="text-xl font-bold w-8 text-gray-700">{rank}</span>
       <div className={`w-8 h-8 rounded-xl ${colors[rank] || 'bg-gray-500'} flex items-center justify-center mr-8`}>
         <img 
@@ -153,6 +154,11 @@ const TabsContainer = () => {
   const data = activeTab === "KRW" ? rankingData.domestic: rankingData.usa;
   const loading = activeTab === "KRW" ? isLoading.domestic : isLoading.usa;
   const currencySymbol = activeTab === "KRW" ? "₩" : "$";
+  
+  const navigate = useNavigate();
+  const handleClickItem = async (tripId) =>{
+      navigate(`/trip/suggest`,{state:{suggestedTripId:tripId}});
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -172,6 +178,7 @@ const TabsContainer = () => {
             <RankingItem 
               key={item.id} 
               {...item} 
+              onClick={()=>handleClickItem (item.id)}
               currencySymbol={currencySymbol}
             />
           ))
