@@ -184,7 +184,7 @@ export default function GoalTabContent() {
                                   </span>
                                 </span>
                                 <span className="text-right font-semibold">
-                                  {currency.availableAmount?.toLocaleString()}{0}
+                                  {currency.availableAmount?.toLocaleString()}
                                   {currency.currencyCode}
                                 </span>
                               </div>
