@@ -21,10 +21,8 @@ export default function TripMainPage() {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(TripAll());
-    }
-  }, [dispatch, status]);
+    dispatch(TripAll());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(nomalAccount());

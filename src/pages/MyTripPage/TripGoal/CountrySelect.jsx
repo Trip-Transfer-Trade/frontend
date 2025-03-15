@@ -20,7 +20,8 @@ const countryCodeMap = {
   "칠레": "CL",
   "이집트": "EG",
   "남아프리카공화국": "ZA",
-  "이름없음": "UN"
+  "이름없음": "UN",
+
 };
 
 // 국기 이미지 URL을 가져오는 함수
@@ -39,6 +40,7 @@ export default function CountrySelect({ onSelect }) {
     { id: "northAmerica", name: "북미" },
     { id: "southAmerica", name: "남미" },
     { id: "africa", name: "아프리카" },
+    { id: "oceania", name: "오세아니아"},
   ];
 
   const countries = {
@@ -47,7 +49,10 @@ export default function CountrySelect({ onSelect }) {
       { id: "italy", name: "이탈리아" },
       { id: "germany", name: "독일" },
       { id: "spain", name: "스페인" },
-      { id: "uk", name: "영국" }
+      { id: "uk", name: "영국" },
+      { id: "denmark", name: "덴마크"},
+      { id: ""}
+
     ],
     asia: [
       { id: "japan", name: "일본" },

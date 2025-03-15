@@ -9,6 +9,10 @@ export default function PortfolioAccount({activeTab}) {
   const { tripId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const selectedTrip = useSelector((state) => state.trip.selectedTrip);
+  const accountId = selectedTrip?.accountId || "";
+
   const accountData = useSelector((state) => state.account.data) || {};
   const currentData = activeTab === "k" ? accountData.KRW : accountData.USD;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -66,7 +70,7 @@ export default function PortfolioAccount({activeTab}) {
 
       <div className="grid grid-cols-3 gap-2 mt-3">
         <button className="py-1 border border-gray-300 rounded-md text-sm" 
-          onClick={() => navigate(`/trip/transfer?sourceType=trip&sourceId=${tripId.accountId}`)}>
+          onClick={() => navigate(`/trip/transfer?sourceType=trip&sourceId=${accountId}`)}>
           이체하기
         </button>
         <button className="py-1 border border-gray-300 rounded-md text-sm" 
@@ -74,7 +78,15 @@ export default function PortfolioAccount({activeTab}) {
           투자하기
         </button>
         <button className="py-1 border border-gray-300 rounded-md text-sm" 
-          onClick={() => navigate(`/exchange/goals/${tripId}`)}>
+            onClick={() => navigate(`/trip/${tripId}/portfolio/exchange`, {
+              state: {
+                tripId,
+                activeTab,
+                depositKRW: accountData.KRW?.depositAmount || 0,
+                depositUSD: accountData.USD?.depositAmount || 0
+              }
+            })}
+          >
           환전하기
         </button>
       </div>
@@ -87,7 +99,14 @@ export default function PortfolioAccount({activeTab}) {
         <div className="flex flex-col space-y-2 w-10/12 my-3 mx-auto">
           <button 
             className="w-full py-[10px] bg-blue-500 text-white text-base rounded-md transition-all hover:bg-blue-600"
-            onClick={() => navigate('/exchange/currency')} //투자를 위한 환전 페이지 만들기ㅜㅜㅜ
+            onClick={() => navigate(`/trip/${tripId}/portfolio/exchange`, {
+              state: {
+                tripId,
+                activeTab,
+                depositKRW: accountData.KRW?.depositAmount || 0,
+                depositUSD: accountData.USD?.depositAmount || 0
+              }
+            })}
           >
             환전하러 가기
           </button>

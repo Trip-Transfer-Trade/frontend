@@ -3,17 +3,19 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { SkipBackIcon } from "lucide-react";
 import { submitTranfer, setTransferData } from "../../redux/transferSlice";
+import BackNavigation from "../../components/BackNavigation";
 
 export default function EnterAmountPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [activeTab, setActiveTab] = useState("KRW");
 
 
   const sourceId = searchParams.get("sourceId");
   const destId = searchParams.get("destId");
   const tripId = searchParams.get("tripId");
+  const initialCurrency = searchParams.get("currency") || "KRW";
+  const [activeTab, setActiveTab] = useState(initialCurrency);
 
   const { tripGoals } = useSelector((state) => state.trip);
   const account = useSelector((state) => state.nomalAccount.account) || {};
@@ -71,17 +73,17 @@ export default function EnterAmountPage() {
         ? destinationAccountInfo.amountNumber
         : destinationAccountInfo.accountNumber,
       description: "",
-      currencyCode: "KRW",
+      currencyCode: activeTab,
     };
 
     dispatch(submitTranfer(payload))
       .unwrap()
       .then(() => {
         alert(
-          `${Number(amount).toLocaleString()}원이 ${
-            destinationAccountInfo.isAccount
-              ? "내 일반 계좌"
-              : destinationAccountInfo.name
+          `${Number(amount).toLocaleString()} ${
+            activeTab === "KRW" ? "원" : "$"
+          }이(가) ${
+            destinationAccountInfo.isAccount ? "내 일반 계좌" : destinationAccountInfo.name
           }로 이체되었습니다.`
         );
         navigate("/trip");
@@ -91,36 +93,53 @@ export default function EnterAmountPage() {
       });
     };
 
+    const formattedSourceBalance = sourceAccountInfo
+    ? activeTab === "KRW"
+      ? `${sourceAccountInfo.amount?.toLocaleString() ?? 0}원`
+      : `$${sourceAccountInfo.amountUS?.toLocaleString() ?? 0}`
+    : "잔액 정보 없음";
+
+    const formattedDestBalance = destinationAccountInfo
+    ? activeTab === "KRW"
+      ? `${destinationAccountInfo.amount?.toLocaleString() ?? 0}원`
+      : `$${destinationAccountInfo.amountUS?.toLocaleString() ?? 0}`
+    : "잔액 정보 없음";
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-              <div className="ml-auto">
+      <BackNavigation  name="이체하기"/>
+      <div className="ml-auto">
         <div className="w-[160px] h-8 bg-gray-100 rounded-lg p-1 flex">
-        <button
-              className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
-                activeTab === "k" ? "bg-white shadow-sm" : "text-gray-500"
-              }`}
-              onClick={() => setActiveTab("KRW")}
-            >
-              국내
-            </button>
-            <button
-              className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
-                activeTab === "u" ? "bg-white shadow-sm" : "text-gray-500"
-              }`}
-              onClick={() => setActiveTab("USD")}
-            >
-              해외
-            </button>
-          </div>
+          <button
+            className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
+              activeTab === "KRW" ? "bg-white shadow-sm" : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("KRW")}
+          >
+            원화
+          </button>
+          <button
+            className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
+              activeTab === "USD" ? "bg-white shadow-sm" : "text-gray-500"
+            }`}
+            onClick={() => setActiveTab("USD")}
+          >
+            달러
+          </button>
         </div>
-      <div className="flex flex-col mt-4">
-        <p className="text-l font-medium mt-10 ml-4">
+      </div>
+
+      <div className="flex flex-col mt-4 mx-4">
+        <p className="text-base font-semibold">
           {destinationAccountInfo
             ? destinationAccountInfo.isAccount
               ? "내 일반 계좌"
               : destinationAccountInfo.name
-            : "알 수 없음"}
+            : "알 수 없음"}{" "}
+          <span className="text-gray-500 text-sm">({formattedDestBalance})</span>
+        </p>
+        <p className="text-md font-medium text-black">
+          {destinationAccountInfo?.accountNumber || destId}
         </p>
       </div>
 
@@ -130,44 +149,16 @@ export default function EnterAmountPage() {
 
       <div className="flex flex-col items-center mt-6">
         <p className="text-3xl font-bold text-gray-600">
-        {amount ? `${Number(amount).toLocaleString()} 원` : "0원"}
+          {amount ? (activeTab === "KRW" ? `${Number(amount).toLocaleString()}원` : `$${Number(amount).toLocaleString()}`) : (activeTab === "KRW" ? "0원" : "$0")}
         </p>
       </div>
 
       <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-5">
         <div>
-          <p className="text-sm text-gray-500">출발 계좌 {" "}
-            {sourceAccountInfo
-            ? sourceAccountInfo.isAccount
-              ? sourceAccountInfo.amountNumber
-              : sourceAccountInfo.accountNumber
-            : sourceId}
-          </p>
           <p className="text-sm text-gray-500">
-            잔액:{" "}
-            {sourceAccountInfo &&
-              sourceAccountInfo.totalAmountInKRW?.toLocaleString() + "원"}
+              출발 계좌: {sourceAccountInfo?.accountNumber || sourceId}
           </p>
-        </div>
-      </div>
-
-      <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-3">
-        <div>
-          <p className="text-sm text-gray-500">
-            도착 계좌:{" "}
-            {destinationAccountInfo
-              ? destinationAccountInfo.isAccount
-                ? destinationAccountInfo.amountNumber
-                : destinationAccountInfo.accountNumber
-              : destId}
-          </p>
-          <p className="text-sm font-medium text-gray-600">
-            {destinationAccountInfo
-              ? destinationAccountInfo.isAccount
-                ? "내 일반 계좌"
-                : destinationAccountInfo.name
-              : "알 수 없음"}
-          </p>
+          <p className="text-sm text-gray-500">잔액: {formattedSourceBalance}</p>
         </div>
       </div>
 
