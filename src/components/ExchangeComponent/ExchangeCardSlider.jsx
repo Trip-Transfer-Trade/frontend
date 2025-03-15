@@ -101,7 +101,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
             toAmount:toAmount
           }
         }
-        navigate('/exchange/complete',{state:{exchanges:data}});
+        navigate('/exchange/complete',{state:{exchanges:data, goal:false}});
       } catch(error){
         console.error("환전 오류",error);
       }
@@ -153,11 +153,11 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
         [fromCurrency]: {
           amount: exchangeAmount, 
           currency: toCurrency,
-          rate: rate,  // ✅ API 응답 데이터 사용
-          toAmount: response.toAmount  // ✅ API 응답 데이터 사용
+          rate: rate,
+          toAmount: response.toAmount
         }
       }
-      navigate('/exchange/complete',{state:{exchanges:data}});
+      navigate('/exchange/complete',{state:{exchanges:data,goal:false}});
     } catch(error){
       console.error("배치 환전 오류",error);
       alert("환전 실패");
