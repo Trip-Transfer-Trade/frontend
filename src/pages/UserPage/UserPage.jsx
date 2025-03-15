@@ -5,10 +5,12 @@ import { fetchUserInfo } from "../../apis/users";
 import { logout } from "../../apis/users";
 import { useDispatch } from "react-redux";
 import { resetTrips } from "../../redux/tripSlice";
+import apiClient from "../../apis/apiClient";
 
 export default function UserPage() {
 
   const [user, setUser] = useState(null);
+  const [count, setCount] = useState(0);
   const navigate = useNavigate(); 
   const dispatch = useDispatch();
 
@@ -22,6 +24,17 @@ export default function UserPage() {
     };
     loadUserInfo();
   }, []);
+
+  useEffect(() => {
+    apiClient.get("/accounts/count")
+    .then((response) => {
+      setCount(response.data);
+      console.log("진행 중 목표 : " + count);
+    })
+    .catch((err) => {
+      console.error("목표 count 가져오기 실패", err);
+    })
+  }, [count])
 
   const menuItems = [
     { icon: "📊", label: "내 주식", path: "/" },
@@ -74,7 +87,7 @@ export default function UserPage() {
 
   <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
     <span className="text-xs text-gray-600">목표 달성</span>
-    <span className="text-xs">3회</span>
+    <span className="text-xs">{count}회</span>
   </div>
 </div>
 
