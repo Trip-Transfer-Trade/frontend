@@ -22,15 +22,20 @@
   border-radius: 16px;
   padding: 20px;
   margin-bottom: 20px;
+  height: 172px;
+  width: 100%;
 }
 
+.card:hover {
+  transform: scale(1.01);
+}
 
 
 .cardContent {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
+
 .cardTitle {
   font-size: 17px;
   font-weight: 800;
@@ -45,10 +50,15 @@
 }
 
 .cardText {
-  margin-top: 30px;
+  margin-top: 50px;
   flex: 1.5;
   margin-left: 10px;
   display: flex;
+}
+.cardText2 {
+  margin-top: 30px;
+  flex: 1.5;
+  margin-left: 10px;
 }
 .countGoal{
   font-size: 14px;
