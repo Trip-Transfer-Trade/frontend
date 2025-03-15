@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Check } from 'lucide-react';
 import styles from './CreateAccount.module.css';
 import { createAccount } from '../../apis/accounts';
+import { fetchSetAmount } from '../../apis/exchanges';
 
 
 const CreateAccount = () => {
@@ -41,6 +42,7 @@ const CreateAccount = () => {
   const handleCreateAccount = async () => {
     try{
         const accountNumber = await createAccount("NORMAL"); // API 호출
+        await fetchSetAmount(accountNumber); // 노멀 계좌생성 후 잔액 설정
         navigate(`/accountComplete?accountNumber=${accountNumber}`); // 계좌번호를 URL 파라미터로 전달
     }catch(error){
         console.error("계좌 생성 실패:", error);
