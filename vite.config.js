@@ -56,8 +56,8 @@ export default defineConfig({
       }
     }
   },
+  publicDir: "public",  // 🔹 `public/` 폴더 사용 명시
   build: {
     outDir: "build", // ✅ `dist/` 대신 `build/` 폴더로 생성
-    assetsInclude: ['**/*.otf', '**/*.svg'],
   },
 });
