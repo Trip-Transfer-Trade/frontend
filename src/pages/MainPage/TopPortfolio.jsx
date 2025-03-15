@@ -38,7 +38,7 @@ const RankingHeader = () => (
   </div>
 );
 
-const RankingItem = ({ rank, name, profit }) => {
+const RankingItem = ({ rank, name, profit, currencySymbol }) => {
   const colors = {
     1: 'bg-blue-500',
     2: 'bg-purple-500',
@@ -59,7 +59,7 @@ const RankingItem = ({ rank, name, profit }) => {
       <div className="flex-1">
         <h3 className="font-medium">{name}</h3>
         <p className="text-red-500 text-sm">
-          +{profit.toLocaleString()}원
+          {currencySymbol} {profit.toLocaleString()}
         </p>
       </div>
     </div>
@@ -152,7 +152,7 @@ const TabsContainer = () => {
 
   const data = activeTab === "KRW" ? rankingData.domestic: rankingData.usa;
   const loading = activeTab === "KRW" ? isLoading.domestic : isLoading.usa;
-  const currencySymbol = activeTab === "domestic" ? "원" : "$";
+  const currencySymbol = activeTab === "KRW" ? "₩" : "$";
 
   return (
     <div className="flex flex-col h-full">
