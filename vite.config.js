@@ -5,7 +5,6 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/",
   plugins: [
     react(), 
     tailwindcss(),
@@ -50,8 +49,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://triptransfertrade.shop/api',
-        // baseURL: "http://localhost:8080/api",
+        // target: 'https://triptransfertrade.shop/api',
+        baseURL: "http://localhost:8080/api",
         changeOrigin: true,
         secure: false,
       }
