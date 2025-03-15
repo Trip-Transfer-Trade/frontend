@@ -2,7 +2,10 @@ pipeline {
     agent any
 
     environment {
-        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  // ✅ 올바른 S3 버킷 경로
+        EC2_USER = "ubuntu"  // ✅ EC2 사용자
+        EC2_HOST = "3.36.57.237"  // ✅ EC2 퍼블릭 IP (또는 도메인)
+        DEPLOY_PATH = "/var/www/html"  // ✅ EC2의 정적 파일 경로
+        SSH_CREDENTIALS = "ec2-ssh-key"  // ✅ Jenkins에 등록한 SSH 키
     }
 
     stages {
@@ -19,6 +22,7 @@ pipeline {
                 }
             }
         }
+
         stage('Copy Environment Variables') {
             steps {
                 script {
@@ -33,7 +37,6 @@ pipeline {
             }
         }
 
-
         stage('Install Dependencies') {
             steps {
                 sh 'npm ci'  // ✅ 패키지 설치
@@ -46,11 +49,17 @@ pipeline {
                 sh 'ls -l build/'  // ✅ 빌드 결과 확인
             }
         }
-        
-        stage('Upload to S3') {
+
+        stage('Deploy to EC2') {
             steps {
-                withCredentials([aws(credentialsId: 'aws-credentials')]) {  // ✅ region 제거 (AWS CLI에서 자동 인식)
-                    sh "aws s3 sync build/ ${AWS_S3_BUCKET} --delete"
+                sshagent(credentials: [SSH_CREDENTIALS]) {
+                    sh """
+                    echo "Uploading build files to EC2..."
+                    rsync -avz --delete -e "ssh -o StrictHostKeyChecking=no" build/ ${EC2_USER}@${EC2_HOST}:${DEPLOY_PATH}
+
+                    echo "Restarting Nginx on EC2..."
+                    ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_HOST} "sudo systemctl restart nginx"
+                    """
                 }
             }
         }
