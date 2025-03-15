@@ -1,13 +1,23 @@
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import styles from "./AccountComplete.module.css"
+import { useEffect } from "react";
 
 const AccountComplete = () => {
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams(); //URL에서 파라미터 가져오기
     const accountNumber = searchParams.get("accountNumber"); // 계좌번호 가져오기
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate("/");
+        }, 3000);
+
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
     const formatAccountNumber = (number) => {
         if (!number) return "계좌번호 없음";
-        return number.replace(/(\d{3})(\d{3})(\d{6})/, "$1-$2-$3"); // "XXX-XXX-XXXXXX" 형식
+        return number.replace(/(\d{3})(\d{3})(\d{6})/, "$1-$2-$3"); // "XXX-XXX-XXXX" 형식
     };
 
     return (
@@ -41,7 +51,7 @@ const AccountComplete = () => {
 
             <div className={styles.accountInfo}>
             <div className={styles.accountRow}>
-                <span className={styles.accountLabel}>종합 계좌</span>
+                <span className={styles.accountLabel}>종합 계좌&nbsp;</span>
                 <span className={styles.accountNumber}>{formatAccountNumber(accountNumber)}</span>
             </div>
             </div>
