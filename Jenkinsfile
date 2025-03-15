@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_S3_BUCKET = "s3://triptransfertrade.shop"  // ✅ 올바른 S3 버킷 경로
+    }
 
     stages {
         stage('Clone Repository') {
@@ -16,43 +19,38 @@ pipeline {
                 }
             }
         }
-
-        stage('Download .env from S3') {
-            steps {
-                withCredentials([aws(credentialsId: 'aws-credentials')]) {
-                    sh "aws s3 cp s3://my-ttt-env/.env ."
-                }
-            }
-        }
-
-        stage('Load Environment Variables') {
+        stage('Copy Environment Variables') {
             steps {
                 script {
-                    sh '''export $(grep -v "^#" .env | xargs)'''
+                    sh '''
+                    if [ ! -f .env ]; then
+                        cp /var/lib/jenkins/workspace/frontend-cicd/.env .env
+                    else
+                        echo ".env file already exists, skipping copy."
+                    fi
+                    '''
                 }
             }
         }
+
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'  
+                sh 'npm ci'  // ✅ 패키지 설치
             }
         }
 
         stage('Build React App') {
             steps {
-                sh 'npm run build || echo "Build failed, but continuing..."'  
-                sh 'ls -l build/'  
+                sh 'npm run build || echo "Build failed, but continuing..."'  // ✅ exit 1 제거
+                sh 'ls -l build/'  // ✅ 빌드 결과 확인
             }
         }
         
-        stage('Deploy to EC2') {
+        stage('Upload to S3') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
-                    sh '''
-                    scp -i $SSH_KEY -r build/* ubuntu@3.36.57.237:/var/www/html
-                    ssh -i $SSH_KEY ubuntu@3.36.57.237 "sudo systemctl restart nginx"
-                    '''
+                withCredentials([aws(credentialsId: 'aws-credentials')]) {  // ✅ region 제거 (AWS CLI에서 자동 인식)
+                    sh "aws s3 sync build/ ${AWS_S3_BUCKET} --delete"
                 }
             }
         }
