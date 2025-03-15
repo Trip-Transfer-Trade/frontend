@@ -46,7 +46,7 @@ export default function FailedPage() {
 
       <Confetti />
       <div className="flex-grow flex flex-col items-center justify-start px-4 pt-36">
-        <div className="w-full text-center font-['Pretendard-Medium']">
+        <div className="w-full text-center font-medium">
           <h1 className="text-[22px] text-gray-900">목표에 도달했어요!</h1>
           <button
             onClick={handleDetailClick}
@@ -64,7 +64,7 @@ export default function FailedPage() {
           <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
           <button
             onClick={handleExchangeClick}
-            className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-Bold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
+            className="w-3/5 mx-auto px-6 py-3 text-white text-[16px] font-Bold bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             환전하러 가기
           </button>

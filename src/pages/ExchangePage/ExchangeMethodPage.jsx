@@ -78,7 +78,7 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
                 className="w-10 mx-auto object-contain"
               />
             </div>
-            <span className="font-['Pretendard-Bold'] text-[20px]">환전하러 가기</span>
+            <span className="font-bold text-[20px]">환전하러 가기</span>
           </div>
 
           <button
@@ -90,10 +90,10 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
                 onClick={() => {handleButtonClick(0)}}>
 
             <div className="p-5 text-left">
-              <div className="font-['Pretendard-Medium'] text-[17px]">즉시 환전하기</div>
+              <div className="font-medium text-[17px]">즉시 환전하기</div>
               {selectedOption === 0 && (
                 <div className="flex items-center gap-x-8  mt-2">
-                    <div className="text-[14px] font-['Pretendard-Regular'] text-blue-100">
+                    <div className="text-[14px] text-blue-100">
                     TTT가 매도금을 즉시 입금해 드려요 (수수료 0.07%)
                     
                     </div>
@@ -118,9 +118,9 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
             onClick={() => {handleButtonClick(1);}}
           >
             <div className="p-5">
-              <div className="font-['Pretendard-Medium'] text-[17px]">3일 뒤에 하기</div>
+              <div className="font-medium text-[17px]">3일 뒤에 하기</div>
               {selectedOption === 1 && (
-                <div className="text-[14px] font-['Pretendard-Regular'] mt-2 text-blue-100">
+                <div className="text-[14px] mt-2 text-blue-100">
                   매도한 금액이 영업일 기준 2일 후에 들어와요
                   <br/>
                     

@@ -66,7 +66,7 @@ export default function FailedPage() {
       </div>
 
       <div className="flex-grow flex flex-col items-center justify-start px-4 pt-20">
-        <div className="w-full max-w-md text-center font-['Pretendard-Medium']">
+        <div className="w-full max-w-md text-center font-medium">
           <div>{trip.name || ""}</div>
           <h1 className="text-[22px] text-gray-900">
             목표 기간이 <span className="text-red-500">만료</span>됐어요
@@ -104,18 +104,18 @@ export default function FailedPage() {
 
           <button
             onClick={() => handleExchangeClick()}
-            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-SemiBold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
+            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-semiBold bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             매도하기
           </button>
           <button
             onClick={()=> handleNextClick()}
-            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-['Pretendard-SemiBold'] bg-white rounded-2xl hover:bg-blue-700 focus:outline-none"
+            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-semiBold bg-white rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             다음에 할게요
           </button>
           <button
-            onClick={handleDetailClick(tripId)}
+            onClick={()=>handleDetailClick(tripId)}
             className="text-[13px] text-blue-600 underline mb-20"
           >
             목표 내역 자세히 보러가기
