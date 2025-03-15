@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { updateTrip } from "../../redux/tripSlice";
 import BackNavigation from "../../components/BackNavigation";
-import Footer from "../../layout/Footer";
 import CountrySelect from "../MyTripPage/TripGoal/CountrySelect";
 
 const countryCodeMap = {

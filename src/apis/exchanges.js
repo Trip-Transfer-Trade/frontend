@@ -31,10 +31,10 @@ export const fetchAvailableAmount = async () => {
 };
 
 // 목표 별 보유 통화 조회
-export const fetchCurrenciesByGoal = async (accountId) => {
-  console.log(`fetchCurrenciesByGoal 호출: accountId=${accountId}`);
+export const fetchCurrenciesByGoal = async (tripId) => {
+  console.log(`fetchCurrenciesByGoal 호출: accountId=${tripId}`);
   const response = await apiClient.get("/exchanges/myWallet/trip/all", {
-    params: { accountId },
+    params: { tripId },
   });
 
   return response.data.data;
@@ -134,6 +134,17 @@ export const fetchRank = async (tripId, currencyCode) =>{
     return response.data.data;
   } catch(error){
     console.error("조회 오류");
+    throw error;
+  }
+}
+
+//노멀 계좌 생성 시 초기 잔액 설정
+export const fetchSetAmount = async(accountNumber) =>{
+  console.log(accountNumber, "잔액 설정");
+  try{
+    await apiClient.post(`/exchanges/init/${accountNumber}`)
+  } catch (error){
+    console.error("잔액 갱신 실패");
     throw error;
   }
 }

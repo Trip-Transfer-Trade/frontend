@@ -23,7 +23,7 @@ export default function ExchangeMethodPage({ onClose ,tripId, currencyCode}) {
         toCurrency : currencyCode
       }); 
       console.log(response.exchanges)
-      navigate('/exchange/complete',{state: { exchanges: response.exchanges }});
+      navigate('/exchange/complete',{state: { exchanges: response.exchanges , goal:true}});
     } catch (error) {
       console.error("환전 완료 데이터 가져오기 실패", error);
     }          
