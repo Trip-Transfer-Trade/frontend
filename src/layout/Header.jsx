@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { IoSearchOutline } from "react-icons/io5";
+// import { IoSearchOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
@@ -36,10 +36,11 @@ export default function Header() {
 
         {/* 아이콘 */}
         <div className="flex items-center space-x-4">
-          <IoSearchOutline className="text-2xl" />
-          <GoBell 
+          {/* <IoSearchOutline className="text-2xl" /> */}
+          <GoBell
             className="text-2xl"
-            onClick={() => navigate("/mypage/alarm")}/>
+            onClick={() => navigate("/mypage/alarm")}
+          />
           <RxHamburgerMenu
             className="text-2xl"
             onClick={() => setIsMenuOpen(true)}
