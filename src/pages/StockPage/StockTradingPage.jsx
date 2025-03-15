@@ -41,6 +41,7 @@ export default function StockTradingPage() {
     apiClient
       .get(`/exchanges/order/amount/${tripGoal}/${currencyCode}`)
       .then((response) => {
+        console.log("통화 확인: " + currencyCode);
         console.log("📌 API 금액 확인:", response.data);
         setAvaliableFunds(response.data.data.amount);
         setIsTradeCompleted(false);
@@ -48,7 +49,7 @@ export default function StockTradingPage() {
       .catch((err) => {
         console.error("API 호출 중 오류 발생:", err);
       });
-  }, [isTradeCompleted]);
+  }, [isTradeCompleted, currencyCode]);
 
   useEffect(() => {
     apiClient
