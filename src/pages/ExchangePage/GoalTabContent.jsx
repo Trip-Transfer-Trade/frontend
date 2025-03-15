@@ -30,6 +30,7 @@ export default function GoalTabContent() {
     (async () => {
       try {
         const data = await fetchAvailableAmount();
+        console.log(data);
         setTripGoals(data);
       } catch (error) {
         console.error("목표 별 환전 가능 금액 불러오기 실패", error);
@@ -53,6 +54,7 @@ export default function GoalTabContent() {
       setCurrencyLoading(true);
       try {
         const currencyData = await fetchCurrenciesByGoal(tripId);
+        console.log(currencyData);
         setCurrencies((prev) => ({ ...prev, [tripId]: currencyData }));
       } catch (error) {
         console.error("보유 통화 불러오기 실패", error);
@@ -184,7 +186,7 @@ export default function GoalTabContent() {
                                   </span>
                                 </span>
                                 <span className="text-right font-semibold">
-                                  {currency.availableAmount?.toLocaleString()}
+                                  {currency.amount?.toLocaleString()}
                                   {currency.currencyCode}
                                 </span>
                               </div>
