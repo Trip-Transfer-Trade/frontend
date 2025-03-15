@@ -2,9 +2,19 @@ import { useNavigate } from "react-router-dom";
 import { IoCloseOutline } from "react-icons/io5";
 
 import NextConfirmButton from "../NextConfirmButton";
+import { fetchBulkSell } from "../../apis/exchanges";
 
-export default function BulkSellWarningModal({ onClose }) {
+export default function BulkSellWarningModal({ onClose, tripId }) {
   const navigate = useNavigate();
+  //일괄 매도하기 
+  const handleButtonClick = async (tripId) =>{
+    try{
+      await fetchBulkSell(tripId);
+    } catch(error){
+      console.error("일괄 매도 실패", error)
+    }
+    navigate(`/trip/${tripId}/sell`);
+  }
 
   return (
     <div className="fixed inset-0 flex items-end justify-center z-50">
@@ -39,7 +49,7 @@ export default function BulkSellWarningModal({ onClose }) {
 
         <NextConfirmButton
           text={"일괄 매도하기"}
-          onClick={() => navigate("/sell/confirm")}
+          onClick={() => {handleButtonClick(tripId)}}
         />
       </div>
     </div>

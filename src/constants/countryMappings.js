@@ -49,6 +49,7 @@ export const countryNameToCurrencyMap = {
   인도네시아: "IDR",
   일본: "JPY",
   대한민국: "KRW",
+  한국:"KRW",
   쿠웨이트: "KWD",
   말레이지아: "MYR",
   사우디: "SAR",
