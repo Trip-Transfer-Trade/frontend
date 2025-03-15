@@ -27,13 +27,13 @@ const processRankingData = (data, isKorean) => {
 
 // RankingHeader Component
 const RankingHeader = () => (
-  <div className="px-6 pt-12 pb-8 text-center bg-white">
+  <div className="px-6 pt-10 pb-8 text-center bg-white">
     <h1 className="text-[16px] font-bold">투자를 도와줄</h1>
     <h1 className="text-[24px] font-bold mb-2">수익 TOP 랭킹</h1>
-    <p className="text-sm text-gray-400">
+    <p className="text-sm text-gray-400 mb-12">
       나와 유사한 목표를 가진 사용자의<br />투자 포트폴리오를 확인해보세요
     </p>
-    <div className="flex justify-center my-8">
+    <div className="flex justify-center">
       <img 
         src="/assets/images/portfolio/trp.svg"
         alt="Trophy" 
@@ -138,13 +138,13 @@ const TabsContainer = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="sticky top-0 bg-white z-10 px-6 pb-4">
+      <div className="sticky top-0 bg-white z-10 px-6">
         <Tabs>
           <Tab label="국내" onClick={() => setActiveTab("KRW")} active={activeTab === "KRW"} />
           <Tab label="미국" onClick={() => setActiveTab("USD")} active={activeTab === "USD"} />
         </Tabs>
       </div>
-      <div className="overflow-y-auto h-full px-6 pb-20">
+      <div className="overflow-y-auto h-full px-6 pb-18">
         {loading ? (
           <div className="flex justify-center items-center h-32">
             <p className="text-gray-500">랭킹 데이터를 불러오는 중...</p>
@@ -152,9 +152,8 @@ const TabsContainer = () => {
         ) : data.length > 0 ? (
           <>
             {usedFallback && (
-              <div className="flex justify-center items-center h-16">
-                <p className="text-gray-500">나와 비슷한 목표를 가진 사람들이 없어요.</p>
-              </div>
+                <p className="w-full text-right text-gray-500 text-[12px]">나와 비슷한 목표를 가진 사람들이 없어요<br/> 전체 랭킹을 보여드릴게요</p>
+              
             )}
             {data.map(item => (
               <RankingItem 
