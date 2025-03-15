@@ -93,6 +93,19 @@ export default function CurrencyExchangePage() {
         let fromRate = 1;
         let toRate = 1;
 
+        // 특정 통화(일본 엔, 인도네시아 루피아) 확인 후 보정 처리하는 함수
+        const getAdjustedRate = (currency, rateObj) => {
+          if (!rateObj) return NaN;
+          let rate = parseFloat(rateObj.tts.replace(/,/g, ""));
+
+          // 일본 엔(JPY) 또는 인도네시아 루피아(IDR)일 경우 100으로 나눠 보정
+          if (currency === "JPY" || currency === "IDR") {
+            rate /= 100;
+          }
+
+          return rate;
+        };
+
         if (fromCurrency !== "KRW") {
           const fromRateObj = filteredRates.find(
             (rate) => rate.cur_nm === getKoreanUnitFromCurrency(fromCurrency)
@@ -105,7 +118,7 @@ export default function CurrencyExchangePage() {
             return;
           }
 
-          fromRate = parseFloat(fromRateObj.tts.replace(/,/g, ""));
+          fromRate = getAdjustedRate(fromCurrency, fromRateObj);
         }
 
         if (toCurrency !== "KRW") {
@@ -120,7 +133,7 @@ export default function CurrencyExchangePage() {
             return;
           }
 
-          toRate = parseFloat(toRateObj.tts.replace(/,/g, ""));
+          toRate = getAdjustedRate(toCurrency, toRateObj);
         }
 
         console.log("fromRate:", fromRate);
@@ -157,11 +170,19 @@ export default function CurrencyExchangePage() {
               onClick={() => setFromDropdownOpen(!fromDropdownOpen)}
             >
               <img
-                src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                  fromCurrency
-                )}/flat/64.png`}
+                src={
+                  fromCurrency === "EUR"
+                    ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                    : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                        fromCurrency
+                      )}/flat/64.png`
+                }
                 alt={`${fromCurrency} flag`}
-                className="h-10"
+                className="h-8"
+                style={{
+                  objectFit: "cover", // 국기 크기를 동일하게 조절
+                  aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                }}
               />
               <span className="text-lg font-bold">
                 {getKoreanUnitFromCurrency(fromCurrency)}
@@ -180,11 +201,19 @@ export default function CurrencyExchangePage() {
                     }}
                   >
                     <img
-                      src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                        code
-                      )}/flat/64.png`}
+                      src={
+                        code === "EUR"
+                          ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+                          : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                              code
+                            )}/flat/64.png`
+                      }
                       alt={`${code} flag`}
-                      className="h-6"
+                      className="h-5"
+                      style={{
+                        objectFit: "cover", // 국기 크기를 동일하게 조절
+                        aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                      }}
                     />
                     <span>{name}</span>
                   </div>
@@ -214,12 +243,21 @@ export default function CurrencyExchangePage() {
               onClick={() => setToDropdownOpen(!toDropdownOpen)}
             >
               <img
-                src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                  toCurrency
-                )}/flat/64.png`}
+                src={
+                  toCurrency === "EUR"
+                    ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                    : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                        toCurrency
+                      )}/flat/64.png`
+                }
                 alt={`${toCurrency} flag`}
-                className="h-10"
+                className="h-8"
+                style={{
+                  objectFit: "cover", // 국기 크기를 동일하게 조절
+                  aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                }}
               />
+
               <span className="text-lg font-bold">
                 {getKoreanUnitFromCurrency(toCurrency)}
               </span>
@@ -237,11 +275,19 @@ export default function CurrencyExchangePage() {
                     }}
                   >
                     <img
-                      src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                        code
-                      )}/flat/64.png`}
+                      src={
+                        code === "EUR"
+                          ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+                          : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                              code
+                            )}/flat/64.png`
+                      }
                       alt={`${code} flag`}
-                      className="h-6"
+                      className="h-5"
+                      style={{
+                        objectFit: "cover", // 국기 크기를 동일하게 조절
+                        aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                      }}
                     />
                     <span>{name}</span>
                   </div>
@@ -297,7 +343,14 @@ export default function CurrencyExchangePage() {
 
         {/* 환전 카드 */}
         <div className="mb-10">
-          <ExchangeCardSlider cards={cards} goalId={goalId} exchangeAmount={amount} rate={exchangeRate} fromCurrency={fromCurrency} toCurrency={toCurrency}/>
+          <ExchangeCardSlider
+            cards={cards}
+            goalId={goalId}
+            exchangeAmount={amount}
+            rate={exchangeRate}
+            fromCurrency={fromCurrency}
+            toCurrency={toCurrency}
+          />
         </div>
       </div>
     </div>

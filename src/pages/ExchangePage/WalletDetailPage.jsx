@@ -62,11 +62,19 @@ export default function WalletDetailPage() {
             >
               <div className="flex items-center space-x-2">
                 <img
-                  src={`https://flagsapi.com/${getCountryCodeFromCountryName(
-                    goal.country
-                  )}/flat/64.png`}
-                  alt={`${getCountryCodeFromCountryName(goal.country)} flag`}
-                  className="h-10"
+                  src={
+                    goal.country === "European Union" || goal.country === "EU"
+                      ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                      : `https://flagsapi.com/${getCountryCodeFromCountryName(
+                          goal.country
+                        )}/flat/64.png`
+                  }
+                  alt={`${goal.country} flag`}
+                  className="h-8"
+                  style={{
+                    objectFit: "cover", // 국기 크기를 동일하게 조절
+                    aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                  }}
                 />
                 <span>{goal.tripName}</span>
               </div>

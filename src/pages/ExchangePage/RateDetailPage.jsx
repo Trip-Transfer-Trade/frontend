@@ -27,11 +27,19 @@ export default function RateDetailPage() {
         text={
           <span>
             <img
-              src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                currencyCode
-              )}/flat/64.png`}
-              alt={`${getCountryCodeFromCurrency(currencyCode)} flag`}
+              src={
+                currencyCode === "EUR"
+                  ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+                  : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                      currencyCode
+                    )}/flat/64.png`
+              }
+              alt={`${currencyCode} flag`}
               className="h-8 inline-block mr-2"
+              style={{
+                objectFit: "cover", // 국기 크기를 동일하게 조절
+                aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+              }}
             />
             {cur_nm} 환율
           </span>

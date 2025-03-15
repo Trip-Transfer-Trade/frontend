@@ -76,18 +76,25 @@ export default function GoalDetailPage() {
           <div key={index} className="flex justify-between items-center p-4">
             <span className="flex items-center space-x-2">
               <img
-                src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                  currency.currencyCode
-                )}/flat/64.png`}
-                alt={`${getCountryCodeFromCurrency(
-                  currency.currencyCode
-                )} flag`}
-                className="h-10"
+                src={
+                  currency.currencyCode === "EUR"
+                    ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                    : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                        currency.currencyCode
+                      )}/flat/64.png`
+                }
+                alt={`${currency.currencyCode} flag`}
+                className="h-8"
+                style={{
+                  objectFit: "cover", // 국기 크기를 동일하게 조절
+                  aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                }}
               />
               <span>{getKoreanUnitFromCurrency(currency.currencyCode)}</span>
             </span>
             <span className="text-right">
-              {currency.availableAmount?.toLocaleString()}{0}
+              {currency.availableAmount?.toLocaleString()}
+              {0}
               {currency.currencyCode}
             </span>
           </div>

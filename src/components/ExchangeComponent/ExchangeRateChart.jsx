@@ -47,7 +47,13 @@ export default function ExchangeRateChart({
     setLoading(true);
     try {
       const days = getPeriodDays(selectedPeriod);
-      const response = await fetchExchangeRateChart(currencyCode, days);
+
+      // JPY 또는 IDR이면 (100) 붙이기
+      const adjustedCurrencyCode = ["JPY", "IDR"].includes(currencyCode)
+        ? `${currencyCode}(100)`
+        : currencyCode;
+
+      const response = await fetchExchangeRateChart(adjustedCurrencyCode, days);
       if (!response) {
         throw new Error("데이터가 없습니다.");
       }

@@ -10,11 +10,12 @@ import StockLogoUs from "../../components/StockLogoUs";
 import StockLogoRandom from "../../components/StockLogoRandom";
 
 import "./StockPage.css";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import Toggle from "../../components/Toggle";
 
 export default function StockPage() {
   const { tripGoal } = useParams();
+  const navigate = useNavigate();
   const portfoliBanner = "/assets/images/stock/portfolioBanner.svg";
 
   const [nationTab, setNationTab] = useState("국내");
@@ -74,6 +75,8 @@ export default function StockPage() {
         console.log(err);
       });
   }, [nationTab, type]);
+
+  
 
   return (
     <div>
@@ -135,7 +138,7 @@ export default function StockPage() {
                           </Link>
                         ))}
                       </div>
-                      <div className="portfoliBanner">
+                      <div className="portfoliBanner" onClick={() => navigate("/top")}>
                         <img src={portfoliBanner} alt="banner" />
                       </div>
                     </Tab>

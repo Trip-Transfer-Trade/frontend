@@ -13,8 +13,14 @@ import ExchangeCard from "./ExchangeCard";
 import { fetchExchange, fetchExchangeBatch } from "../../apis/exchanges";
 import { useNavigate } from "react-router-dom";
 
-
-export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate, fromCurrency, toCurrency }) {
+export default function ExchangeCardSlider({
+  cards,
+  exchangeAmount,
+  goalId,
+  rate,
+  fromCurrency,
+  toCurrency,
+}) {
   const [selectedCards, setSelectedCards] = useState([0]); // 첫 번째 카드 기본 선택
   const [selectedTotal, setSelectedTotal] = useState(0);
   const [selectedLess, setSelectedLess] = useState(false);
@@ -62,104 +68,109 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       return;
     }
     setSelectedLess(false);
-    
+
     let remainingAmount = parseFloat(exchangeAmount); // 남은 금액
     let updatedBatchDTOList = [];
     const myWalletIndex = 0;
     const otherCards = selectedCards.filter((index) => index !== myWalletIndex);
     const sortedSelectedCards = [
       cards[myWalletIndex], // 내 지갑 카드 유지
-      ...otherCards.map((index) => cards[index]).sort((a, b) => b.amount - a.amount),
+      ...otherCards
+        .map((index) => cards[index])
+        .sort((a, b) => b.amount - a.amount),
     ];
-    // console.log(sortedSelectedCards); 
+    // console.log(sortedSelectedCards);
     //단일 환전
     if (sortedSelectedCards.length === 1) {
       const singleCard = sortedSelectedCards[0];
       if (!singleCard) return;
-      const fromAmount = Math.min(singleCard.amount,remainingAmount);
-      const toAmount = fromAmount*(1/parseFloat(rate));
+      const fromAmount = Math.min(singleCard.amount, remainingAmount);
+      const toAmount = fromAmount * (1 / parseFloat(rate));
 
       const exchangeData = {
         accountId: singleCard.accountId,
         fromCurrency: fromCurrency,
-        toCurrency:toCurrency,
+        toCurrency: toCurrency,
         exchangeRate: rate,
         fromAmount: fromAmount,
-        toAmount:toAmount
+        toAmount: toAmount,
       };
-      console.log("단일",exchangeData);
-      
-      try{
+      console.log("단일", exchangeData);
+
+      try {
         const response = await fetchExchange(exchangeData);
         console.log(response);
         const data = {
-          [fromCurrency]:
-          {
-            amount:fromAmount,
-            currency:toCurrency,
-            rate:rate,
-            toAmount:toAmount
-          }
-        }
-        navigate('/exchange/complete',{state:{exchanges:data, goal:false}});
-      } catch(error){
-        console.error("환전 오류",error);
+          [fromCurrency]: {
+            amount: fromAmount,
+            currency: toCurrency,
+            rate: rate,
+            toAmount: toAmount,
+          },
+        };
+        navigate("/exchange/complete", {
+          state: { exchanges: data, goal: false },
+        });
+      } catch (error) {
+        console.error("환전 오류", error);
       }
       return;
     }
-    console.log("배치환전",sortedSelectedCards.length,"개 선택")
-    //배치 환전 
+    console.log("배치환전", sortedSelectedCards.length, "개 선택");
+    //배치 환전
     for (let i = 0; i < sortedSelectedCards.length; i++) {
-      const card = sortedSelectedCards[i];  
+      const card = sortedSelectedCards[i];
       if (!card) continue;
-  
+
       const deductionAmount = Math.min(card.amount, remainingAmount);
-      
+
       updatedBatchDTOList.push({
         amount: deductionAmount,
         accountId: card.accountId,
       });
-  
+
       remainingAmount -= deductionAmount;
       console.log(remainingAmount);
-  
+
       if (remainingAmount <= 0) break;
     }
-  
+
     if (remainingAmount > 0) {
-      console.log(remainingAmount)
+      console.log(remainingAmount);
       setSelectedLess(true);
       return;
     }
 
     setSelectedLess(false);
-    
+
     const exchangeData = {
       accountId: goalId,
-      fromCurrency:fromCurrency,
-      toCurrency:toCurrency,
-      fromAmount:exchangeAmount,
-      exchangeRate:rate,
-      batchDTOList:updatedBatchDTOList
-    }
+      fromCurrency: fromCurrency,
+      toCurrency: toCurrency,
+      fromAmount: exchangeAmount,
+      exchangeRate: rate,
+      batchDTOList: updatedBatchDTOList,
+    };
 
-    console.log("요청 data :",exchangeData);
-    
-    try{  
-      const response =await fetchExchangeBatch(exchangeData);
-      response.currency=toCurrency
+    console.log("요청 data :", exchangeData);
+
+    try {
+      const response = await fetchExchangeBatch(exchangeData);
+      response.currency = toCurrency;
       console.log(response);
-      const data ={
+      const data = {
         [fromCurrency]: {
-          amount: exchangeAmount, 
+          amount: exchangeAmount,
           currency: toCurrency,
           rate: rate,
-          toAmount: response.toAmount
-        }
-      }
-      navigate('/exchange/complete',{state:{exchanges:data,goal:false}});
-    } catch(error){
-      console.error("배치 환전 오류",error);
+          toAmount: response.toAmount,
+        },
+      };
+      navigate("/exchange/complete", {
+        state: { exchanges: data, goal: false },
+      });
+    } catch (error) {
+      console.error("배치 환전 오류", error);
       alert("환전 실패");
     }
   }
@@ -177,7 +188,9 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
           if (cards.length === 0) return null;
 
           const firstCard = cards[0];
-          const sortedCards = [...cards.slice(1)].sort((a, b) => b.amount - a.amount);
+          const sortedCards = [...cards.slice(1)].sort(
+            (a, b) => b.amount - a.amount
+          );
           const displayCards = [firstCard, ...sortedCards];
 
           return displayCards.map((card, index) => {
@@ -185,7 +198,9 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
             return (
               <SwiperSlide key={index}>
                 <ExchangeCard
-                  image={`/assets/images/travel/travel-${getCountryCodeFromCountryName(card.country).toLowerCase()}.jpeg`}
+                  image={`/assets/images/travel/travel-${getCountryCodeFromCountryName(
+                    card.country
+                  ).toLowerCase()}.jpeg`}
                   title={card.tripName}
                   price={card.amount}
                   onClick={() => handleCardClick(cards.indexOf(card))}
@@ -196,8 +211,14 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
           });
         })()}
       </Swiper>
-      {selectedLess? <p className="text-red-500 px-8 text-[12px] mb-10 flex">
-        <img src="/assets/images/exchange/alert.svg" className="mx-1"/>환전 가능 금액이 부족합니다. 추가 선택을 해주세요.</p> : <p className="mb-10"></p>}
+      {selectedLess ? (
+        <p className="text-red-500 px-8 text-[12px] mb-10 flex">
+          <img src="/assets/images/exchange/alert.svg" className="mx-1" />
+          환전 가능 금액이 부족합니다. 추가 선택을 해주세요.
+        </p>
+      ) : (
+        <p className="mb-10"></p>
+      )}
       <div className="px-6">
         <NextConfirmButton text="환전하기" onClick={handleExchange} />
       </div>
