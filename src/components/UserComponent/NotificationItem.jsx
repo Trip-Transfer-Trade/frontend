@@ -10,7 +10,7 @@ export function NotificationItem({ title, description, time, isRead, onClick }) 
                         {title}
                     </h3>
                     <div className="text-gray-500 text-xs flex-shrink-0">
-                        {time}
+                        {/* {time} */}
                     </div>
                 </div>
             </div>
