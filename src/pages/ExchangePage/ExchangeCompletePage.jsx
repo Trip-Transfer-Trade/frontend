@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function ExchangeCompletePage() {
   const { state } = useLocation();
   const exchanges = state?.exchanges;
+  const goal = state?.goal;
   const navigate = useNavigate();
 
   return (
@@ -44,6 +45,7 @@ export default function ExchangeCompletePage() {
           <ExchangeCompleteResultCard
             key={currency}
             title={currency === "KRW" ? "국내 투자금" : "해외 투자금"}
+            goal={goal}
             principal={currency === "KRW" ? `₩ ${data.amount?.toLocaleString()}` : `$ ${data.amount?.toLocaleString()}`}
             exchangeRate={parseFloat(data.rate).toFixed(2)}
             exchangeAmount={`${getCurrencySymbolFromCurrency(data.currency)} ${data.toAmount.toLocaleString()}`}
