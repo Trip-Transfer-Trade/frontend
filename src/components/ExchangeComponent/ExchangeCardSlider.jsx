@@ -62,7 +62,6 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       return;
     }
     setSelectedLess(false);
-    console.log("HERE");
     
     let remainingAmount = parseFloat(exchangeAmount); // 남은 금액
     let updatedBatchDTOList = [];
@@ -76,10 +75,9 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
     //단일 환전
     if (sortedSelectedCards.length === 1) {
       const singleCard = sortedSelectedCards[0];
-      console.log("들어옴", singleCard )
       if (!singleCard) return;
-      const toAmount = Math.min(singleCard.amount,remainingAmount);
-      const fromAmount = toAmount*(parseFloat(rate));
+      const fromAmount = Math.min(singleCard.amount,remainingAmount);
+      const toAmount = fromAmount*(1/parseFloat(rate));
 
       const exchangeData = {
         accountId: singleCard.accountId,
@@ -94,8 +92,16 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       try{
         const response = await fetchExchange(exchangeData);
         console.log(response);
-        response.currency=toCurrency
-        navigate('/exchange/complete',{state:{exchanges:[response]}});
+        const data = {
+          [fromCurrency]:
+          {
+            amount:fromAmount,
+            currency:toCurrency,
+            rate:rate,
+            toAmount:toAmount
+          }
+        }
+        navigate('/exchange/complete',{state:{exchanges:data}});
       } catch(error){
         console.error("환전 오류",error);
       }
@@ -132,6 +138,7 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       accountId: goalId,
       fromCurrency:fromCurrency,
       toCurrency:toCurrency,
+      fromAmount:exchangeAmount,
       exchangeRate:rate,
       batchDTOList:updatedBatchDTOList
     }
@@ -142,7 +149,15 @@ export default function ExchangeCardSlider({ cards, exchangeAmount, goalId, rate
       const response =await fetchExchangeBatch(exchangeData);
       response.currency=toCurrency
       console.log(response);
-      navigate('/exchange/complete',{state:{exchanges:[response]}});
+      const data ={
+        [fromCurrency]: {
+          amount: exchangeAmount, 
+          currency: toCurrency,
+          rate: rate,  // ✅ API 응답 데이터 사용
+          toAmount: response.toAmount  // ✅ API 응답 데이터 사용
+        }
+      }
+      navigate('/exchange/complete',{state:{exchanges:data}});
     } catch(error){
       console.error("배치 환전 오류",error);
       alert("환전 실패");
