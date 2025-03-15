@@ -53,7 +53,7 @@ export default function FailedPage() {
     <div className="min-h-screen bg-white flex flex-col">
       <div className="flex justify-end p-4">
         <button className="text-gray-500" onClick={handleQuestionClick}>
-        <QuestionMarkCircle className="w-5 h-5 text-gray-400" />    
+          <QuestionMarkCircle className="w-5 h-5 text-gray-400" />    
         </button>
       </div>
 

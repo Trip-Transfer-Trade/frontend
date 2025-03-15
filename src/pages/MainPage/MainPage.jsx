@@ -36,7 +36,7 @@ export default function MainPage() {
   }, []);
 
   useEffect(() => {
-    apiClient.get("/trips/count")
+    apiClient.get("/accounts/count")
     .then((response) => {
       setCount(response.data);
       console.log("진행 중 목표 : " + count);
@@ -105,7 +105,7 @@ export default function MainPage() {
     switch (accountStatus) {
       case "NOT_LOGGED_IN":
         return (
-          <div className={styles.banner}>
+          <div className={styles.banner} onClick={() => navigate("/auth/login")}>
             <div className={styles.header}>
               <h1 className={styles.title}>목표를 설정하고</h1>
               <h1 className={styles.title}>투자부터 환전까지 한번에 해요!</h1>
@@ -113,7 +113,7 @@ export default function MainPage() {
             <div className={styles.card}>
               <h2 className={styles.cardTitle}>나의 목표 보기</h2>
               <div className={styles.cardContent}>
-                <div className={styles.cardText}>
+                <div className={styles.cardText2}>
                   <p className={styles.instruction}>로그인하고<br/>나의 목표를 만들어 보세요!</p>
                 </div>
                 <div className={styles.LogincardImage}>
@@ -133,7 +133,7 @@ export default function MainPage() {
             <div className={styles.card}>
               <h2 className={styles.cardTitle}>나의 목표 보기</h2>
               <div className={styles.cardContent}>
-                <div className={styles.cardText}>
+                <div className={styles.cardText2}>
                   <p className={styles.accountQuestion}>TTT가 처음이신가요?</p>
                   <p className={styles.accountInstruction}>먼저 새로운 계좌를 개설해주세요.</p>
                 </div>
@@ -146,7 +146,7 @@ export default function MainPage() {
         );
       case "LOGGED_IN_WITH_ACCOUNT":
         return (
-          <div className={styles.banner}>
+          <div className={styles.banner} onClick={() => navigate("/trip/tripgoal")}>
             <div className={styles.header}>
               <h1 className={styles.title}>나의 목표를 확인하세요</h1>
               <h1 className={styles.title}>효율적인 투자 관리!</h1>
