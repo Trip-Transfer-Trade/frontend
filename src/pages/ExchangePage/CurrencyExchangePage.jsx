@@ -157,11 +157,19 @@ export default function CurrencyExchangePage() {
               onClick={() => setFromDropdownOpen(!fromDropdownOpen)}
             >
               <img
-                src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                  fromCurrency
-                )}/flat/64.png`}
+                src={
+                  fromCurrency === "EUR"
+                    ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                    : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                        fromCurrency
+                      )}/flat/64.png`
+                }
                 alt={`${fromCurrency} flag`}
-                className="h-10"
+                className="h-8"
+                style={{
+                  objectFit: "cover", // 국기 크기를 동일하게 조절
+                  aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                }}
               />
               <span className="text-lg font-bold">
                 {getKoreanUnitFromCurrency(fromCurrency)}
@@ -180,11 +188,19 @@ export default function CurrencyExchangePage() {
                     }}
                   >
                     <img
-                      src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                        code
-                      )}/flat/64.png`}
+                      src={
+                        code === "EUR"
+                          ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+                          : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                              code
+                            )}/flat/64.png`
+                      }
                       alt={`${code} flag`}
-                      className="h-6"
+                      className="h-5"
+                      style={{
+                        objectFit: "cover", // 국기 크기를 동일하게 조절
+                        aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                      }}
                     />
                     <span>{name}</span>
                   </div>
@@ -214,12 +230,21 @@ export default function CurrencyExchangePage() {
               onClick={() => setToDropdownOpen(!toDropdownOpen)}
             >
               <img
-                src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                  toCurrency
-                )}/flat/64.png`}
+                src={
+                  toCurrency === "EUR"
+                    ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" // EU 국기 (CDN 이미지)
+                    : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                        toCurrency
+                      )}/flat/64.png`
+                }
                 alt={`${toCurrency} flag`}
-                className="h-10"
+                className="h-8"
+                style={{
+                  objectFit: "cover", // 국기 크기를 동일하게 조절
+                  aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                }}
               />
+
               <span className="text-lg font-bold">
                 {getKoreanUnitFromCurrency(toCurrency)}
               </span>
@@ -237,11 +262,19 @@ export default function CurrencyExchangePage() {
                     }}
                   >
                     <img
-                      src={`https://flagsapi.com/${getCountryCodeFromCurrency(
-                        code
-                      )}/flat/64.png`}
+                      src={
+                        code === "EUR"
+                          ? "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg"
+                          : `https://flagsapi.com/${getCountryCodeFromCurrency(
+                              code
+                            )}/flat/64.png`
+                      }
                       alt={`${code} flag`}
-                      className="h-6"
+                      className="h-5"
+                      style={{
+                        objectFit: "cover", // 국기 크기를 동일하게 조절
+                        aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                      }}
                     />
                     <span>{name}</span>
                   </div>
@@ -297,7 +330,14 @@ export default function CurrencyExchangePage() {
 
         {/* 환전 카드 */}
         <div className="mb-10">
-          <ExchangeCardSlider cards={cards} goalId={goalId} exchangeAmount={amount} rate={exchangeRate} fromCurrency={fromCurrency} toCurrency={toCurrency}/>
+          <ExchangeCardSlider
+            cards={cards}
+            goalId={goalId}
+            exchangeAmount={amount}
+            rate={exchangeRate}
+            fromCurrency={fromCurrency}
+            toCurrency={toCurrency}
+          />
         </div>
       </div>
     </div>

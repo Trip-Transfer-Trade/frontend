@@ -1,4 +1,4 @@
-import { X } from "lucide-react"
+import { X } from "lucide-react";
 import ExchangeCompleteResultCard from "../../components/ExchangeComponent/ExchangCompleteResultCard";
 import { useLocation } from "react-router-dom";
 import { getCurrencySymbolFromCurrency } from "../../constants/currencyMappings";
@@ -12,17 +12,26 @@ export default function ExchangeCompletePage() {
 
   return (
     <div className="flex flex-col items-center min-h-screen p-6">
-      
       <div className="absolute top-6 right-6">
-        <button className="text-gray-400"
-          onClick={() => {navigate(`/exchange`);}}>
+        <button
+          className="text-gray-400"
+          onClick={() => {
+            navigate(`/exchange`);
+          }}
+        >
           <X size={28} strokeWidth={1.5} />
         </button>
       </div>
 
       <div className="mt-16 mb-4">
         <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center">
-          <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+          <svg
+            className="w-10 h-10 text-white"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
@@ -46,9 +55,15 @@ export default function ExchangeCompletePage() {
             key={currency}
             title={currency === "KRW" ? "국내 투자금" : "해외 투자금"}
             goal={goal}
-            principal={currency === "KRW" ? `₩ ${data.amount?.toLocaleString()}` : `$ ${data.amount?.toLocaleString()}`}
+            principal={
+              currency === "KRW"
+                ? `₩ ${data.amount?.toLocaleString()}`
+                : `$ ${data.amount?.toLocaleString()}`
+            }
             exchangeRate={parseFloat(data.rate).toFixed(2)}
-            exchangeAmount={`${getCurrencySymbolFromCurrency(data.currency)} ${data.toAmount.toLocaleString()}`}
+            exchangeAmount={`${getCurrencySymbolFromCurrency(
+              data.currency
+            )} ${data.toAmount.toLocaleString()}`}
             bgColor={currency === "KRW" ? "bg-blue-50" : "bg-amber-50"}
             subBgColor={currency === "KRW" ? "bg-blue-100" : "bg-amber-100"}
           />

@@ -6,12 +6,12 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { getCurrencyCodeFromCountryName } from "../../../constants/countryMappings";
 import { fetchTripByTripId } from "../../../apis/trips";
-import { MessageCircleQuestionIcon as QuestionMarkCircle } from "lucide-react"
+import { MessageCircleQuestionIcon as QuestionMarkCircle } from "lucide-react";
 
 export default function SuccessPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { tripGoal } = useParams();
-  const tripId = tripGoal.replace("tripGoal","");
+  const tripId = tripGoal.replace("tripGoal", "");
   const [amount, setAmount] = useState(1000000);
   const [period, setPeriod] = useState(11);
   const [returnRate, setReturnRate] = useState(32.9);
@@ -54,7 +54,7 @@ export default function SuccessPage() {
     <div className="min-h-screen bg-white flex flex-col relative">
       <div className="flex justify-end p-4">
         <button className="text-gray-500" onClick={handleQuestionClick}>
-        <QuestionMarkCircle className="w-5 h-5 text-gray-400" />
+          <QuestionMarkCircle className="w-5 h-5 text-gray-400" />
         </button>
       </div>
 
@@ -70,8 +70,8 @@ export default function SuccessPage() {
               alt="지갑"
               className="w-42 h-48 mx-auto object-contain"
             />
-          </div>  
-          
+          </div>
+
           <div className="w-full grid grid-cols-2 gap-4 mb-8">
             <div className="bg-gray-50 p-4 rounded-lg">
               <p className="text-sm text-gray-600 mb-1">투자 기간</p>
@@ -86,32 +86,38 @@ export default function SuccessPage() {
           <div className="w-full text-center mb-8">
             <p className="text-2xl font-bold text-blue-600">
               {amount.toLocaleString()}
-              <span className="text-base font-normal text-gray-600 ml-1">원 모았어요</span>
+              <span className="text-base font-normal text-gray-600 ml-1">
+                원 모았어요
+              </span>
             </p>
           </div>
 
           <button
             onClick={() => handleExchangeClick()}
-            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-SemiBold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none">
+            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-SemiBold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
+          >
             환전하러 가기
           </button>
           <button
             onClick={handleNextClick}
-            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-['Pretendard-SemiBold'] bg-white rounded-2xl hover:bg-blue-700 focus:outline-none">
+            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-['Pretendard-SemiBold'] bg-white rounded-2xl hover:bg-blue-700 focus:outline-none"
+          >
             다음에 할게요
           </button>
           <button
             onClick={handleDetailClick(tripId)}
-            className="text-[13px] text-blue-600 underline mb-20">
+            className="text-[13px] text-blue-600 underline mb-20"
+          >
             목표 내역 자세히 보러가기
           </button>
         </div>
       </div>
       {isModalOpen && (
         <SharedModal onClose={() => setIsModalOpen(false)}>
-          <ExchangeMethod 
-          tripId={modalData.tripId}
-          currencyCode={modalData.currencyCode}/>
+          <ExchangeMethod
+            tripId={modalData.tripId}
+            currencyCode={modalData.currencyCode}
+          />
         </SharedModal>
       )}
     </div>
