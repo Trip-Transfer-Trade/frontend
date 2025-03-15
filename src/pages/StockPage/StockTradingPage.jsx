@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import BackNavigation from "../../components/BackNavigation";
-import Footer from "../../layout/Footer";
 import { toast, ToastContainer } from "react-toastify";
 
 import "./StockPage.css";
@@ -368,7 +367,6 @@ export default function StockTradingPage() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }
