@@ -67,7 +67,7 @@ export default function SuccessPage() {
 
       <Confetti />
       <div className="flex-grow flex flex-col items-center justify-start px-4 pt-20">
-        <div className="w-full text-center font-['Pretendard-Medium']">
+        <div className="w-full text-center font-medium">
           <div>{trip.name || ""}</div>
           <h1 className="text-[22px] text-[#2A58FE]">목표에 도달했어요!</h1>
           <p className="text-[15px] mb-2">자동 매도 후 환전할 수 있어요</p>
@@ -100,13 +100,13 @@ export default function SuccessPage() {
           </div>
           <button
             onClick={() => handleExchangeClick()}
-            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-['Pretendard-SemiBold'] bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
+            className="w-full mx-auto px-6 py-3 text-white text-[16px] font-semiBold bg-blue-600 rounded-2xl hover:bg-blue-700 focus:outline-none"
           > 
             매도하기
           </button>
           <button
             onClick={()=> handleNextClick()}
-            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-['Pretendard-SemiBold'] bg-white rounded-2xl hover:bg-blue-700 focus:outline-none"
+            className="w-full mx-auto px-6 py-3 text-[#62626C] text-[16px] font-SemiBold bg-white rounded-2xl hover:bg-blue-700 focus:outline-none"
           >
             다음에 할게요
           </button>
