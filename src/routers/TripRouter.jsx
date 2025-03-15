@@ -16,6 +16,7 @@ import TransferPage from "../pages/MyTripPage/TransferPage";
 import EnterAmountPage from "../pages/MyTripPage/EnterAmountPage";
 import SuggestPortfolioPage from "../pages/PortfolioPage/SuggestPortfolioPage";
 import StockExchangePage from "../pages/PortfolioPage/StockExchangePage";
+import GoalSellSuccessPage from "../pages/PortfolioPage/GoalSellSuccessPage";
 
 
 
@@ -53,6 +54,10 @@ const TripRouter = {
       path: ":tripGoal/stocks/sell",
       element: <StockTradingPage type="sell" />,
     },
+    {
+      path: ":tripGoal/sell",
+      element: <GoalSellSuccessPage />
+    }
   ],
 };
 
