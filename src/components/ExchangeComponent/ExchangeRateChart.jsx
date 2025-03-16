@@ -13,7 +13,7 @@ export default function ExchangeRateChart({
   currencyCode = "USD",
   showPeriodButtons = true,
 }) {
-  const [selectedPeriod, setSelectedPeriod] = useState("1M");
+  const [selectedPeriod, setSelectedPeriod] = useState("6M");
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
