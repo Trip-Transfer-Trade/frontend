@@ -1,32 +1,15 @@
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-const countryCodeMap = {
-  "미국": "US",
-  "캐나다": "CA",
-  "프랑스": "FR",
-  "이탈리아": "IT",
-  "일본": "JP",
-  "한국": "KR",
-  "독일": "DE",
-  "영국": "GB",
-  "스페인": "ES",
-  "중국": "CN",
-  "호주": "AU",
-  "멕시코": "MX",
-  "인도": "IN",
-  "브라질": "BR",
-  "아르헨티나": "AR",
-  "칠레": "CL",
-  "이집트": "EG",
-  "남아프리카공화국": "ZA",
-  "이름없음": "UN",
-
-};
+import { countryNameToCountryCodeMap } from "../../../constants/countryMappings";
+import InputField from "../../../components/InputField";
 
 // 국기 이미지 URL을 가져오는 함수
 function getCountryFlagURL(countryName) {
-  const countryCode = countryCodeMap[countryName] || "UN";
+  if (countryName === "유럽연합") {
+    return "https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg";
+  }
+  const countryCode = countryNameToCountryCodeMap[countryName] || "UN";
   return `https://flagsapi.com/${countryCode}/flat/64.png`;
 }
 
@@ -38,42 +21,41 @@ export default function CountrySelect({ onSelect }) {
     { id: "europe", name: "유럽" },
     { id: "asia", name: "아시아" },
     { id: "northAmerica", name: "북미" },
-    { id: "southAmerica", name: "남미" },
-    { id: "africa", name: "아프리카" },
-    { id: "oceania", name: "오세아니아"},
+    { id: "oceania", name: "오세아니아" },
   ];
 
   const countries = {
     europe: [
-      { id: "france", name: "프랑스" },
-      { id: "italy", name: "이탈리아" },
-      { id: "germany", name: "독일" },
-      { id: "spain", name: "스페인" },
+      { id: "switzerland", name: "스위스" },
+      { id: "denmark", name: "덴마아크" },
+      { id: "eu", name: "유럽연합" },
       { id: "uk", name: "영국" },
-      { id: "denmark", name: "덴마크"},
-      { id: ""}
-
+      { id: "norway", name: "노르웨이" },
+      { id: "sweden", name: "스웨덴" },
     ],
     asia: [
-      { id: "japan", name: "일본" },
-      { id: "korea", name: "한국" },
+      { id: "uae", name: "아랍에미리트" },
+      { id: "bahrain", name: "바레인" },
+      { id: "brunei", name: "브루나이" },
       { id: "china", name: "중국" },
-      { id: "india", name: "인도" }
+      { id: "hongkong", name: "홍콩" },
+      { id: "indonesia", name: "인도네시아" },
+      { id: "japan", name: "일본" },
+      { id: "korea", name: "대한민국" },
+      { id: "kuwait", name: "쿠웨이트" },
+      { id: "malaysia", name: "말레이지아" },
+      { id: "saudi", name: "사우디" },
+      { id: "singapore", name: "싱가포르" },
+      { id: "thailand", name: "태국" },
     ],
     northAmerica: [
       { id: "usa", name: "미국" },
       { id: "canada", name: "캐나다" },
-      { id: "mexico", name: "멕시코" }
     ],
-    southAmerica: [
-      { id: "brazil", name: "브라질" },
-      { id: "argentina", name: "아르헨티나" },
-      { id: "chile", name: "칠레" }
+    oceania: [
+      { id: "australia", name: "호주" },
+      { id: "newzealand", name: "뉴질랜드" },
     ],
-    africa: [
-      { id: "egypt", name: "이집트" },
-      { id: "southAfrica", name: "남아프리카공화국" }
-    ]
   };
 
   function handleSelect(country) {
@@ -82,32 +64,45 @@ export default function CountrySelect({ onSelect }) {
   }
 
   return (
-    <div className="max-w-lg min-h-[70vh] bg-white px-4 flex flex-col mx-auto">
-      <div className="flex flex-col gap-2 flex-grow">
+    <div className="bg-white flex flex-col mx-auto">
+      <div className="flex flex-col flex-grow">
         {continents.map((continent) => (
-          <div key={continent.id} className="border-b border-gray-200">
+          <div key={continent.id} className="border-b border-gray-300">
             <button
-              className="w-full flex justify-between items-center py-3 text-lg font-bold"
-              onClick={() => setOpenSection(openSection === continent.id ? "" : continent.id)}
+              className="w-full px-2 py-4 flex justify-between items-center text-lg font-bold"
+              onClick={() =>
+                setOpenSection(openSection === continent.id ? "" : continent.id)
+              }
             >
               {continent.name}
-              <ChevronDown className={`transition-transform ${openSection === continent.id ? "rotate-180" : ""}`} size={20} />
+              <ChevronDown
+                className={`transition-transform ${
+                  openSection === continent.id ? "rotate-180" : ""
+                }`}
+                size={20}
+              />
             </button>
 
             {openSection === continent.id && (
-              <div className="py-1">
+              <div className="px-4 pb-4">
                 {(countries[continent.id] || []).map((country) => (
                   <button
                     key={country.id}
-                    className={`flex items-center py-2 gap-3 w-full text-left rounded-lg transition-all ${
-                      selectedCountry === country.name ? "bg-gray-300" : "hover:bg-gray-100"
+                    className={`flex items-center py-2 gap-2 w-full text-left rounded-lg transition-all ${
+                      selectedCountry === country.name
+                        ? "bg-gray-300"
+                        : "hover:bg-gray-100"
                     }`}
                     onClick={() => handleSelect(country)}
                   >
                     <img
                       src={getCountryFlagURL(country.name)}
                       alt={country.name}
-                      className="w-7 h-7 rounded-full"
+                      className="h-5"
+                      style={{
+                        objectFit: "cover", // 국기 크기를 동일하게 조절
+                        aspectRatio: "4 / 3", // 비율 유지 (EU 국기와 다른 국기 통일)
+                      }}
                     />
                     <span className="text-md">{country.name}</span>
                   </button>
