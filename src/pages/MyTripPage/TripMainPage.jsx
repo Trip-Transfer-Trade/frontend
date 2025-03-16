@@ -12,22 +12,32 @@ import { DndProvider } from "react-dnd";
 import { MultiBackend, createTransition } from "react-dnd-multi-backend";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { TouchBackend } from "react-dnd-touch-backend";
+import withScrolling from "react-dnd-scrolling";
 import CreateAccountModal from "../../components/portfolio/CreateAccountModal";
 import SharedModal from "../../components/Modal"
+import { useMediaQuery } from "react-responsive";
 
 const TouchTransition = createTransition("touchstart", (event) => {
-  return event.touches != null; // 터치 이벤트가 존재하면 true
+  return event.touches != null;
 });
 
-const HTML5toTouch = {
+const ScrollingComponent = withScrolling('div');
+
+const pipeline = {
   backends: [
     {
-      backend: HTML5Backend,     // 데스크톱(마우스) 환경 우선
+      id: "html5",
+      backend: HTML5Backend,
     },
     {
-      backend: TouchBackend,     // 모바일(터치) 환경
-      preview: true,             // 미리보기 사용 여부
-      transition: TouchTransition
+      id: "touch",
+      backend: TouchBackend,
+      preview: true,
+      transition: TouchTransition,
+      options: {
+        enableMouseEvents: true,
+        delayTouchStart: 300,
+      },
     },
   ],
 };
@@ -38,6 +48,8 @@ export default function TripMainPage() {
   const { tripGoals, status } = useSelector((state) => state.trip);
   const account = useSelector((state) => state.nomalAccount.account);
   const [showModal, setShowModal] = useState(false);
+  const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
+  const Container = isMobile ? ScrollingComponent : "div";
 
   useEffect(() => {
     dispatch(TripAll());
@@ -71,37 +83,39 @@ export default function TripMainPage() {
     const isPastA = dateA < today;
     const isPastB = dateB < today;
 
-    if (isPastA && !isPastB) return 1;  // A가 과거 날짜면 뒤로
-    if (!isPastA && isPastB) return -1; // B가 과거 날짜면 뒤로
-    return dateA - dateB; // 가장 임박한 날짜가 위로
+    if (isPastA && !isPastB) return 1;
+    if (!isPastA && isPastB) return -1;
+    return dateA - dateB;
   });
 
   return (
-    <DndProvider backend={MultiBackend} options={HTML5toTouch}>
-      <div className="flex flex-col min-h-screen">
-        <main className="flex-1 p-4 space-y-4">
-          {account && account.amountNumber ? (
-            <AccountCard account={account} />
-          ) : (
-            <p>계좌 정보를 불러오는 중...</p>
-          )}
+    <DndProvider backend={MultiBackend} options={pipeline}>
+      <Container style={{ height: "100vh", overflowY: "auto" }}>
+        <div className="flex flex-col min-h-screen">
+          <main className="flex-1 p-4 space-y-4">
+            {account && account.amountNumber ? (
+              <AccountCard account={account} />
+            ) : (
+              <p>계좌 정보를 불러오는 중...</p>
+            )}
 
-          {status === "loading" && <p>로딩 중...</p>}
-          {Array.isArray(sortedTrips) && sortedTrips.length > 0 ? (
-            sortedTrips.map((trip) => <TripCard key={trip.tripId} trip={trip} accountId={account.accountId} />)
-          ) : (
-            <p>여행 목표가 없습니다.</p>
-          )}
+            {status === "loading" && <p>로딩 중...</p>}
+            {Array.isArray(sortedTrips) && sortedTrips.length > 0 ? (
+              sortedTrips.map((trip) => <TripCard key={trip.tripId} trip={trip} accountId={account.accountId} />)
+            ) : (
+              <p>여행 목표가 없습니다.</p>
+            )}
 
-          <button
-            className="w-full py-4 mt-4 bg-gray-100 rounded-xl flex items-center justify-center"
-            onClick={() => navigate("/trip/tripgoal")}
-          >
-            <Plus className="w-5 h-5 text-gray-500 mr-1" />
-            <span className="text-gray-500">새로운 목표 등록</span>
-          </button>
-        </main>
-      </div>
+            <button
+              className="w-full py-4 mt-4 bg-gray-100 rounded-xl flex items-center justify-center"
+              onClick={() => navigate("/trip/tripgoal")}
+            >
+              <Plus className="w-5 h-5 text-gray-500 mr-1" />
+              <span className="text-gray-500">새로운 목표 등록</span>
+            </button>
+          </main>
+        </div>
+      </Container>
       {showModal && (
         <SharedModal onClose={() => setShowModal(false)}>
           <CreateAccountModal onClose={() => setShowModal(false)} />

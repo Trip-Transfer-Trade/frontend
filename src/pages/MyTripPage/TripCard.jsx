@@ -147,10 +147,6 @@ export default function TripCard({ trip, accountId }) {
             className="bg-blue-500 h-2 rounded-full transition-all duration-500"
             style={progressStyle}
           ></div>
-          <div
-            className="bg-blue-500 h-2 rounded-full transition-all duration-500"
-            style={progressStyle}
-          ></div>
         </div>
         <p className="text-[10px] text-gray-500 mt-1 text-right">
           {endDate} 까지 모으는 중

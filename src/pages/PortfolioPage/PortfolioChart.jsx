@@ -19,6 +19,11 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
       <div className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center h-52 mx-4 mb-4">
         <FiBarChart2 className="text-4xl text-gray-400 mb-2" />
         <p className="text-gray-500 text-lg font-medium">보유한 종목이 없어요</p>
+        <div className="flex justify-center mt-4 pt-4">
+          <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
+            목표 수정하기
+          </a>
+        </div>
       </div>
     );
   }
