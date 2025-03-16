@@ -88,9 +88,6 @@ export default function TripCard({ trip, accountId }) {
       navigate(
         `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripAccountId}&destType=trip`
       );
-      navigate(
-        `/trip/transfer?sourceId=${item.sourceId}&sourceType=${item.sourceType}&destId=${tripAccountId}&destType=trip`
-      );
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -129,8 +126,8 @@ export default function TripCard({ trip, accountId }) {
           </p>
         </div>
         <div className="flex flex-col items-center">
-          <img src={flagURL} alt={country} className="w-10 h-10" />
           <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600 mt-1" />
+          <img src={flagURL} alt={country} className="w-10 h-10" />
         </div>
       </div>
       <p className="text-xs text-gray-500">
