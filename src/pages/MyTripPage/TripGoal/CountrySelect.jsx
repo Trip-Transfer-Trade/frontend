@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { use, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 
 import { countryNameToCountryCodeMap } from "../../../constants/countryMappings";
@@ -63,8 +64,11 @@ export default function CountrySelect({ onSelect }) {
     onSelect(country.name);
   }
 
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white flex flex-col mx-auto">
+      <p className="text-xl font-bold mb-6">여행 국가를 선택해주세요</p>
       <div className="flex flex-col flex-grow">
         {continents.map((continent) => (
           <div key={continent.id} className="border-b border-gray-300">
@@ -111,6 +115,22 @@ export default function CountrySelect({ onSelect }) {
             )}
           </div>
         ))}
+      </div>
+      <div className="mt-16 flex justify-center items-center bg-custom-gray-1 p-4 rounded-2xl w-full space-x-4">
+        <img
+          src="/assets/images/main/trip.svg"
+          alt="Trending Travel Icon"
+          className="w-8"
+        />
+        <div
+          onClick={() => {
+            navigate("/destination");
+          }}
+          className="text-black font-semibold text-sm flex flex-col items-center"
+        >
+          <p>인기 급상승</p>
+          <p>여행지 Best 10</p>
+        </div>
       </div>
     </div>
   );
