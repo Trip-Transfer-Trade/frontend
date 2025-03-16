@@ -35,15 +35,21 @@ export default function PortfolioAccount({ activeTab }) {
     if (activeTab === "u" && currentData.depositAmount === 0) {
       setIsModalOpen(true);
     } else {
-      navigate(`/trip/${tripId}/stocks`);
+      const nation = activeTab === "k" ? "국내" : "미국";
+      navigate(`/trip/${tripId}/stocks`, { state: { nation } });
     }
   };
+  
 
   return (
     <div className="m-4 bg-white rounded-lg shadow-lg p-3 mb-4">
       <div className="flex justify-between items-center px-3">
         <span className="text-lg font-medium">누적수익금</span>
-        <span className="text-lg font-medium text-red-500">
+        <span
+          className={`text-lg font-medium ${
+            currentData.profit < 0 ? "text-blue-500" : "text-red-500"
+          }`}
+        >
           {formatAmount(currentData.profit, currency)}
         </span>
       </div>

@@ -121,34 +121,28 @@ export default function TripCard({ trip, accountId }) {
       <div className="flex justify-between items-center mb-2">
         <div>
           <p className="text-gray-600 text-sm">{name ?? "이름 없음"}</p>
-          <p className="text-2xl font-bold">
+          <p className="text-2xl font-bold pointer-events-none">
             {(totalAmountInKRW || 0).toLocaleString()}원
           </p>
         </div>
         <div className="flex flex-col items-center">
           <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600 mt-1" />
-          <img src={flagURL} alt={country} className="w-10 h-10" />
+          <img src={flagURL} alt={country} className="w-10 h-10 pointer-events-none" />
         </div>
       </div>
-      <p className="text-xs text-gray-500">
-        계좌 번호{" "}
-        <FormattedAccountNumber
-          accountNumber={accountNumber ?? "1234567891011"}
-        />
-      </p>
       <div className="mt-4">
         <div className="flex justify-between items-center mb-1">
-          <div className="bg-white text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
+          <div className="bg-white pointer-events-none text-blue-600 text-[10px] px-2 py-0.5 rounded shadow-md">
             {progressText}% 달성
           </div>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full pointer-events-none bg-gray-200 rounded-full h-2">
           <div
-            className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+            className="bg-blue-500 h-2 rounded-full pointer-events-none transition-all duration-500"
             style={progressStyle}
           ></div>
         </div>
-        <p className="text-[10px] text-gray-500 mt-1 text-right">
+        <p className="text-[10px] text-gray-500 mt-1 pointer-events-none text-right">
           {endDate} 까지 모으는 중
         </p>
       </div>
