@@ -76,7 +76,7 @@ export default function OwnedCurrencyItem({ currencyCode, totalAmount }) {
             {loading ? (
               <p className="text-gray-500">로딩 중...</p>
             ) : walletDetail && walletDetail.length > 0 ? (
-              <div>
+              <div className="space-y-1">
                 {walletDetail.map((goal) => (
                   <div
                     key={goal.accountId}

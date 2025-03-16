@@ -5,7 +5,7 @@ export default function MenuItem({ icon, label, path }) {
 
   return (
     <div
-      className="flex items-center space-x-2 p-2"
+      className="flex items-center space-x-2 p-2 ml-4"
       onClick={() => navigate(path)}
     >
       <span className="text-xl">{icon}</span>

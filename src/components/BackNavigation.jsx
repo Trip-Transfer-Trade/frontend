@@ -8,7 +8,8 @@ export default function BackNavigation({ text = "", onBack }) {
   function handleBack() {
     if (onBack) {
       onBack();
-    } else if (window.history.length > 1 && document.referrer) {
+    } else if (window.history.state !== null) {
+      // state가 null이 아니면 뒤로 가기 가능
       navigate(-1);
     } else {
       navigate("/");

@@ -154,7 +154,7 @@ export default function GoalTabContent() {
                         </p>
                       ) : currencies[tripGoal.tripId] &&
                         currencies[tripGoal.tripId].length > 0 ? (
-                        <div>
+                        <div className="space-y-1">
                           {currencies[tripGoal.tripId].map(
                             (currency, index) => (
                               <div
