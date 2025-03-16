@@ -33,9 +33,10 @@ export default function StockTradingPage() {
   const isCheckCode = /^\d+$/.test(code);
 
   useEffect(() => {
-    setCurrencySymbol(isCheckCode ? "원" : "$");
-    setCurrencyCode(isCheckCode ? "KRW" : "USD");
-  }, [currencySymbol, currencyCode]);
+    const isCodeNumber = /^\d/.test(code);
+    setCurrencySymbol(isCodeNumber ? "원" : "$");
+    setCurrencyCode(isCodeNumber ? "KRW" : "USD");
+  }, [currencySymbol, currencyCode, code]);
 
   useEffect(() => {
     apiClient
