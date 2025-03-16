@@ -25,26 +25,37 @@ export default function ExchangeCardSlider({
   const [selectedCards, setSelectedCards] = useState([0]); // 첫 번째 카드 기본 선택
   const [selectedTotal, setSelectedTotal] = useState(0);
   const [selectedLess, setSelectedLess] = useState(false);
-  const [ id, setId]=useState(0);
+  const [id, setId] = useState(0);
   const navigate = useNavigate();
-  console.log("cards" ,cards, "exchangeAmount" ,exchangeAmount, "goalId", goalId,"rate", rate,"f", fromCurrency,"t", toCurrency)
+  console.log(
+    "cards",
+    cards,
+    "exchangeAmount",
+    exchangeAmount,
+    "goalId",
+    goalId,
+    "rate",
+    rate,
+    "f",
+    fromCurrency,
+    "t",
+    toCurrency
+  );
   // goalId로 자기에 맞는 카드 선택해야됨
   // goal로 account 찾기
-  useEffect(()=>{
-    const getAccountId = async(goalId) =>{
-      try{
+  useEffect(() => {
+    const getAccountId = async (goalId) => {
+      try {
         const data = await fetchTripByTripId(goalId);
-        console.log("응답",data);
+        console.log("응답", data);
         setId(data.accountId);
-      
-      } catch (error){
+      } catch (error) {
         console.error(error);
       }
-    }
+    };
     getAccountId(goalId);
-  },[])
+  }, []);
 
-  
   useEffect(() => {
     if (cards.length > 0) {
       // 기본 선택 카드 설정
@@ -65,8 +76,8 @@ export default function ExchangeCardSlider({
   }, [selectedCards, cards]);
 
   function handleCardClick(index) {
-    if (index==0){
-      alert('다른 다른 목표들로만 환전할 수 없습니다.')
+    if (index == 0) {
+      alert("현재 목표를 반드시 포함해야 합니다.");
       return selectedCards;
     }
     let newSelectedCards = [...selectedCards];
@@ -80,12 +91,12 @@ export default function ExchangeCardSlider({
         alert("환전할 금액을 초과하는 카드를 선택할 수 없습니다.");
         return;
       }
-      newSelectedCards.push(index); 
+      newSelectedCards.push(index);
     } else {
       // 이미 선택된 카드를 다시 선택하면 삭제
       newSelectedCards = newSelectedCards.filter((i) => i !== index);
     }
-  
+
     // 선택된 카드 업데이트
     setSelectedCards(newSelectedCards);
     setSelectedLess(false);
@@ -107,9 +118,9 @@ export default function ExchangeCardSlider({
     let remainingAmount = parseFloat(exchangeAmount); // 남은 금액
     let updatedBatchDTOList = [];
 
-    const sortedSelectedCards =  selectedCards.map((index) => cards[index]);
-        
-    console.log("sortedSelectedCards",sortedSelectedCards);
+    const sortedSelectedCards = selectedCards.map((index) => cards[index]);
+
+    console.log("sortedSelectedCards", sortedSelectedCards);
 
     //단일 환전
     if (sortedSelectedCards.length === 1) {
@@ -220,7 +231,9 @@ export default function ExchangeCardSlider({
           if (cards.length === 0) return null;
 
           const firstCard = cards.find((card) => card.accountId === id); // accountId에 맞는 카드 찾기
-          const sortedCards = [...cards].filter((card) => card.accountId !== id).sort((a, b) => b.amount - a.amount);
+          const sortedCards = [...cards]
+            .filter((card) => card.accountId !== id)
+            .sort((a, b) => b.amount - a.amount);
           const displayCards = [firstCard, ...sortedCards];
 
           return displayCards.map((card, index) => {
