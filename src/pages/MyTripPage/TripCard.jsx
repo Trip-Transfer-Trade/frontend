@@ -157,10 +157,8 @@ export default function TripCard({ trip, accountId }) {
           <div className="text-center">
             <h2 className="text-xl font-bold mb-2">투자할 돈이 없어요.</h2>
             <p className="text-gray-600 text-center">
-              계좌에 투자를 위한 돈이 부족합니다. 지금 바로 이체를 진행할까요?
-            </p>
-            <p className="text-gray-600 text-center">
-              계좌에 투자를 위한 돈이 부족합니다. 지금 바로 이체를 진행할까요?
+              계좌에 투자를 위한 돈이 부족합니다. <br />
+              지금 바로 이체를 진행할까요?
             </p>
             <button
               onClick={() => {

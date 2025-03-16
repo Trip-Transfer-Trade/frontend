@@ -15,6 +15,7 @@ import { getCurrencyCodeFromCountryName } from "../../constants/countryMappings"
 
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { MdCurrencyExchange } from "react-icons/md";
+import { ChevronDown } from "lucide-react";
 
 export default function GoalTabContent() {
   const navigate = useNavigate();
@@ -117,7 +118,15 @@ export default function GoalTabContent() {
                   onClick={() => toggleSelected(tripGoal.tripId)}
                   className="flex justify-between items-center px-4 py-6 cursor-pointer rounded-lg"
                 >
-                  <p>{tripGoal.tripName}</p>
+                  <div className="flex justify-center space-x-2">
+                    <ChevronDown
+                      className={`transition-transform ${
+                        selectedGoalId === tripGoal.tripId ? "rotate-180" : ""
+                      }`}
+                      size={20}
+                    />
+                    <p>{tripGoal.tripName}</p>
+                  </div>
                   <MdCurrencyExchange
                     onClick={(e) => {
                       e.stopPropagation();

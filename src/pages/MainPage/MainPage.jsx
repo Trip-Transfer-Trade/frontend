@@ -241,12 +241,12 @@ export default function MainPage() {
           <div className={styles.iconWrapper}>
             <img
               src="/assets/images/portfolio/trp.svg"
-              alt="수익률 랭킹"
+              alt="수익률랭킹"
               className={styles.serviceIcon}
               style={{ width: "30px", height: "auto" }}
             />
           </div>
-          <h5 className={styles.serviceTitle}>수익률 랭킹</h5>
+          <h5 className={styles.serviceTitle}>수익률랭킹</h5>
         </div>
 
         <div
@@ -256,11 +256,11 @@ export default function MainPage() {
           <div className={styles.iconWrapper}>
             <img
               src="/assets/images/main/trip.svg"
-              alt="여행지"
+              alt="여행지랭킹"
               className={styles.serviceIcon}
             />
           </div>
-          <h5 className={styles.serviceTitle}>여행지 추천</h5>
+          <h5 className={styles.serviceTitle}>여행지랭킹</h5>
         </div>
       </div>
 
