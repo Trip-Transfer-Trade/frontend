@@ -160,3 +160,15 @@ export const fetchSetAmount = async(accountNumber) =>{
     throw error;
   }
 }
+
+// trip에 해당하는 exchange Currency 받기
+export const fetchExchangeCurrencyByTripId = async (tripId)=>{
+  console.log("exchange currecy");
+  try{
+    const response = await apiClient.get(`/exchanges/trip/${tripId}`);
+    return response.data.data;
+  } catch(error){
+    console.error("환전 지갑 받기");
+    throw error;
+  }
+}
