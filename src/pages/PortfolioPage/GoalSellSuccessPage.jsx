@@ -6,6 +6,7 @@ import ExchangeMethod from "../ExchangePage/ExchangeMethodPage";
 import { fetchTripByTripId } from "../../apis/trips";
 import { useParams } from "react-router-dom";
 import { getCurrencyCodeFromCountryName } from "../../constants/countryMappings";
+import { fetchExchangeCurrencyByTripId } from "../../apis/exchanges";
 
 export default function GoalSellSuccessPage() {
   const [loading, setLoading] = useState(true);
@@ -14,27 +15,38 @@ export default function GoalSellSuccessPage() {
   
   const tripId = useParams()?.tripGoal;
 
-  useEffect(()=>{
+  useEffect(() => {
     const fetchData = async () => {
-        try{
-            console.log(tripId);
-            const data = await fetchTripByTripId(tripId);
-            console.log(data);
+        try {
+            console.log("Fetching trip data for tripId:", tripId);
+
+            const [tripData, exchangeData] = await Promise.all([
+                fetchTripByTripId(tripId),
+                fetchExchangeCurrencyByTripId(tripId)
+            ]);
+
+            console.log("Fetched tripData:", tripData);
+            console.log("Fetched exchangeData:", exchangeData);
+            
+            const krwData = exchangeData.find(item => item.currencyCode === "KRW");
+            const usdData = exchangeData.find(item => item.currencyCode === "USD");
+
             setSellData({
-                tripId:tripId,
-                name:data.name,
-                country:data.country,
-                profit:(data.profit != null ? data.profit : 0) + (data.realisedProfit != null ? data.realisedProfit : 0),
-                profitUs:(data.profitUs != null ? data.profitUs : 0) + (data.realisedProfitUs != null ? data.realisedProfitUs : 0)
-            })
-        } catch (error){
-            console.error("로딩 오류",error);
-        } finally{
+                tripId: tripId,
+                name: tripData?.name || "Unknown", 
+                country: tripData?.country || "Unknown",
+                profit: krwData ? krwData.amount : 0,
+                profitUs: usdData ? usdData.amount : 0
+            });
+        } catch (error) {
+            console.error("로딩 오류", error);
+        } finally {
             setLoading(false);
-        };
-    }
+        }
+    };
+
     fetchData();
-  },[])
+}, [tripId]);
 
   if (loading) return <p>⏳ 결과 데이터를 불러오는 중...</p>;
   

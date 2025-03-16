@@ -64,7 +64,8 @@ export default function ExchangeRateItem({
             changePrice > 0 ? "text-red-500" : "text-blue-500"
           }`}
         >
-          {changePrice}원 ({changeRate}%)
+          {changePrice > 0 ? `+${changePrice}` : changePrice}원 (
+          {changeRate > 0 ? `+${changeRate}` : changeRate}%)
         </span>
       </span>
     </div>
