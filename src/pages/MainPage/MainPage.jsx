@@ -39,6 +39,10 @@ export default function MainPage() {
     apiClient
       .get("/accounts/count")
       .then((response) => {
+        const count = response.data;
+        if(count === 1){
+          count -= 1;
+        }
         setCount(response.data);
         console.log("진행 중 목표 : " + count);
       })
