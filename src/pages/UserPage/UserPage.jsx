@@ -83,7 +83,7 @@ export default function UserPage() {
           </div>
 
           <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center">
-            <span className="text-xs text-gray-600">목표 달성</span>
+            <span className="text-xs text-gray-600">내 목표</span>
             <span className="text-xs">{count}회</span>
           </div>
         </div>

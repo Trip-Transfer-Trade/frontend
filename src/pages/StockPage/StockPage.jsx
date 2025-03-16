@@ -12,6 +12,7 @@ import StockLogoRandom from "../../components/StockLogoRandom";
 import "./StockPage.css";
 import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import Toggle from "../../components/Toggle";
+import { StockIndexCard } from "../../components/StockIndexCard";
 
 export default function StockPage() {
   const { tripGoal } = useParams();
@@ -23,6 +24,56 @@ export default function StockPage() {
   const [stockItems, setStockItems] = useState({ list: [] });
   const [isToggled, setIsToggled] = useState(false);
   const [exchangeRate, setExchangeRate] = useState(0);
+
+  const marketData = {
+    국내: [
+      {
+        name: "코스피",
+        value: 2566.36,
+        changePercentage: -0.2,
+        changeValue: -7.28,
+        color: "text-blue-500",
+      },
+      {
+        name: "코스닥",
+        value: 734.26,
+        changePercentage: 1.5,
+        changeValue: 11.46,
+        color: "text-red-500",
+      },
+    ],
+    미국: [
+      {
+        name: "나스닥",
+        value: 15012.55,
+        changePercentage: 1.2,
+        changeValue: 178.45,
+        color: "text-red-500",
+      },
+      {
+        name: "다우",
+        value: 34567.89,
+        changePercentage: -0.8,
+        changeValue: -276.43,
+        color: "text-blue-500",
+      },
+    ],
+  };
+
+  const [stockDataIndex, setStockDataIndex] = useState(0);
+  const [stockData, setStockData] = useState(marketData[nationTab][stockDataIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setStockDataIndex((prevIndex) => (prevIndex === 0 ? 1 : 0));
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    setStockData(marketData[nationTab][stockDataIndex]);
+  }, [nationTab, stockDataIndex]);
 
   useEffect(() => {
     apiClient
@@ -91,15 +142,12 @@ export default function StockPage() {
               }}
             >
               <div className="search-container">
-                <input
-                  type="text"
-                  className="searchInput"
-                  placeholder="검색어를 입력해 주세요."
-                />
-                <img
-                  src="/assets/images/stock/searchBtn.svg"
-                  alt="검색 돋보기 아이콘"
-                  className="searchBtn"
+              <StockIndexCard 
+                  name={stockData.name}
+                  value={stockData.value}
+                  changeValue={stockData.changeValue}
+                  changePercentage={stockData.changePercentage}
+                  color={stockData.color}
                 />
               </div>
               <div className="ranking-title-k">실시간 랭킹</div>
@@ -155,16 +203,13 @@ export default function StockPage() {
               }}
             >
               <div className="search-container">
-                <input
-                  type="text"
-                  className="searchInput"
-                  placeholder="검색어를 입력해 주세요."
-                />
-                <img
-                  src="/assets/images/stock/searchBtn.svg"
-                  alt="검색 돋보기 아이콘"
-                  className="searchBtn"
-                />
+                <StockIndexCard 
+                    name={stockData.name}
+                    value={stockData.value}
+                    changeValue={stockData.changeValue}
+                    changePercentage={stockData.changePercentage}
+                    color={stockData.color}
+                  />
               </div>
               <div className="ranking-header">
                 <span className="ranking-title">실시간 랭킹</span>
