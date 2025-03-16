@@ -17,6 +17,7 @@ import EnterAmountPage from "../pages/MyTripPage/EnterAmountPage";
 import SuggestPortfolioPage from "../pages/PortfolioPage/SuggestPortfolioPage";
 import StockExchangePage from "../pages/PortfolioPage/StockExchangePage";
 import GoalSellSuccessPage from "../pages/PortfolioPage/GoalSellSuccessPage";
+import AccountExchangePage from "../pages/MyTripPage/AccountExchange";
 
 
 
@@ -29,6 +30,8 @@ const TripRouter = {
     { path: "transfer", element: < TransferPage/> },
     { path: "transfer/amount", element: < EnterAmountPage/> },
     
+    //일반 계좌 예수금 환전
+    { path: "account/exchange", element: <AccountExchangePage /> },
 
     // 포트폴리오
     { path: "suggest", element : <SuggestPortfolioPage />},
