@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 const GoalCard = ({ trip }) => {
   const navigate = useNavigate();
   const progressRef = useRef(null);
   const percent = trip.goalAmount > 0 ? (trip.profit / trip.goalAmount) * 100 : 0;
   const [progressWidth, setProgressWidth] = useState();
   
-
   useEffect(() => {
     const canvas = progressRef.current;
     if (!canvas) return;
@@ -42,7 +40,8 @@ const GoalCard = ({ trip }) => {
   }, [percent]);
 
   const handleClick = () => {
-    navigate(`/trip/${trip.tripId}/portfolio`);
+    console.log("GoalCard에서 navigate 호출, tripId:", trip.tripId);
+    navigate(`/trip/${trip.tripId}/protfolio`);
   };
 
   const progressLabelStyle = {

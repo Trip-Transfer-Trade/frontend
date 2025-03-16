@@ -22,6 +22,7 @@ export default function AssetsList({ activeTab }) {
     return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
   };
 
+
   return (
     <div className="px-4 overflow-y-auto max-h-[400px]">
       <div className="space-y-3">
@@ -32,6 +33,10 @@ export default function AssetsList({ activeTab }) {
               const shortenedName = asset.stockName.length > 5 
                 ? asset.stockName.substring(0, 5) + "..." 
                 : asset.stockName;
+
+              const profitRate = ((asset.currencyPrice - asset.avgPrice) / asset.avgPrice) * 100;
+              const profitRateFormatted = profitRate.toFixed(1) + "%";
+              const profitColor = profitRate >= 0 ? "text-red-500" : "text-blue-500";
 
               return (
                 <Link 
@@ -55,7 +60,12 @@ export default function AssetsList({ activeTab }) {
                         </div>
                         <div className="text-right">
                           <p className="text-xs text-gray-500">수량: {asset.quantity}</p>
-                          <p className="text-xs text-gray-500">구매가 {formatAmount(asset.avgPrice, currency)}</p>
+                          <p className="text-xs text-gray-500">
+                            구매가 {formatAmount(asset.avgPrice, currency)}
+                            <span className={`${profitColor} ml-1`}>
+                              ({profitRateFormatted})
+                            </span>
+                          </p>
                           <p className="text-xs text-gray-500">현재가 {formatAmount(asset.currencyPrice, currency)}</p>
                         </div>
                       </div>
