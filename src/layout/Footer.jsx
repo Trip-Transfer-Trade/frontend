@@ -17,7 +17,7 @@ export default function Footer() {
   const [selected, setSelected] = useState("home");
   const [isModalOpen, setModalOpen] = useState(false);
 
-  //로그인 상태 가져오기 
+  //로그인 상태 가져오기
   const { isLoggedIn, updateLoginStatus } = useAuth();
 
   // 현재 경로에 맞춰 초기 선택 상태 설정

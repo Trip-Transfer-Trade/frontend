@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BackNavigation from "../../components/BackNavigation";
-import Footer from "../../layout/Footer";
+
 import Tabs from "../../components/Tabs";
 import Tab from "../../components/Tab";
 import StockItem from "../../components/StockItem";
@@ -236,7 +236,6 @@ export default function StockPage() {
       </div>
 
       <Outlet />
-      <Footer />
     </div>
   );
 }
