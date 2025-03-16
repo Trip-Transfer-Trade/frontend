@@ -78,32 +78,24 @@ export default function MainPage() {
   }, [selected]);
 
   useEffect(() => {
-    // const fetchStockData = () => {
-    apiClient
-      .get(
-        selected === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking",
-        {
-          params: { type: convertType(type) },
-        }
-      )
-      .then((response) => {
-        console.log("API 응답 데이터:", response.data);
-        const stockData =
-          selected === "국내"
-            ? response.data.data.output
-            : response.data.output2;
-        setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
+    const fetchStockData = () => {
+      apiClient.get(selected === "국내" ? "/exchanges/ranking" : "/exchanges/us/ranking", {
+        params: { type: convertType(type) }
       })
-      .catch((err) => {
-        console.log("주식 데이터 조회 실패", err);
-      });
-    // }
+        .then((response) => {
+          console.log("API 응답 데이터:", response.data);
+          const stockData = selected === "국내" ? response.data.data.output : response.data.output2;
+          setStockItems({ list: Array.isArray(stockData) ? stockData : [] });
+        })
+        .catch((err) => {
+          console.log("주식 데이터 조회 실패", err);
+        });
+    }
+    fetchStockData();
 
-    // fetchStockData();
+    const interval = setInterval(fetchStockData, 5000);
 
-    // const interval = setInterval(fetchStockData, 5000);
-
-    // return () => clearInterval(interval);
+    return () => clearInterval(interval);
   }, [selected, type]);
 
   const renderBanner = () => {
