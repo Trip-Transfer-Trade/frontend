@@ -89,12 +89,6 @@ export default function UserPage() {
         </div>
       </div>
 
-
-  <div className="bg-gray-100 rounded-lg px-4 py-2 flex justify-between items-center" onClick={navigate("/mytrip")}>
-    <span className="text-xs text-gray-600">내 목표</span>
-    <span className="text-xs">{count}회</span>
-  </div>
-
       <div className="left-0 right-0 top-[calc(50%-2px)] h-[4px] bg-custom-gray-2 z-0"></div>
 
       {/* 바로가기 */}
