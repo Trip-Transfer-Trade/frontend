@@ -248,12 +248,13 @@ export default function MainPage() {
         <div className={styles.serviceCard} onClick={() => navigate("/top")}>
           <div className={styles.iconWrapper}>
             <img
-              src="/assets/images/main/portfolio.svg"
-              alt="포트폴리오"
+              src="/assets/images/portfolio/trp.svg"
+              alt="수익률 랭킹"
               className={styles.serviceIcon}
+              style={{ width: "30px", height: "auto" }}
             />
           </div>
-          <h5 className={styles.serviceTitle}>포트폴리오</h5>
+          <h5 className={styles.serviceTitle}>수익률 랭킹</h5>
         </div>
 
         <div

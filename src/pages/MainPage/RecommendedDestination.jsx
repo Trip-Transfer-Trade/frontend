@@ -22,7 +22,7 @@ export default function RecommendedDestination() {
     },
     {
       id: 7,
-      name: "말레이지아",
+      name: "말레이시아",
       image: "/assets/images/travel/travel-my.jpeg",
     },
     {
@@ -33,7 +33,7 @@ export default function RecommendedDestination() {
     {
       id: 9,
       name: "싱가포르",
-      image: "/assets/images/travel/travel-id.jpeg",
+      image: "/assets/images/travel/travel-sg.jpeg",
     },
     {
       id: 10,
@@ -50,8 +50,7 @@ export default function RecommendedDestination() {
         {destinations.map((destination) => (
           <div
             key={destination.id}
-            className="relative overflow-hidden rounded-2xl aspect-square"
-            style={{ position: "relative" }}
+            className="relative overflow-hidden rounded-2xl aspect-square pointer-events-none"
           >
             <img
               src={destination.image}
