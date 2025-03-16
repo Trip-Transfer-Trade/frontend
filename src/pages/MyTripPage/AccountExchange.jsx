@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { fetchExchangeRates, fetchExchange } from "../../apis/exchanges";
 import BackNavigation from "../../components/BackNavigation";
 
-const countryCodeMap = { KRW: "KR", USD: "US" };
+const countryCodeMap = {
+  KRW: "KR",
+  USD: "US",
+};
 
 function formatAmount(amount, currency) {
   return currency === "KRW"
@@ -16,13 +18,11 @@ function getCountryFlagURL(currency) {
   return `https://flagsapi.com/${countryCodeMap[currency]}/flat/64.png`;
 }
 
-export default function StockExchangePage() {
+export default function AccountExchangePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { tripId, activeTab, depositKRW = 0, depositUSD = 0 } = location.state || {};
-  const selectedTrip = useSelector((state) => state.trip.selectedTrip);
-  const accountId = selectedTrip?.accountId || "";
-  const tripName = selectedTrip?.name || "";
+  
+  const { accountId, amount = 0, amountUS = 0 } = location.state || {};  
 
   const [fromCurrency, setFromCurrency] = useState("KRW");
   const [toCurrency, setToCurrency] = useState("USD");
@@ -30,7 +30,7 @@ export default function StockExchangePage() {
   const [convertedAmount, setConvertedAmount] = useState(0);
   const [exchangeRate, setExchangeRate] = useState(1);
 
-  const availableAmount = fromCurrency === "KRW" ? depositKRW : depositUSD;
+  const availableAmount = fromCurrency === "KRW" ? amount : amountUS;
 
   useEffect(() => {
     async function fetchRate() {
@@ -77,17 +77,18 @@ export default function StockExchangePage() {
 
     const payload = {
       accountId,
+      fromAmount: Number(amountInput).toFixed(2),
       fromCurrency,
       toCurrency,
+      toAmount: convertedAmount.toFixed(2),
       exchangeRate,
-      fromAmount: Number(amountInput),
-      toAmount: convertedAmount,
     };
 
     try {
       const response = await fetchExchange(payload);
+
       alert(`${amountInput} ${fromCurrency}가 ${response.toAmount.toFixed(2)} ${toCurrency}로 환전되었습니다.`);
-      navigate(`/trip/${tripId}/portfolio`);
+      navigate(`/trip`);
     } catch (error) {
       console.error("❌ 환전 실패:", error);
       alert("환전 실패: " + error.message);
@@ -96,7 +97,7 @@ export default function StockExchangePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      <BackNavigation text={tripName} />
+      <BackNavigation text="환전" />
       <div className="px-6">
         <div className="bg-gray-100 rounded-lg p-4 mb-4 flex items-center justify-between">
           <div>
@@ -106,7 +107,11 @@ export default function StockExchangePage() {
               잔액: {formatAmount(availableAmount, fromCurrency)} {fromCurrency}
             </p>
           </div>
-          <img src={getCountryFlagURL(fromCurrency)} alt={fromCurrency} className="w-10 h-10" />
+          <img
+            src={getCountryFlagURL(fromCurrency)}
+            alt={fromCurrency}
+            className="w-10 h-10"
+          />
         </div>
 
         <button
@@ -132,9 +137,10 @@ export default function StockExchangePage() {
         <div className="text-center my-4">
           <p className="text-lg font-bold">↓</p>
           <p className="text-gray-500 text-sm">
-            {fromCurrency === "KRW"
-              ? `1000 KRW = ${(1000 / exchangeRate).toFixed(2)} USD`
-              : `1 USD = ${exchangeRate.toFixed(2)} KRW`}
+                {fromCurrency === "KRW" 
+                ? `1000 KRW = ${(1000 / exchangeRate).toFixed(2)} USD`
+                : `1 USD = ${exchangeRate.toFixed(2)} KRW`
+                }
           </p>
         </div>
 
@@ -146,10 +152,17 @@ export default function StockExchangePage() {
               환전 후 예상 금액: {formatAmount(convertedAmount, toCurrency)} {toCurrency}
             </p>
           </div>
-          <img src={getCountryFlagURL(toCurrency)} alt={toCurrency} className="w-10 h-10" />
+          <img
+            src={getCountryFlagURL(toCurrency)}
+            alt={toCurrency}
+            className="w-10 h-10"
+          />
         </div>
 
-        <button onClick={handleExchange} className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg mt-4">
+        <button
+          onClick={handleExchange}
+          className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg mt-4"
+        >
           환전하기
         </button>
       </div>

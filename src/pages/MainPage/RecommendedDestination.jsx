@@ -10,18 +10,47 @@ export default function RecommendedDestination() {
       name: "인도네시아",
       image: "/assets/images/travel/travel-id.jpeg",
     },
+    {
+      id: 5,
+      name: "중국",
+      image: "/assets/images/travel/travel-cn.jpeg",
+    },
+    {
+      id: 6,
+      name: "태국",
+      image: "/assets/images/travel/travel-th.jpeg",
+    },
+    {
+      id: 7,
+      name: "말레이시아",
+      image: "/assets/images/travel/travel-my.jpeg",
+    },
+    {
+      id: 8,
+      name: "호주",
+      image: "/assets/images/travel/travel-au.jpeg",
+    },
+    {
+      id: 9,
+      name: "싱가포르",
+      image: "/assets/images/travel/travel-sg.jpeg",
+    },
+    {
+      id: 10,
+      name: "노르웨이",
+      image: "/assets/images/travel/travel-no.jpeg",
+    },
   ];
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pb-6">
       <BackNavigation text="여행지 Best10" />
 
       <div className="grid grid-cols-2 gap-4 px-6">
         {destinations.map((destination) => (
           <div
             key={destination.id}
-            className="relative overflow-hidden rounded-2xl aspect-square"
-            style={{ position: "relative" }}
+            className="relative overflow-hidden rounded-2xl aspect-square pointer-events-none"
           >
             <img
               src={destination.image}

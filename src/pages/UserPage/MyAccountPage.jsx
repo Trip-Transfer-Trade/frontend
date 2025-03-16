@@ -4,6 +4,7 @@ import AccountTab from "../../components/UserComponent/AccountTab";
 import AccountItem from "../../components/UserComponent/AccountItem";
 import { Outlet } from "react-router-dom";
 import apiClient from "../../apis/apiClient";
+import BackNavigation from "../../components/BackNavigation";
 
 export default function MyAccountPagePage() {
   const [type, setType] = useState("원화");
@@ -32,7 +33,8 @@ export default function MyAccountPagePage() {
 
   return (
     <div>
-      <div className="py-20">
+      <BackNavigation text="내 계좌" />
+      <div className="px-6">
         <section>
           <AccountTabs>
             <AccountTab

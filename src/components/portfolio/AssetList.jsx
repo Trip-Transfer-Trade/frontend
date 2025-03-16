@@ -4,17 +4,23 @@ import StockLogoUs from "../../components/StockLogoUs";
 import StockLogoRandom from "../../components/StockLogoRandom";
 import { Link, useParams } from "react-router-dom";
 
+function formatAmount(amount, currency) {
+  return currency === "KRW"
+    ? new Intl.NumberFormat("ko-KR").format(amount) + "원"
+    : "$" + parseFloat(amount).toFixed(2);
+}
+
 export default function AssetsList({ activeTab }) {
   const assets = useSelector((state) => state.assets.assets);
   const { tripId } = useParams();
+  const currency = activeTab === "u" ? "USD" : "KRW";
 
   const getStockLogo = (stockCode) => {
     const stockLogos = activeTab === "u" ? StockLogoUs : StockLogo;
     const stock = stockLogos.find(item => item.stockCode === stockCode);
     const randomIndex = Math.floor(Math.random() * StockLogoRandom.length);
-
     return stock ? stock.logoImageUrl : StockLogoRandom[randomIndex];
-};
+  };
 
   return (
     <div className="px-4 overflow-y-auto max-h-[400px]">
@@ -49,8 +55,8 @@ export default function AssetsList({ activeTab }) {
                         </div>
                         <div className="text-right">
                           <p className="text-xs text-gray-500">수량: {asset.quantity}</p>
-                          <p className="text-xs text-gray-500 mr-2">구매가 {Number(asset.avgPrice).toLocaleString()}</p>
-                          <p className="text-xs text-gray-500 mr-2">현재가 {Number(asset.currencyPrice).toLocaleString()}</p>
+                          <p className="text-xs text-gray-500">구매가 {formatAmount(asset.avgPrice, currency)}</p>
+                          <p className="text-xs text-gray-500">현재가 {formatAmount(asset.currencyPrice, currency)}</p>
                         </div>
                       </div>
                     </div>

@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
-// import { IoSearchOutline } from "react-icons/io5";
 import { GoBell } from "react-icons/go";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
+import { useAuth } from "../context/AuthProvider";
+import LoginModal from "../pages/LoginPage/LoginModal";
 
 import "./Header.css";
 
 export default function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { isLoggedIn, updateLoginStatus } = useAuth();
 
   function getTitle() {
     if (location.pathname === "/trip") return "마이 트립 ✈️";
@@ -21,6 +24,15 @@ export default function Header() {
   }
 
   const title = getTitle();
+
+  const handleProtectedClick = (callback) => {
+    updateLoginStatus(); // 로그인 상태 즉시 반영
+    if (!isLoggedIn) {
+      setIsModalOpen(true);
+    } else {
+      callback();
+    }
+  };
 
   return (
     <div>
@@ -36,17 +48,21 @@ export default function Header() {
 
         {/* 아이콘 */}
         <div className="flex items-center space-x-4">
-          {/* <IoSearchOutline className="text-2xl" /> */}
           <GoBell
-            className="text-2xl"
-            onClick={() => navigate("/mypage/alarm")}
+            className="text-2xl cursor-pointer"
+            onClick={() =>
+              handleProtectedClick(() => navigate("/mypage/alarm"))
+            }
           />
           <RxHamburgerMenu
-            className="text-2xl"
-            onClick={() => setIsMenuOpen(true)}
+            className="text-2xl cursor-pointer"
+            onClick={() => handleProtectedClick(() => setIsMenuOpen(true))}
           />
         </div>
       </header>
+
+      {/* 로그인 모달 */}
+      <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {/* 사이드 메뉴 */}
       {isMenuOpen && (
@@ -59,17 +75,68 @@ export default function Header() {
             />
           </div>
           <nav className="p-4 space-y-4">
-            <button className="w-full text-left py-2 border-b">홈</button>
-            <button className="w-full text-left py-2 border-b">
-              마이 트립 ✈️
-            </button>
-            <button className="w-full text-left py-2 border-b">
-              환전 지갑
-            </button>
-            <button className="w-full text-left py-2 border-b">
-              마이페이지
-            </button>
-            {/* 여기에 필요한 기능 추가 */}
+            <div>
+              <h3 className="font-semibold text-lg border-b">마이 트립 ✈️</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/trip/tripgoal");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  목표 생성
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-lg border-b">환전 지갑</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=지갑");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  내 지갑
+                </button>
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=환전");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  환전하기
+                </button>
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=환율");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  실시간 환율 조회
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-lg border-b">기타</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/destination");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  여행지 Best10
+                </button>
+              </div>
+            </div>
           </nav>
         </div>
       )}

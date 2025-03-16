@@ -3,6 +3,7 @@ import React from "react";
 const ExchangeCompleteResultCard = ({
     title,
     principal,
+    countryCode,
     goal,
     exchangeRate,
     exchangeAmount,
@@ -10,19 +11,21 @@ const ExchangeCompleteResultCard = ({
     bgColor = "bg-blue-50",       
     subBgColor = "bg-blue-100",    
   }) => {
+    const flagSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
+    console.log(flagSrc);
+
     return (
       <div className={`w-full max-w-md ${bgColor} rounded-xl p-4 mb-2`}>
         {goal&&
           <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-gray-300 rounded-full mr-3">
-              {icon && (
-                <img
-                  src={icon}
+            <div className={`rounded-full mr-3`}>
+              <img
+                  src={flagSrc}
                   alt="icon"
-                  className="w-full h-full object-contain"
-                />
-              )}
-            </div>
+                  className= {`${countryCode === "KR" ? "w-8" : "w-6"} object-contain`}
+              />
+          </div>
+
             <span className="font-medium text-[14px]">{title}</span>
           </div>
         }

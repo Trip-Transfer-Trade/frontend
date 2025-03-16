@@ -39,7 +39,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'  // ✅ 패키지 설치
+                sh 'npm ci --force'
             }
         }
 

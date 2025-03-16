@@ -8,7 +8,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, title = "" }) {
   const { tripId } = useParams();
-  
   const selectedTrip = useSelector((state) => state.trip.selectedTrip);
 
   if (!ignoreTrip && !selectedTrip)
@@ -39,11 +38,12 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
       (a, b) => b.currencyPrice * b.quantity - a.currencyPrice * a.quantity
     );
 
+    // ✅ 5자 이상이면 "..." 처리
     const shortenName = (name) => name.length > 5 ? name.substring(0, 5) + "..." : name;
 
     if (sortedAssets.length > maxItems) {
-      const topItems = assets.slice(0, maxItems - 1);
-      const others = assets.slice(maxItems - 1);
+      const topItems = sortedAssets.slice(0, maxItems - 1);
+      const others = sortedAssets.slice(maxItems - 1);
 
       labels = [...topItems.map((item) => shortenName(item.stockName)), "기타"];
       data = [
@@ -52,11 +52,11 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
       ];
       colors = [...colors.slice(0, maxItems - 1), "#A0AEC0"];
     } else {
-      labels = sortedAssets.map((item) => item.stockName);
+      labels = sortedAssets.map((item) => shortenName(item.stockName)); // ✅ 5자 초과 시 ... 적용
       data = sortedAssets.map((item) => item.currencyPrice * item.quantity);
-      colors = colors.slice(0, sortedAssets.length)
+      colors = colors.slice(0, sortedAssets.length);
     }
-    return { labels, data, colors }
+    return { labels, data, colors };
   };
 
   const { labels, data, colors } = processChartData(assets);
@@ -75,7 +75,7 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
 
   const chartOptions = {
     plugins: {
-      legend: { display: false },
+      legend: { display: false }, // ✅ 기본 범례 비활성화 (기존 유지)
     },
     maintainAspectRatio: false,
   };
@@ -91,11 +91,14 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
             <Doughnut data={chartData} options={chartOptions} />
           </div>
 
+          {/* ✅ 직접 만든 범례 (이름 5자 초과 시 "..." 적용) */}
           <div className="w-5/9 flex flex-col items-center pl-2 overflow-x-auto">
             {labels.map((label, index) => (
               <div key={index} className="w-full flex items-center text-[10px] mb-1">
                 <div className="w-1 h-2 mr-1 flex-shrink-0" style={{ backgroundColor: colors[index] }}></div>
-                <span className="font-medium min-w-[80px] text-left">{label}:</span>
+                <span className="font-medium min-w-[80px] text-left">
+                  {label}:
+                </span>
                 <span className="ml-2 text-gray-500 flex-1 text-left">
                   {((data[index] / totalAssets) * 100).toFixed(1)}%
                 </span>
