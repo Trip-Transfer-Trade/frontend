@@ -28,16 +28,19 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
     let labels = [];
     let data = [];
     let colors = ["#4FD1C5", "#F56565", "#2D3748", "#F6E05E", "#667EEA"];
+    let filteredAssets = assets.filter(item => item.quantity > 0);
 
-    let sortedAssets = [...assets].sort(
+    let sortedAssets = [...filteredAssets].sort(
       (a, b) => b.currencyPrice * b.quantity - a.currencyPrice * a.quantity
     );
+
+    const shortenName = (name) => name.length > 5 ? name.substring(0, 5) + "..." : name;
 
     if (sortedAssets.length > maxItems) {
       const topItems = assets.slice(0, maxItems - 1);
       const others = assets.slice(maxItems - 1);
 
-      labels = [...topItems.map((item) => item.stockName), "기타"];
+      labels = [...topItems.map((item) => shortenName(item.stockName)), "기타"];
       data = [
         ...topItems.map((item) => item.currencyPrice * item.quantity),
         others.reduce((acc, item) => acc + item.currencyPrice * item.quantity, 0),
@@ -95,13 +98,11 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
             ))}
           </div>
         </div>
-        {!ignoreTrip && (
-          <div className="flex justify-center mt-4 pt-4">
-            <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
-              목표 수정하기
-            </a>
-          </div>
-        )}
+        <div className="flex justify-center mt-4 pt-4">
+          <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
+            목표 수정하기
+          </a>
+        </div>
       </div>
     </div>
   );
