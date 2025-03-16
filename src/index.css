@@ -70,3 +70,11 @@ body {
   font-family: "Pretendard", sans-serif;
   font-weight: 400;
 }
+
+input,
+textarea,
+select,
+button {
+  -webkit-appearance: none; /* iOS 기본 스타일 제거 */
+  appearance: none;
+}

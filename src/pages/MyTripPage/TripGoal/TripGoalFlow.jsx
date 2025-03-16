@@ -86,7 +86,7 @@ export default function TripGoalFlow() {
     <div className="flex flex-col min-h-screen">
       {step < 3 && (
         <BackNavigation
-          text={`목표 생성 - ${steps[step]}`}
+          // text={`목표 생성 - ${steps[step]}`}
           onBack={handlePrevStep}
         />
       )}
