@@ -5,6 +5,7 @@ import HistoryPage from "../pages/UserPage/HistoryPage";
 import ProfilePage from "../pages/UserPage/ProfilePage";
 import MyAccountPage from "../pages/UserPage/MyAccountPage";
 import AlarmHistoryPage from "../pages/UserPage/AlarmHistoryPage";
+import TripHistoryPage from "../pages/UserPage/TripHistoryPage";
 
 const UserRouter = {
   path: "/mypage",
@@ -49,6 +50,15 @@ const UserRouter = {
         {
           index: "alarm",
           element: <AlarmHistoryPage />,
+        }
+      ]
+    },
+    {
+      path: "trip",
+      children: [
+        {
+          path: "history",
+          element: <TripHistoryPage />,
         }
       ]
     }

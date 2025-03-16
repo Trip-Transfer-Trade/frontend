@@ -43,7 +43,7 @@ export default function UserPage() {
     { icon: "💰", label: "환율 정보", path: "/exchange/rates" },
     { icon: "📈", label: "포트폴리오", path: "/" },
     { icon: "🔔", label: "알림 설정", path: "/" },
-    { icon: "📅", label: "여행 기록", path: "/" },
+    { icon: "📅", label: "여행 기록", path: "/mypage/trip/history" },
   ];
 
   return (

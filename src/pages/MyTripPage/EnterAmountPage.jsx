@@ -108,7 +108,7 @@ export default function EnterAmountPage() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <BackNavigation  name="이체하기"/>
-      <div className="ml-auto">
+      <div className="ml-auto pr-3">
         <div className="w-[160px] h-8 bg-gray-100 rounded-lg p-1 flex">
           <button
             className={`flex-1 text-xs rounded-lg flex items-center justify-center transition-colors ${
