@@ -54,6 +54,7 @@ export default function ExchangeCompletePage() {
           <ExchangeCompleteResultCard
             key={currency}
             title={currency === "KRW" ? "국내 투자금" : "해외 투자금"}
+            countryCode= {currency==="KRW"? "KR":"US"}
             goal={goal}
             principal={
               currency === "KRW"
