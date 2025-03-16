@@ -187,6 +187,7 @@ export default function StockTradingPage() {
           style: { bottom: "80px" },
         });
         setIsTradeCompleted(true);
+        setQuantity(0);
       })
       .catch((err) => {
         console.error(
