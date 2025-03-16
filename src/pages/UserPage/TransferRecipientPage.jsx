@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setAccountNumber, setMemo } from "../../redux/transfer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LuDelete } from "react-icons/lu";
 
 import BackNavigation from "../../components/BackNavigation";
@@ -9,6 +9,9 @@ export default function TransferRecipientPage() {
   const dispatch = useDispatch();
   const { accountNumber, memo } = useSelector((state) => state.transfer);
   const navigate = useNavigate();
+  const location = useLocation();
+  const {amount, id }= location.state || {};
+
 
   const handleNumberClick = (number) => {
     dispatch(setAccountNumber(accountNumber + number));
@@ -57,7 +60,8 @@ export default function TransferRecipientPage() {
             alert("계좌번호를 입력해주세요.");
             return;
           }
-          navigate("/mypage/transfer/amount");
+          console.log(amount);
+          navigate("/mypage/transfer/amount", { state: { amount, id, accountNumber, memo } });
         }}
       >
         확인

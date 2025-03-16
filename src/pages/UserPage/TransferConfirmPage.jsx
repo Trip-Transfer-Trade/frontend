@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import BackNavigation from "../../components/BackNavigation";
 import NextConfirmButton from "../../components/NextConfirmButton";
@@ -9,7 +9,9 @@ export default function TransferConfirmPage() {
   const { accountNumber, memo, amount } = useSelector(
     (state) => state.transfer
   );
+  const location = useLocation();
   const navigate = useNavigate();
+  const accountId = location.state.accountId;
 
   // Format number with commas
   const formatAmount = (num) => {
@@ -39,7 +41,7 @@ export default function TransferConfirmPage() {
   const handleConfirm = async () =>{
 
     const transactionData = {
-      accountId : 1,          
+      accountId : accountId,      //연결 안했네    
       amount: parseFloat(amount),  
       description: memo, 
       targetAccountNumber:accountNumber, 
@@ -51,7 +53,7 @@ export default function TransferConfirmPage() {
       alert("송금을 완료하였습니다");
       navigate("/");
     } catch(error) {
-      alert("송금 처리에 실패했습니다. 다시 시도해주세요.");
+      alert("송금 처리에 실패했습니다. 다시 시도해주세요.",error);
     } 
   }
 

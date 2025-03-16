@@ -52,7 +52,7 @@ export default function MyAccountPagePage() {
                     <AccountItem
                       key={index}
                       id={account.accountId}
-                      title={account.name}
+                      title={account.name === "Unknown" ? "내 계좌" : account.name}
                       amount={`${account.amount.toLocaleString()}원`}
                       onTransfer={() => alert(`${account.name} 이체 기능 실행`)}
                     />
@@ -78,8 +78,8 @@ export default function MyAccountPagePage() {
                   accounts.map((account, index) => (
                     <AccountItem
                       key={index}
-                      title={account.name}
-                      amount={`$${account.amount.toFixed(2)}`}
+                      title={account.name=== "Unknown" ? "내 계좌" : account.name}
+                      amount={`$ ${account.amount.toFixed(2)}`}
                       onTransfer={() => alert(`${account.name} 이체 기능 실행`)}
                     />
                   ))

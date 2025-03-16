@@ -37,12 +37,18 @@ export const checkCode = async (checkData) =>{
 
 
 export const saveToken = async (token) =>{
-  console.log("fcm 토큰 저장");
-  try{
-    await apiClient.post("/alarms/fcm",token);
-    console.log("저장 성공");
-  } catch (error){
-    console.error("fcm 토큰 저장 실패");
-    throw error;
+  try {
+    const response = await apiClient.post("/alarms/fcm", token);
+    
+    if (response.status === 200) {
+      console.log("저장 성공");
+      return true;  // 성공하면 true 반환
+    } else {
+      console.error(`fcm 토큰 저장 실패: 상태 코드 ${response.status}`);
+      return false; // 실패하면 false 반환
+    }
+  } catch (error) {
+    console.error("fcm 토큰 저장 실패", error);
+    return false;
   }
 }

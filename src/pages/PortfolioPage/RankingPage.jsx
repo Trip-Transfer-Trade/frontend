@@ -43,30 +43,6 @@ const RankingHeader = () => (
   </div>
 );
 
-// RankingItem Component
-// const RankingItem = ({ rank, name, profit, currencySymbol }) => {
-//   const colors = { 1: 'bg-blue-500', 2: 'bg-purple-500', 3: 'bg-orange-500' };
-//   if (profit === 0) return null; // profit이 0이면 렌더링하지 않음
-//   return (
-//     <div className="flex items-center px-6 py-3 bg-white rounded-lg mb-2">
-//       <span className="text-xl font-bold w-8 text-gray-700">{rank}</span>
-//       <div className={`w-8 h-8 rounded-xl ${colors[rank] || 'bg-gray-500'} flex items-center justify-center mr-8`}>
-//         <img 
-//           src="/assets/images/main/portfolio.svg?height=32&width=32" 
-//           alt="Profile" 
-//           className="w-8 h-8"
-//         />
-//       </div>
-//       <div className="flex-1">
-//         <h3 className="font-medium">{name}</h3>
-//         <p className="text-red-500 text-sm">
-//           {currencySymbol} {profit.toLocaleString()}
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
-
 const RankingItem = ({ rank, name, profit, currencySymbol, onClick }) => {
   const colors = { 1: 'bg-blue-500', 2: 'bg-purple-500', 3: 'bg-orange-500' };
   if (profit === 0) return null; // profit이 0이면 렌더링하지 않음
@@ -161,7 +137,7 @@ const TabsContainer = () => {
 
   const handleClickItem = async (tripId) =>{
     console.log("jere")
-      navigate(`suggest`,{state:{suggestedTripId:tripId}});
+      navigate(`suggest`,{state:{suggestedTripId:tripId, activeTab:activeTab}});
   }
 
   return (
