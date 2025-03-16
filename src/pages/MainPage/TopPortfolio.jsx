@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Tab from "../../components/Tab";
 import Tabs from "../../components/Tabs";
 import BackNavigation from "../../components/BackNavigation";
@@ -157,7 +157,7 @@ const TabsContainer = () => {
   
   const navigate = useNavigate();
   const handleClickItem = async (tripId) =>{
-      navigate(`/trip/suggest`,{state:{suggestedTripId:tripId}});
+      navigate(`/trip/suggest`,{state:{suggestedTripId:tripId , activeTab:activeTab}});
   }
 
   return (
