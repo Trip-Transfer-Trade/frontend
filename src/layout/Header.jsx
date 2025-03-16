@@ -59,17 +59,68 @@ export default function Header() {
             />
           </div>
           <nav className="p-4 space-y-4">
-            <button className="w-full text-left py-2 border-b">홈</button>
-            <button className="w-full text-left py-2 border-b">
-              마이 트립 ✈️
-            </button>
-            <button className="w-full text-left py-2 border-b">
-              환전 지갑
-            </button>
-            <button className="w-full text-left py-2 border-b">
-              마이페이지
-            </button>
-            {/* 여기에 필요한 기능 추가 */}
+            <div>
+              <h3 className="font-semibold text-lg border-b">마이 트립 ✈️</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/trip/tripgoal");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  목표 생성
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-lg border-b">환전 지갑</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=지갑");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  내 지갑
+                </button>
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=환전");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  환전하기
+                </button>
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/exchange?tab=환율");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  실시간 환율 조회
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="font-semibold text-lg border-b">기타</h3>
+              <div className="pl-4 space-y-2">
+                <button
+                  className="w-full text-left py-2"
+                  onClick={() => {
+                    navigate("/destination");
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  여행지 Best10
+                </button>
+              </div>
+            </div>
           </nav>
         </div>
       )}
