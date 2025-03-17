@@ -32,6 +32,8 @@ export default function UserPage() {
         if(count === 1){
           count = 0;
           setCount(count);
+        } else if (count === 0){
+          setCount(0);
         } else {
           setCount(count - 1);
         }
