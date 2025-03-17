@@ -15,7 +15,9 @@ export default function SuggestPortfolioPage() {
 
   useEffect(() => {
     if (suggestedTripId) {
-      dispatch(fetchAssets({ tripId: suggestedTripId, country: activeTab }));
+      const mappedActiveTab = activeTab === "k" ? "KRW" : "USD";
+      console.log("Fetching assets with:", suggestedTripId, mappedActiveTab);
+      dispatch(fetchAssets({ tripId: suggestedTripId, activeTab: mappedActiveTab }));
     }
   }, [dispatch, suggestedTripId, activeTab]);
 
