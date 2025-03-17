@@ -64,6 +64,12 @@ export default function TripMainPage() {
       dispatch(TripAll());
     }
   }, [tripGoals, dispatch]);
+  useEffect(() => {
+    if (!account || !account.accountId) {
+      dispatch({ type: "RESET_TRIP_STATE" });
+      dispatch({ type: "RESET_ACCOUNT_STATE" });
+    }
+  }, [account, dispatch]);
 
   useEffect(() => {
     if (account !== undefined && account !== null) {
