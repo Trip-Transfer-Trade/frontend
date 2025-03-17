@@ -4,7 +4,7 @@ export default function RecommendedDestination() {
   const destinations = [
     { id: 1, name: "미국", image: "/assets/images/travel/travel-us.jpeg" },
     { id: 2, name: "일본", image: "/assets/images/travel/travel-jp.jpeg" },
-    { id: 3, name: "영국", image: "/assets/images/travel/travel-uk.jpeg" },
+    { id: 3, name: "영국", image: "/assets/images/travel/travel-gb.jpeg" },
     {
       id: 4,
       name: "인도네시아",
