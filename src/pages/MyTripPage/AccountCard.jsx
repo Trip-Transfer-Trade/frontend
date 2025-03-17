@@ -49,16 +49,14 @@ export default function AccountCard({ account }) {
             <TbHandClick className="text-xl text-gray-400 cursor-pointer hover:text-gray-600" />
           </div>
         </div>
-        <div className="flex flex-col mt-auto">
-        <div className="flex justify-between items-center">
-        <div className="flex items-center text-gray-500 text-sm cursor-pointer hover:text-gray-700"
-              onClick={handleExchangeClick}>
-            <MdOutlineError className="text-sm mr-1" />
-            해외 주식 투자를 위해 환전해보아요
-          </div>
-          <p className="text-xl font-semibold">{totalAmountInKRW.toLocaleString()}원</p>
+        <div className="flex justify-end items-center mt-auto">
+          <p className="text-xl font-semibold whitespace-nowrap">{totalAmountInKRW.toLocaleString()}원</p>
         </div>
-      </div>
+        <div className="mt-1 flex items-center text-gray-400 text-sm cursor-pointer hover:text-blue-500"
+             onClick={handleExchangeClick}>
+          <MdOutlineError className="text-xs mr-1" />
+          해외 주식 투자를 위해 환전해보아요
+        </div>
       </div>
     </div>
   );
