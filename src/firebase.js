@@ -31,7 +31,7 @@ async function requestPermission() {
   });
 
   if (token) {
-    console.log("fcm 토큰 발급 성공");
+    console.log("fcm 토큰 발급 성공",token);
     saveToken(token);
   }
   else console.log("Can not get Token");
