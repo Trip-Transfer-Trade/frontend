@@ -18,7 +18,7 @@ export default function ExchangeInfo() {
       {/* Header with logo and title */}
       <div className="flex items-center gap-4 mt-12 mb-8">
           <img 
-            src="/public/assets/images/logo.svg"
+            src="/assets/images/logo.svg"
             alt="TTT Logo"
             className="w-16 "
           />
