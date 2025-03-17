@@ -31,13 +31,7 @@ export default function MyStockPage() {
             </div>
           ))
         ) : (
-            <button
-            className="w-full py-4 mt-4 bg-gray-100 rounded-xl flex items-center justify-center"
-            onClick={() => navigate("/trip/tripgoal")}
-          >
-            <Plus className="w-5 h-5 text-gray-500 mr-1" />
-            <span className="text-gray-500">새로운 목표 등록</span>
-          </button>
+            <p></p>
         )}
       </div>
     </div>
