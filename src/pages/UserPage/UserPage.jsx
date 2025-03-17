@@ -44,7 +44,7 @@ export default function UserPage() {
 
   const menuItems = [
     { icon: "💳", label: "내 계좌", path: "/mypage/account" },
-    { icon: "📊", label: "내 주식", path: "/" },
+    { icon: "📊", label: "내 주식", path: "/mypage/stock" },
     { icon: "📂", label: "내 지갑", path: "/exchange" },
     { icon: "📅", label: "여행 기록", path: "/mypage/trip/history" },
   ];
