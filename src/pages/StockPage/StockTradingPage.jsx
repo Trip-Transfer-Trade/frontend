@@ -44,11 +44,13 @@ export default function StockTradingPage() {
       .then((response) => {
         console.log("통화 확인: " + currencyCode);
         console.log("📌 API 금액 확인:", response.data);
-        setAvaliableFunds(response.data.data.amount);
+        const amount = response.data?.data?.amount ?? 0;
+        setAvaliableFunds(amount);
         setIsTradeCompleted(false);
       })
       .catch((err) => {
         console.error("API 호출 중 오류 발생:", err);
+        setAvaliableFunds(0);
       });
   }, [isTradeCompleted, currencyCode]);
 
