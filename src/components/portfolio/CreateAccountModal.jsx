@@ -4,17 +4,22 @@ import { IoCloseOutline } from "react-icons/io5";
 export default function CreateAccountModal({ onClose }) {
   const navigate = useNavigate();
 
+  const handleClose = () => {
+    navigate("/"); // 홈으로 이동
+    onClose(); // 모달 닫기
+  };
+
   return (
     <div className="fixed inset-0 flex items-end justify-center z-50">
       <div
         className="absolute inset-0 bg-black opacity-50 z-40"
-        onClick={onClose}
+        onClick={handleClose}
       ></div>
 
       <div className="relative bg-white p-6 rounded-t-2xl w-full pb-10 z-50">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold">계좌가 필요해요!</h2>
-          <button onClick={onClose}>
+          <button onClick={handleClose}>
             <IoCloseOutline size={24} />
           </button>
         </div>
