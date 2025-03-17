@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { GoBell } from "react-icons/go";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoCloseOutline } from "react-icons/io5";
 import { useAuth } from "../context/AuthProvider";
 import LoginModal from "../pages/LoginPage/LoginModal";
+import apiClient from "../apis/apiClient";
 
 import "./Header.css";
 
@@ -12,6 +13,7 @@ export default function Header() {
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [count, setCount] = useState(0);
   const navigate = useNavigate();
 
   const { isLoggedIn, updateLoginStatus } = useAuth();
@@ -26,7 +28,7 @@ export default function Header() {
   const title = getTitle();
 
   const handleProtectedClick = (callback) => {
-    updateLoginStatus(); // 로그인 상태 즉시 반영
+    updateLoginStatus();
     if (!isLoggedIn) {
       setIsModalOpen(true);
     } else {
@@ -34,10 +36,20 @@ export default function Header() {
     }
   };
 
+  useEffect(() => {
+    apiClient
+      .get("/accounts/count")
+      .then((response) => {
+        setCount(response.data);
+      })
+      .catch((err) => {
+        console.error("목표 count 가져오기 실패", err);
+      });
+  }, []);
+
   return (
     <div>
       <header className="header flex w-full justify-between px-6">
-        {/* 로고 또는 타이틀 표시 */}
         <div className="flex items-center">
           {location.pathname === "/" ? (
             <img src="/assets/images/logo.svg" alt="Logo" className="logo" />
@@ -46,7 +58,6 @@ export default function Header() {
           )}
         </div>
 
-        {/* 아이콘 */}
         <div className="flex items-center space-x-4">
           <GoBell
             className="text-2xl cursor-pointer"
@@ -61,10 +72,8 @@ export default function Header() {
         </div>
       </header>
 
-      {/* 로그인 모달 */}
       <LoginModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
-      {/* 사이드 메뉴 */}
       {isMenuOpen && (
         <div className="side-menu fixed top-0 left-0 w-full h-full bg-white z-[1000]">
           <div className="p-6 flex justify-between items-center">
@@ -83,7 +92,8 @@ export default function Header() {
                 <button
                   className="w-full text-left py-2"
                   onClick={() => {
-                    navigate("/trip/tripgoal");
+                    const destination = count < 1 ? "/trip" : "/trip/tripgoal";
+                    navigate(destination);
                     setIsMenuOpen(false);
                   }}
                 >
