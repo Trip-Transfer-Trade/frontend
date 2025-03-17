@@ -1,19 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-const GoalCard = ({ trip = {} }) => {
-  const navigate = useNavigate();
+const GoalCard = ({ trip, onClick }) => {
   const progressRef = useRef(null);
-
-  const name = trip.name || "";
-  const goalAmount = trip.goalAmount || 0;
-  const profit = trip.profit || 0;
-  const endDate = trip.endDate || "";
-  const tripId = trip.tripId || "0";
-  
-  const percent = goalAmount > 0 ? (profit / goalAmount) * 100 : 0;
+  const percent = trip.goalAmount > 0 ? (trip.profit / trip.goalAmount) * 100 : 0;
   const [progressWidth, setProgressWidth] = useState(0);
-  
+
   useEffect(() => {
     const canvas = progressRef.current;
     if (!canvas) return;
@@ -46,44 +37,37 @@ const GoalCard = ({ trip = {} }) => {
     animateProgress();
   }, [percent]);
 
-  const handleClick = () => {
-    console.log("GoalCard에서 navigate 호출, tripId:", tripId);
-    navigate(`/trip/${tripId}/protfolio`);
-  };
-
-  const progressLabelStyle = {
-    left: `${Math.max(5, Math.min(progressWidth, 270))}px`,
-    transform:
-      progressWidth === 0
-        ? "translateX(10%)"
-        : progressWidth >= 270
-        ? "translateX(-90%)"
-        : "translateX(-50%)",
-  };
-
   return (
     <div
       className="bg-white rounded-lg p-4 mb-2 border border-gray-200 cursor-pointer hover:shadow-md transition"
-      onClick={handleClick}
+      onClick={onClick}  // ✅ 부모에서 전달받은 클릭 이벤트 실행
     >
       <div className="flex flex-col mb-2">
-        <p className="text-lg font-bold">{name}</p>
+        <p className="text-lg font-bold">{trip.name}</p>
         <p className="text-sm text-gray-600">
-          {goalAmount.toLocaleString()}원에서 {" "}
-          <span className="text-blue-500 font-bold">{profit.toLocaleString()}원</span> 모았어요!
+          {trip.goalAmount.toLocaleString()}원에서{" "}
+          <span className="text-blue-500 font-bold">{trip.profit.toLocaleString()}원</span> 모았어요!
         </p>
       </div>
-      <div className="relative w-full mt-4 ">
+      <div className="relative w-full mt-4">
         <canvas ref={progressRef} width={300} height={30} className="w-full" />
         <div
           className="absolute text-xs text-blue-500 bg-gray-50 px-1 py-1 rounded-md shadow-md"
-          style={progressLabelStyle}
+          style={{
+            left: `${Math.max(5, Math.min(progressWidth, 270))}px`,
+            transform:
+              progressWidth === 0
+                ? "translateX(10%)"
+                : progressWidth >= 270
+                ? "translateX(-90%)"
+                : "translateX(-50%)",
+          }}
         >
           {percent.toFixed(1)}% 달성
         </div>
       </div>
       <div className="flex justify-end items-center gap-2">
-        <p className="text-gray-500 text-xs mt-0">{endDate}까지 모으는 중</p>
+        <p className="text-gray-500 text-xs mt-0">{trip.endDate}까지 모으는 중</p>
       </div>
     </div>
   );

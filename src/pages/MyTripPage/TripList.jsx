@@ -24,7 +24,7 @@ export default function TripList({ selectedTripId, setSelectedTripId, tripGoals,
               <span className="text-2xl mt-1">{item.isAccount ? "💰" : "🌍"}</span>
               <div className="flex flex-col justify-start leading-tight">
                 <p className="text-lg text-gray-700 font-semibold">
-                  {item.isAccount ? "내 일반 계좌" : item.name}
+                  {item.isAccount ? "내 메인 계좌" : item.name}
                 </p>
                 <p className="text-xs text-gray-500">
                   <FormattedAccountNumber accountNumber={displayNumber ?? "000000000000"} />

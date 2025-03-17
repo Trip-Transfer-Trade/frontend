@@ -53,7 +53,7 @@ export default function AccountCard({ account }) {
         <div className="flex justify-between items-center">
         <div className="flex items-center text-gray-500 text-sm cursor-pointer hover:text-gray-700"
               onClick={handleExchangeClick}>
-            <MdOutlineError className="text-lg mr-1" />
+            <MdOutlineError className="text-sm mr-1" />
             해외 주식 투자를 위해 환전해보아요
           </div>
           <p className="text-xl font-semibold">{totalAmountInKRW.toLocaleString()}원</p>
