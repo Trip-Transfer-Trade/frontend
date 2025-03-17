@@ -17,7 +17,7 @@ export default function SuggestPortfolioPage() {
     if (suggestedTripId) {
       const mappedActiveTab = activeTab === "k" ? "KRW" : "USD";
       console.log("Fetching assets with:", suggestedTripId, mappedActiveTab);
-      dispatch(fetchAssets({ tripId: suggestedTripId, activeTab: mappedActiveTab }));
+      dispatch(fetchAssets({ tripId: suggestedTripId, country: mappedActiveTab }));
     }
   }, [dispatch, suggestedTripId, activeTab]);
 
