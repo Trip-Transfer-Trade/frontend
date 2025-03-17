@@ -17,7 +17,7 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
     const maxItems = 6;
     let labels = [];
     let data = [];
-    let colors = ["#4FD1C5", "#F56565", "#2D3748", "#F6E05E", "#667EEA"];
+    let colors = ["#4FD1C5", "#F56565", "#2D3748", "#F6E05E", "#667EEA", "#A0AEC0"];
     let filteredAssets = assets.filter(item => item.quantity > 0);
 
     if (filteredAssets.length === 0) {
