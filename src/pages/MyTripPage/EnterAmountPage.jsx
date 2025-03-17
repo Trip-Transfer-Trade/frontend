@@ -139,7 +139,7 @@ export default function EnterAmountPage() {
           <span className="text-gray-500 text-sm">({formattedDestBalance})</span>
         </p>
         <p className="text-md font-medium text-black">
-          {destinationAccountInfo?.accountNumber || ""}
+          {destinationAccountInfo?.accountNumber || destId}
         </p>
       </div>
 
@@ -156,7 +156,7 @@ export default function EnterAmountPage() {
       <div className="bg-gray-50 rounded-lg p-3 flex justify-between items-center mx-8 mt-5">
         <div>
           <p className="text-sm text-gray-500">
-              출발 계좌 {sourceAccountInfo?.accountNumber || ""}
+              출발 계좌: {sourceAccountInfo?.accountNumber || sourceId}
           </p>
           <p className="text-sm text-gray-500">잔액: {formattedSourceBalance}</p>
         </div>
