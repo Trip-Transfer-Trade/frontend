@@ -14,7 +14,6 @@ export default function MyStockPage() {
     dispatch(TripAll());
   }, [dispatch]);
 
-  if (status === "failed") return <p className="text-center text-red-500">여행 데이터를 불러오는 데 실패했습니다.</p>;
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
