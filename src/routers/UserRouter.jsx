@@ -6,6 +6,7 @@ import ProfilePage from "../pages/UserPage/ProfilePage";
 import MyAccountPage from "../pages/UserPage/MyAccountPage";
 import AlarmHistoryPage from "../pages/UserPage/AlarmHistoryPage";
 import TripHistoryPage from "../pages/UserPage/TripHistoryPage";
+import MyStockPage from "../pages/UserPage/MyStockPage";
 
 const UserRouter = {
   path: "/mypage",
@@ -61,7 +62,11 @@ const UserRouter = {
           element: <TripHistoryPage />,
         }
       ]
-    }
+    },
+    {
+      path: "stock",
+      element: <MyStockPage />,
+    },
   ],
 };
 

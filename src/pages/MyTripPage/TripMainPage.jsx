@@ -96,14 +96,14 @@ export default function TripMainPage() {
             {account && account.amountNumber ? (
               <AccountCard account={account} />
             ) : (
-              <p>계좌 정보를 불러오는 중...</p>
+              <p></p>
             )}
 
             {status === "loading" && <p>로딩 중...</p>}
             {Array.isArray(sortedTrips) && sortedTrips.length > 0 ? (
               sortedTrips.map((trip) => <TripCard key={trip.tripId} trip={trip} accountId={account.accountId} />)
             ) : (
-              <p>여행 목표가 없습니다.</p>
+              <p> </p>
             )}
 
             <button

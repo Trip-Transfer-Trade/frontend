@@ -147,24 +147,59 @@ export default function SignupFlow() {
       <div className="flex-grow w-full mx-auto px-6">
         {step === 0 && (
           <div className="space-y-6">
-            <InputField label="이름" name="name" value={formData.name} onChange={handleChange} />
-            <InputField label="성별" name="gender" value={formData.gender} onChange={handleChange} type="select" options={["M", "F"]} />
-            <InputField label="생년월일" name="birthDate" value={formData.birthDate} onChange={handleChange} type="date" />
+            <InputField
+              label="이름"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+            />
+            <InputField
+              label="성별"
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              type="select"
+              options={["M", "F"]}
+            />
+            <InputField
+              label="생년월일"
+              name="birthDate"
+              value={formData.birthDate}
+              onChange={handleChange}
+              type="date"
+            />
           </div>
         )}
         {step === 1 && (
           <div className="space-y-6">
             <div className="flex items-end space-x-2">
-              <InputField label="전화번호" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
-              <button className="w-24 h-12 p-2 text-white text-sm font-medium rounded-md transition bg-brand-blue" type="button" onClick={handleRequestVerificationCode}>
+              <InputField
+                label="전화번호"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+              />
+              <button
+                className="w-24 h-12 p-2 text-white text-sm font-medium rounded-md transition bg-brand-blue"
+                type="button"
+                onClick={handleRequestVerificationCode}
+              >
                 {isVerificationRequested ? "재요청" : "인증요청"}
               </button>
             </div>
 
             {isVerificationRequested && (
               <div className="flex items-end space-x-2">
-                <InputField label="인증번호" name="verificationCode" value={formData.verificationCode} onChange={handleChange} />
-                <button className="w-24 h-12 p-2 text-white text-sm font-medium rounded-md transition bg-brand-blue" onClick={handleCheckVerificationCode}>
+                <InputField
+                  label="인증번호"
+                  name="verificationCode"
+                  value={formData.verificationCode}
+                  onChange={handleChange}
+                />
+                <button
+                  className="w-24 h-12 p-2 text-white text-sm font-medium rounded-md transition bg-brand-blue"
+                  onClick={handleCheckVerificationCode}
+                >
                   인증하기
                 </button>
               </div>
@@ -174,9 +209,26 @@ export default function SignupFlow() {
 
         {step === 2 && (
           <div className="space-y-6">
-            <InputField label="아이디" name="userName" value={formData.userName} onChange={handleChange} />
-            <InputField label="비밀번호" name="password" value={formData.password} onChange={handleChange} type="password" />
-            <InputField label="비밀번호 확인" name="passwordConfirm" value={formData.passwordConfirm} onChange={handleChange} type="password" />
+            <InputField
+              label="아이디"
+              name="userName"
+              value={formData.userName}
+              onChange={handleChange}
+            />
+            <InputField
+              label="비밀번호"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              type="password"
+            />
+            <InputField
+              label="비밀번호 확인"
+              name="passwordConfirm"
+              value={formData.passwordConfirm}
+              onChange={handleChange}
+              type="password"
+            />
           </div>
         )}
 
@@ -188,15 +240,23 @@ export default function SignupFlow() {
               </div>
               <h2 className="text-xl font-bold">회원가입 완료</h2>
             </div>
-            <div className="w-full px-6 pb-16">
-              <NextConfirmButton text="시작하기" onClick={() => navigate("/auth/login")} />
+            <div className="w-full pb-16">
+              <NextConfirmButton
+                text="시작하기"
+                onClick={() => navigate("/auth/login")}
+              />
             </div>
           </div>
         )}
       </div>
 
       <div className="px-6 pb-16">
-        {step < 3 && <NextConfirmButton text={step === 2 ? "완료" : "다음"} onClick={nextStep} />}
+        {step < 3 && (
+          <NextConfirmButton
+            text={step === 2 ? "완료" : "다음"}
+            onClick={nextStep}
+          />
+        )}
       </div>
     </div>
   );

@@ -13,20 +13,6 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
   if (!ignoreTrip && !selectedTrip)
     return <p>여행 포트폴리오 상세 정보 불러오는 중...✈️</p>;
 
-  if (!assets || assets.length === 0) {
-    return (
-      <div className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center h-52 mx-4 mb-4">
-        <FiBarChart2 className="text-4xl text-gray-400 mb-2" />
-        <p className="text-gray-500 text-lg font-medium">보유한 종목이 없어요</p>
-        <div className="flex justify-center mt-4 pt-4">
-          <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
-            목표 수정하기
-          </a>
-        </div>
-      </div>
-    );
-  }
-
   const processChartData = (assets) => {
     const maxItems = 6;
     let labels = [];
@@ -34,11 +20,14 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
     let colors = ["#4FD1C5", "#F56565", "#2D3748", "#F6E05E", "#667EEA"];
     let filteredAssets = assets.filter(item => item.quantity > 0);
 
+    if (filteredAssets.length === 0) {
+      return null;
+    }
+
     let sortedAssets = [...filteredAssets].sort(
       (a, b) => b.currencyPrice * b.quantity - a.currencyPrice * a.quantity
     );
 
-    // ✅ 5자 이상이면 "..." 처리
     const shortenName = (name) => name.length > 5 ? name.substring(0, 5) + "..." : name;
 
     if (sortedAssets.length > maxItems) {
@@ -52,14 +41,32 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
       ];
       colors = [...colors.slice(0, maxItems - 1), "#A0AEC0"];
     } else {
-      labels = sortedAssets.map((item) => shortenName(item.stockName)); // ✅ 5자 초과 시 ... 적용
+      labels = sortedAssets.map((item) => shortenName(item.stockName));
       data = sortedAssets.map((item) => item.currencyPrice * item.quantity);
       colors = colors.slice(0, sortedAssets.length);
     }
     return { labels, data, colors };
   };
 
-  const { labels, data, colors } = processChartData(assets);
+  const chartDataObj = processChartData(assets);
+
+  if (!chartDataObj) {
+    return (
+      <div className="p-4 bg-white rounded-lg shadow-lg flex flex-col items-center justify-center h-52 mx-4 mb-4">
+        <FiBarChart2 className="text-4xl text-gray-400 mb-2" />
+        <p className="text-gray-500 text-lg font-medium">보유한 종목이 없어요</p>
+        {!ignoreTrip && (
+          <div className="flex justify-center mt-4 pt-4">
+            <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
+              목표 수정하기
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const { labels, data, colors } = chartDataObj;
   const totalAssets = data.reduce((acc, val) => acc + val, 0);
 
   const chartData = {
@@ -75,7 +82,7 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
 
   const chartOptions = {
     plugins: {
-      legend: { display: false }, // ✅ 기본 범례 비활성화 (기존 유지)
+      legend: { display: false },
     },
     maintainAspectRatio: false,
   };
@@ -91,7 +98,6 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
             <Doughnut data={chartData} options={chartOptions} />
           </div>
 
-          {/* ✅ 직접 만든 범례 (이름 5자 초과 시 "..." 적용) */}
           <div className="w-5/9 flex flex-col items-center pl-2 overflow-x-auto">
             {labels.map((label, index) => (
               <div key={index} className="w-full flex items-center text-[10px] mb-1">
@@ -106,11 +112,13 @@ export default function PortfolioChart({ activeTab, assets, ignoreTrip = false, 
             ))}
           </div>
         </div>
-        <div className="flex justify-center mt-4 pt-4">
-          <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
-            목표 수정하기
-          </a>
-        </div>
+        {!ignoreTrip && (
+          <div className="flex justify-center mt-4 pt-4">
+            <a href={`/trip/${tripId}/portfolio/progress`} className="text-gray-400 text-sm font-medium underline">
+              목표 수정하기
+            </a>
+          </div>
+        )}
       </div>
     </div>
   );

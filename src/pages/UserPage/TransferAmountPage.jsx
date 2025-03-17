@@ -1,17 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { setAmount } from "../../redux/transfer";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useLocation} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { LuDelete } from "react-icons/lu";
 
 import BackNavigation from "../../components/BackNavigation";
 
 export default function TransferAmountPage() {
+  const location = useLocation();
   const dispatch = useDispatch();
-  const { amount } = useSelector((state) => state.transfer);
+  const { amount} = useSelector((state) => state.transfer) || 0;
   const navigate = useNavigate();
   const [koreanAmount, setKoreanAmount] = useState("");
-
+  const myAmount = location.state.amount || 0;
+  const accountId = location?.state.id;
+  console.log(myAmount);
   const formatAmount = (num) => {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -59,6 +62,14 @@ export default function TransferAmountPage() {
     } else {
       newAmount = amount * 10 + Number.parseInt(value);
     }
+    console.log(newAmount,myAmount)
+    const parsedMyAmount = Number(myAmount.replace("원", "").replace(/,/g, "").trim()) || 0;
+
+
+    if (newAmount > parsedMyAmount) {
+      alert(`최대 ${myAmount.toLocaleString()}까지 입력할 수 있습니다.`);
+      newAmount =  parsedMyAmount; // 초과하면 최대 금액으로 설정
+    }
 
     dispatch(setAmount(newAmount));
   };
@@ -77,7 +88,7 @@ export default function TransferAmountPage() {
 
       {/* 키패드 */}
       <button
-        onClick={() => navigate("/mypage/transfer/confirm")}
+        onClick={() => navigate("/mypage/transfer/confirm" , {state : {accountId : accountId}})}
         className="bg-brand-blue text-white py-4 text-center w-full"
       >
         확인

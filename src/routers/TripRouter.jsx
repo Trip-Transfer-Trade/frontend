@@ -18,6 +18,7 @@ import SuggestPortfolioPage from "../pages/PortfolioPage/SuggestPortfolioPage";
 import StockExchangePage from "../pages/PortfolioPage/StockExchangePage";
 import GoalSellSuccessPage from "../pages/PortfolioPage/GoalSellSuccessPage";
 import AccountExchangePage from "../pages/MyTripPage/AccountExchange";
+import StockListPage from "../pages/UserPage/StockListPage";
 
 
 
@@ -50,6 +51,8 @@ const TripRouter = {
 
     // 투자하기
     { path: ":tripGoal/stocks", element: <StockPage /> },
+    { path: ":tripGoal/stockslist", element: <StockListPage /> },
+    
     {
       path: ":tripGoal/stocks/buy",
       element: <StockTradingPage type="buy" />,

@@ -11,13 +11,15 @@ export default function AccountItem({ title, amount, id }) {
         }}
             >
             <div>
-                <h3 className="text-sm font-medium text-gray-800">{title}</h3>
-                <p className="text-2xl font-semibold text-black">{amount}</p>
+                <h3 className="text-[15px] text-gray-800">{title}</h3>
+                <p className="text-[25px] font-semibold text-black">{amount}</p>
             </div>
             <button
-                className="bg-blue-600 text-white text-base font-medium px-6 py-1 rounded-lg"
-                onClick={(e) => {e.stopPropagation();
-                console.log("이체")}}>
+                className="bg-brand-blue text-white text-[15px] font-light px-6 py-1 rounded-lg"
+                onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("이체");
+                    navigate(`/mypage/transfer/recipient`, { state: { amount: amount, id:id }})}} >
                 이체
             </button>
         </div>

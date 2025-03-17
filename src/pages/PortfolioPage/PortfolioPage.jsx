@@ -23,6 +23,7 @@ export default function Portfolio() {
     }
   }, [dispatch, tripId, activeTab]);
 
+
   if (status === "loading") return <p>로딩 중...</p>;
   if (status === "failed") return <p>오류 발생</p>;
   if (!selectedTrip) return <p>여행 데이터를 찾을 수 없습니다.</p>;
@@ -58,7 +59,7 @@ export default function Portfolio() {
       <img
         src="/assets/images/stock/portfolioBanner.svg"
         alt="포트폴리오 추천"
-        className="cursor-pointer px-4"
+        className="cursor-pointer m-5"
         onClick={() => navigate(`/trip/${tripId}/portfolio/rank`)}
       />
       <main className="flex-1 overflow-hidden flex flex-col">

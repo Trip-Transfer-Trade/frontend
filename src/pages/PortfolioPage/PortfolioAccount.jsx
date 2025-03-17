@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAccountData } from "../../redux/accountSlice";
 import { useParams, useNavigate } from "react-router-dom";
 import ModalCenter from "../../components/ModalCenter";
+import { IoCloseOutline } from "react-icons/io5";
+import { FiAlertCircle } from "react-icons/fi";
 
 function formatAmount(amount, currency) {
   return currency === "KRW"
@@ -35,15 +37,21 @@ export default function PortfolioAccount({ activeTab }) {
     if (activeTab === "u" && currentData.depositAmount === 0) {
       setIsModalOpen(true);
     } else {
-      navigate(`/trip/${tripId}/stocks`);
+      const nation = activeTab === "k" ? "국내" : "미국";
+      navigate(`/trip/${tripId}/stocks`, { state: { nation } });
     }
   };
+  
 
   return (
     <div className="m-4 bg-white rounded-lg shadow-lg p-3 mb-4">
       <div className="flex justify-between items-center px-3">
         <span className="text-lg font-medium">누적수익금</span>
-        <span className="text-lg font-medium text-red-500">
+        <span
+          className={`text-lg font-medium ${
+            currentData.profit < 0 ? "text-blue-500" : "text-red-500"
+          }`}
+        >
           {formatAmount(currentData.profit, currency)}
         </span>
       </div>
@@ -82,6 +90,31 @@ export default function PortfolioAccount({ activeTab }) {
           환전하기
         </button>
       </div>
+      <ModalCenter isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="text-center">
+          <h2 className="text-lg font-bold">미국 달러가 없어요</h2>
+          <p className="text-gray-600 text-sm mt-2">
+            해외 주식 투자를 위해 환전을 진행해주세요......
+          </p>
+          <button
+            className="w-full bg-blue-500 text-white py-2 rounded-lg mt-4"
+            onClick={() => {
+              setIsModalOpen(false);
+              navigate(`/trip/${tripId}/portfolio/exchange`, {
+                state: { tripId, activeTab, depositKRW: accountData.KRW?.depositAmount || 0, depositUSD: accountData.USD?.depositAmount || 0 }
+              })
+            }}
+          >
+            환전하러 가기
+          </button>
+          <button
+            className="w-full bg-gray-200 text-gray-500 py-2 rounded-lg mt-2"
+            onClick={() => setIsModalOpen(false)}
+          >
+            나중에 하기
+          </button>
+        </div>
+      </ModalCenter>
     </div>
   );
 }

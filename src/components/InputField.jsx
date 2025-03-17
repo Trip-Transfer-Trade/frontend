@@ -8,8 +8,8 @@ export default function InputField({
   placeholder = "",
 }) {
   return (
-    <div>
-      <label className="text-sm font-medium">{label}</label>
+    <div className="flex flex-col w-full">
+      <label className="text-sm font-medium block">{label}</label>
       {type === "select" ? (
         <select
           name={name}

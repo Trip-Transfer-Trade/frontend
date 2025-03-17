@@ -67,16 +67,18 @@ export default function Header() {
       {/* 사이드 메뉴 */}
       {isMenuOpen && (
         <div className="side-menu fixed top-0 left-0 w-full h-full bg-white z-[1000]">
-          <div className="p-4 flex justify-between items-center border-b">
-            <h2 className="text-lg font-bold">전체 메뉴</h2>
+          <div className="p-6 flex justify-between items-center">
+            <h2 className="text-xl font-bold">전체 메뉴</h2>
             <IoCloseOutline
               className="text-2xl cursor-pointer"
               onClick={() => setIsMenuOpen(false)}
             />
           </div>
-          <nav className="p-4 space-y-4">
-            <div>
-              <h3 className="font-semibold text-lg border-b">마이 트립 ✈️</h3>
+          <nav className="p-6 space-y-4">
+            <div className="mb-4">
+              <h3 className="font-semibold text-lg border-b border-custom-gray-3 mb-2">
+                마이 트립 ✈️
+              </h3>
               <div className="pl-4 space-y-2">
                 <button
                   className="w-full text-left py-2"
@@ -90,9 +92,11 @@ export default function Header() {
               </div>
             </div>
 
-            <div>
-              <h3 className="font-semibold text-lg border-b">환전 지갑</h3>
-              <div className="pl-4 space-y-2">
+            <div className="mb-4">
+              <h3 className="font-semibold text-lg border-b border-custom-gray-3 mb-2">
+                환전 지갑
+              </h3>
+              <div className="pl-4">
                 <button
                   className="w-full text-left py-2"
                   onClick={() => {
@@ -124,7 +128,9 @@ export default function Header() {
             </div>
 
             <div>
-              <h3 className="font-semibold text-lg border-b">기타</h3>
+              <h3 className="font-semibold text-lg border-b border-custom-gray-3 mb-2">
+                기타
+              </h3>
               <div className="pl-4 space-y-2">
                 <button
                   className="w-full text-left py-2"
