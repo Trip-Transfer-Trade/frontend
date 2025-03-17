@@ -41,7 +41,7 @@ export default function ExchangeCompletePage() {
 
       <div className="relative w-42 h-42 mb-6">
         <img
-          src="/public/assets/images/exchange/completed.svg"
+          src="/assets/images/exchange/completed.svg"
           alt="Cute character with coins"
           className="w-full h-full object-contain"
         />
