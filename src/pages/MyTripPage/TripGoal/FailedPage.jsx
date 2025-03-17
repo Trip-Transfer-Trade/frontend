@@ -10,7 +10,7 @@ import BulkSellWarningModal from "../../../components/portfolio/BulkSellWarningM
 export default function FailedPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { tripGoal } = useParams();
-  const [tripId, setTripId] = useState(1);
+  const [tripId, setTripId] = useState(tripGoal);
   const [trip, setTrip] = useState("");
 
   // const [amount, setAmount] = useState(1000000);

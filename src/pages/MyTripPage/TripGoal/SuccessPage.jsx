@@ -10,7 +10,7 @@ import BulkSellWarningModal from "../../../components/portfolio/BulkSellWarningM
 export default function SuccessPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { tripGoal } = useParams();
-  const [tripId, setTripId] = useState(1);
+  const [tripId, setTripId] = useState(tripGoal);
   // const [period, setPeriod] = useState(11);
   // const [returnRate, setReturnRate] = useState(32.9);
   const [trip, setTrip] = useState("");
@@ -20,7 +20,7 @@ export default function SuccessPage() {
   useEffect(() =>{
     setTripId(tripGoal.replace("tripGoal", ""));
     const getData = async () => {
-      console.log(tripId);
+      console.log(tripId, tripGoal);
       try {
         const response = await fetchTripByTripId(tripId);
         setTrip(response);
